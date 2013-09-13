@@ -13,7 +13,7 @@ using Eigen::MatrixXd;
 
 double f(double u2, double u4, double u6, double lambda0,double n,double o2, double o4, double o6)
 {
-	return (((pow(n*n+2,2)/(9*n))*(8*pi*pi*m*c))/(3*h*3*lambda0))*(u2*o2+u4*o4+u6*o6);
+	return (((pow(n*n+2,2)/(9*n))*(8*pi*pi*m*c))/(3*h*6*lambda0))*(u2*o2+u4*o4+u6*o6);
 };
 
 double sellmeier(double a, double b, double c, double d, double lambda)
@@ -28,7 +28,6 @@ double tempchi2=0;
 size=u2.size();
 for (int i=0;i<size;i++){
 tempchi2=tempchi2+pow(f(u2[i],u4[i],u6[i],lambda0[i],n,o2,o4,o6)-fexp[i],2);
-//std::cout <<i <<" " <<tempchi2<<" "<<f(u2[i],u4[i],u6[i],lambda0[i],n,o2,o4,o6)<<" "<<fexp[i]<<" "<<u2[i]<<" "<<u4[i]<<" "<<u6[i]<<endl;
 };
 return tempchi2;
 };
@@ -45,7 +44,7 @@ void CalculateHessian(vector <double> u2, vector<double> u4, vector <double> u6,
 	double ro2,ro4,ro6,res,delta;
 	size=u2.size();
 	MatrixXd Res(size,1);
-	delta=1e-26;
+	delta=1e-28;
 	MatrixXd Jaco(size,3);
 	//cout <<"Debug " <<o2<<" "<<o4<<" "<<o6<<endl;
 	for (i=0;i<size;i++){

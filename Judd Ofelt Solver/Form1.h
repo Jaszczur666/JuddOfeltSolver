@@ -1,20 +1,11 @@
 #pragma once
 #include "Solver.h"
+#include "Parser.h"
 #include <vector>
 #define EIGEN_NO_CPUID
  #include <intrin.h>
 using namespace std;
-struct Experiment{
-std::vector <double> u2;
-std::vector <double> u4;
-std::vector <double> u6;
-std::vector <double> lambda;
-double n;
-double o2;
-double o4;
-double o6;
-std::vector <double> fexp;
-};
+
 	Experiment experimental;
 	Experiment SmEmmision;
 namespace JuddOfeltSolver {
@@ -66,6 +57,8 @@ namespace JuddOfeltSolver {
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^  fileToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  loadFromFileToolStripMenuItem;
+	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
+	private: System::Windows::Forms::Button^  button1;
 	protected: 
 
 	private:
@@ -93,6 +86,8 @@ namespace JuddOfeltSolver {
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->fileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->loadFromFileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
@@ -155,7 +150,7 @@ namespace JuddOfeltSolver {
 			// 
 			// button6
 			// 
-			this->button6->Location = System::Drawing::Point(12, 172);
+			this->button6->Location = System::Drawing::Point(24, 143);
 			this->button6->Name = L"button6";
 			this->button6->Size = System::Drawing::Size(144, 46);
 			this->button6->TabIndex = 6;
@@ -182,15 +177,31 @@ namespace JuddOfeltSolver {
 			// loadFromFileToolStripMenuItem
 			// 
 			this->loadFromFileToolStripMenuItem->Name = L"loadFromFileToolStripMenuItem";
-			this->loadFromFileToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->loadFromFileToolStripMenuItem->Size = System::Drawing::Size(150, 22);
 			this->loadFromFileToolStripMenuItem->Text = L"Load from file";
 			this->loadFromFileToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::loadFromFileToolStripMenuItem_Click);
+			// 
+			// openFileDialog1
+			// 
+			this->openFileDialog1->FileName = L"openFileDialog1";
+			this->openFileDialog1->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &Form1::openFileDialog1_FileOk);
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(55, 249);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(75, 23);
+			this->button1->TabIndex = 8;
+			this->button1->Text = L"button1";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click_1);
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(767, 343);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->button6);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->button4);
@@ -217,15 +228,14 @@ namespace JuddOfeltSolver {
 				 //button1->Text=fpom.ToString();
 			 }
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-				 double tempf;
-				 				 
-				
-				 dataGridView1->RowCount=9;
-				 for (int i=0;i<9;i++){
+		int size;
+		size=experimental.u2.size();				
+				 dataGridView1->RowCount=size;
+				 for (int i=0;i<size;i++){
 				 dataGridView1->Rows[i]->Cells[0]->Value= experimental.u2[i].ToString();
 				 dataGridView1->Rows[i]->Cells[1]->Value= experimental.u4[i].ToString();
 				 dataGridView1->Rows[i]->Cells[2]->Value= experimental.u6[i].ToString();
-				 dataGridView1->Rows[i]->Cells[3]->Value= experimental.lambda[i].ToString();
+				 dataGridView1->Rows[i]->Cells[3]->Value= (1e7*experimental.lambda[i]).ToString();
 				 dataGridView1->Rows[i]->Cells[4]->Value= experimental.fexp[i].ToString();
 				 }
 			 }
@@ -251,7 +261,21 @@ private: System::Void button6_Click(System::Object^  sender, System::EventArgs^ 
 			 CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,6,SmEmmision.lambda,1.85,1.12e-20,5.57e-20,2.78e-20,a);
 		 }
 private: System::Void loadFromFileToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-
+if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
+				 {
+					 LoadAbsoDataFromFile(openFileDialog1->FileNames[0],experimental);
+					 experimental.o2=1e-20;
+					 experimental.o4=1e-20;
+					 experimental.o6=1e-20;
+}
+		 }
+private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
+		 }
+private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
+			experimental.o2=0.14727E-19;
+			experimental.o4=0.19006E-19;
+			experimental.o6=0.86311E-20;
+			cout <<chi2(experimental.u2,experimental.u4,experimental.u6,experimental.lambda,experimental.n,experimental.o2,experimental.o4,experimental.o6,experimental.fexp);
 		 }
 };
 }
