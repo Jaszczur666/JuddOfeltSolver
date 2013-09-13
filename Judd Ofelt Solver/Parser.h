@@ -41,7 +41,7 @@ void LoadAbsoDataFromFile(String^ Filename, struct Experiment &experimental)
 	MarshalString(Filename,name);
 	ifstream inpfile(name);
 //	getline(inpfile,str);
-	inpfile>>n>>j;
+	inpfile>>j>>n;
 	cout << n <<" "<<j<<endl;
 	experimental.lambda.clear();
 	experimental.u2.clear();
@@ -51,6 +51,35 @@ void LoadAbsoDataFromFile(String^ Filename, struct Experiment &experimental)
 	experimental.n=n;
 	experimental.j=j;
 	while(inpfile >> pexp >> wavenumber>>u2>>u4>>u6){
+		experimental.fexp.push_back(pexp);
+		experimental.u2.push_back(u2);
+		experimental.u4.push_back(u4);
+		experimental.u6.push_back(u6);
+		experimental.lambda.push_back(1./wavenumber);
+		experimental.o2=1e-20;
+		experimental.o4=1e-20;
+		experimental.o6=1e-20;
+	cout <<pexp <<" "<<1./wavenumber <<" "<<u2<<" "<<" "<<u4<<" "<< u6<<endl;
+	}
+}
+
+void LoadEmDataFromFile(String^ Filename, struct Experiment &experimental)
+{
+	double n, j,u2,u4,u6,wavenumber,pexp;
+	string name,str;
+	MarshalString(Filename,name);
+	ifstream inpfile(name);
+//	getline(inpfile,str);
+	inpfile>>j>>n;
+	cout << n <<" "<<j<<endl;
+	experimental.lambda.clear();
+	experimental.u2.clear();
+	experimental.u4.clear();
+	experimental.u6.clear();
+	experimental.fexp.clear();
+	experimental.n=n;
+	experimental.j=j;
+	while(inpfile >> wavenumber>>u2>>u4>>u6){
 		experimental.fexp.push_back(pexp);
 		experimental.u2.push_back(u2);
 		experimental.u4.push_back(u4);

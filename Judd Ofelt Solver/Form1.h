@@ -59,6 +59,7 @@ namespace JuddOfeltSolver {
 	private: System::Windows::Forms::ToolStripMenuItem^  loadFromFileToolStripMenuItem;
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
 	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::ToolStripMenuItem^  loadEmissionDataToolStripMenuItem;
 	protected: 
 
 	private:
@@ -88,6 +89,7 @@ namespace JuddOfeltSolver {
 			this->loadFromFileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->loadEmissionDataToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
@@ -169,7 +171,8 @@ namespace JuddOfeltSolver {
 			// 
 			// fileToolStripMenuItem
 			// 
-			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->loadFromFileToolStripMenuItem});
+			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->loadFromFileToolStripMenuItem, 
+				this->loadEmissionDataToolStripMenuItem});
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
 			this->fileToolStripMenuItem->Size = System::Drawing::Size(35, 20);
 			this->fileToolStripMenuItem->Text = L"File";
@@ -177,7 +180,7 @@ namespace JuddOfeltSolver {
 			// loadFromFileToolStripMenuItem
 			// 
 			this->loadFromFileToolStripMenuItem->Name = L"loadFromFileToolStripMenuItem";
-			this->loadFromFileToolStripMenuItem->Size = System::Drawing::Size(150, 22);
+			this->loadFromFileToolStripMenuItem->Size = System::Drawing::Size(176, 22);
 			this->loadFromFileToolStripMenuItem->Text = L"Load from file";
 			this->loadFromFileToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::loadFromFileToolStripMenuItem_Click);
 			// 
@@ -195,6 +198,13 @@ namespace JuddOfeltSolver {
 			this->button1->Text = L"button1";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click_1);
+			// 
+			// loadEmissionDataToolStripMenuItem
+			// 
+			this->loadEmissionDataToolStripMenuItem->Name = L"loadEmissionDataToolStripMenuItem";
+			this->loadEmissionDataToolStripMenuItem->Size = System::Drawing::Size(176, 22);
+			this->loadEmissionDataToolStripMenuItem->Text = L"Load emission data";
+			this->loadEmissionDataToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::loadEmissionDataToolStripMenuItem_Click);
 			// 
 			// Form1
 			// 
@@ -276,6 +286,19 @@ private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs
 			experimental.o4=0.19006E-19;
 			experimental.o6=0.86311E-20;
 			cout <<chi2(experimental.u2,experimental.u4,experimental.u6,experimental.lambda,experimental.n,experimental.o2,experimental.o4,experimental.o6,experimental.fexp);
+		 }
+private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+			 vector <double> a;
+			 int size;
+			 double Ajj;
+			 if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
+			 {
+				 LoadEmDataFromFile(openFileDialog1->FileNames[0],SmEmmision);
+				 CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,6,SmEmmision.lambda,experimental.n,experimental.o2,experimental.o4,experimental.o6,a);
+				 size=a.size();
+				 for (int i=0;i<size;i++) Ajj+=a[i];
+				 cout << 1e3/Ajj <<"ms";
+			 }
 		 }
 };
 }

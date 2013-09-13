@@ -107,7 +107,7 @@ double lambda,chi2s,chi2n;
 
 }
 
-void CalculateRates(vector <double> u2, vector<double> u4, vector <double> u6, double twojplusone, vector <double> lambda0,double n,double o2, double o4, double o6, vector <double> a)
+void CalculateRates(vector <double> u2, vector<double> u4, vector <double> u6, double twojplusone, vector <double> lambda0,double n,double o2, double o4, double o6, vector <double> &a)
 {
 	int size;
 	double rate;
