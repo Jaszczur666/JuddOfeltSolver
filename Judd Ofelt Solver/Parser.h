@@ -88,6 +88,6 @@ void LoadEmDataFromFile(String^ Filename, struct Experiment &experimental)
 		experimental.o2=1e-20;
 		experimental.o4=1e-20;
 		experimental.o6=1e-20;
-	cout <<pexp <<" "<<1./wavenumber <<" "<<u2<<" "<<" "<<u4<<" "<< u6<<endl;
+	cout  <<1./wavenumber <<" "<<u2<<" "<<" "<<u4<<" "<< u6<<endl;
 	}
 }
