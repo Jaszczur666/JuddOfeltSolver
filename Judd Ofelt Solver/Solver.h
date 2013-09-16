@@ -74,6 +74,8 @@ parameters<<o2,o4,o6;
 double no2,no4,no6,sumfexp,sumdfexp;
 double lambda,chi2s,chi2n;
 	lambda=1/1024.0;
+	sumdfexp=0;
+	sumfexp=0;
 	chi2s=0;
 	MSG="Num.      \tChi2              \tO2                 \tO4               \tO6\r\n";
 	for(int i=1;i<5;i++)
@@ -104,8 +106,9 @@ double lambda,chi2s,chi2n;
 	for (int i=0;i<size;i++){
 		sumdfexp=sumdfexp+abs(pow((fexp[i]-f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)),2));
 		sumfexp=sumfexp+fexp[i]*fexp[i];
-	cout << fexp[i]<<" " << f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)<<"  "<< sumdfexp/sumfexp <<endl;
+	cout << fexp[i]<<" " << f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)<<"  "<< endl;
 	}
+	cout<< sqrt(sumdfexp/(size-3))<<" "<<sqrt(sumdfexp/(size-3))/sqrt(sumfexp);
 
 }
 

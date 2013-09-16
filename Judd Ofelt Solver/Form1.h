@@ -166,7 +166,7 @@ namespace JuddOfeltSolver {
 			// 
 			// lambda
 			// 
-			this->lambda->HeaderText = L"lambda";
+			this->lambda->HeaderText = L"lambda [nm]";
 			this->lambda->Name = L"lambda";
 			// 
 			// Pexp
