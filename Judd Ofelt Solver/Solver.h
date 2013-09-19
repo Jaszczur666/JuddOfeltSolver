@@ -78,6 +78,7 @@ double lambda,chi2s,chi2n;
 	sumfexp=0;
 	chi2s=0;
 	MSG="Num.      \tChi2              \tO2                 \tO4               \tO6\r\n";
+	cout <<"Beginnig fitting procedure."<<endl;
 	for(int i=1;i<5;i++)
 	{
 	chi2s=chi2(u2,u4,u6,lambda0,n,twojplusone,o2,o4,o6,fexp);
@@ -102,13 +103,15 @@ double lambda,chi2s,chi2n;
 			lambda=lambda/1.1;
 		}
 	};
+	cout <<"Fitting finished"<<endl;
 	int size=u2.size();
 	for (int i=0;i<size;i++){
 		sumdfexp=sumdfexp+abs(pow((fexp[i]-f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)),2));
 		sumfexp=sumfexp+fexp[i]*fexp[i];
 	cout << fexp[i]<<" " << f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)<<"  "<< endl;
 	}
-	cout<< sqrt(sumdfexp/(size-3))<<" "<<sqrt(sumdfexp/(size-3))/sqrt(sumfexp);
+	cout<<"-----------------------------------------------"<<endl;
+	cout<< sqrt(sumdfexp/(size-3))<<" "<<sqrt(sumdfexp/(size-3))/sqrt(sumfexp)<<endl;
 
 }
 
