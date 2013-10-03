@@ -70,6 +70,7 @@ MatrixXd Hessian,Hessiandiag;
 MatrixXd Grad;
 MatrixXd parameters(3,1);
 MatrixXd newparams(3,1);
+MatrixXd error(3,1);
 parameters<<o2,o4,o6;
 double no2,no4,no6,sumfexp,sumdfexp;
 double lambda,chi2s,chi2n;
@@ -77,7 +78,7 @@ double lambda,chi2s,chi2n;
 	sumdfexp=0;
 	sumfexp=0;
 	chi2s=0;
-	MSG="Num.      \tChi2              \tO2                 \tO4               \tO6\r\n";
+	MSG+="Num.      \tChi2              \tO2                 \tO4               \tO6\r\n";
 	cout <<"Beginnig fitting procedure."<<endl;
 	for(int i=1;i<5;i++)
 	{
@@ -104,14 +105,23 @@ double lambda,chi2s,chi2n;
 		}
 	};
 	cout <<"Fitting finished"<<endl;
+	MSG+="Fitting finished \r\n";
 	int size=u2.size();
+	error=(Hessiandiag.inverse().diagonal()*chi2n/(size-3));
+	for (int i=0;i<3;i++) error(i)=sqrt(error(i));
+	cout <<"Errors "<< error(0)<<" "<<error(1)<<" "<< error(2)<<endl;
+	MSG+="Parameters\t o2="+o2.ToString("G4")+"\t o4="+o4.ToString("G4")+"\t o6="+o6.ToString("G4")+"\r\n";
+	MSG+="Errors \t do2="+error(0).ToString("G2")+"\t do4="+error(1).ToString("G2")+"\t do6="+error(2).ToString("G2")+"\r\n";
+	cout << "Relative errors " << 100*error(0)/o2 <<"% "<<100*error(1)/o4 <<"% "<<100*error(2)/o6<<"%"<<endl;
+	MSG+="Relative errors \t" + (100*error(0)/o2).ToString("G3") +"%\t"+(100*error(1)/o4).ToString("G3") +"%\t"+(100*error(2)/o6).ToString("G3")+"% \r\n";
+	cout << "Effective relative error "<< 100*(error(0)/o2+error(1)/o4+error(2)/o6)<<"%"<<endl;
 	for (int i=0;i<size;i++){
 		sumdfexp=sumdfexp+abs(pow((fexp[i]-f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)),2));
 		sumfexp=sumfexp+fexp[i]*fexp[i];
 	cout << fexp[i]<<" " << f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)<<"  "<< endl;
 	}
 	cout<<"-----------------------------------------------"<<endl;
-	cout<< sqrt(sumdfexp/(size-3))<<" "<<sqrt(sumdfexp/(size-3))/sqrt(sumfexp)<<endl;
+	cout<< sqrt(sumdfexp/(size-3))<<" "<<sqrt((sumdfexp/(size-3))/sumfexp)<<endl;
 
 }
 
