@@ -363,11 +363,17 @@ namespace JuddOfeltSolver {
 };
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
 			 String ^messages;
+			 if (experimental.filled==false){
+				 loadFromFileToolStripMenuItem_Click(sender, e);
+			 }
+			 else
+			 {
 			FitLM(experimental.u2, experimental.u4, experimental.u6, experimental.lambda,experimental.n,experimental.j,experimental.o2,experimental.o4, experimental.o6, experimental.fexp,messages);
 			OutTB->Text+=messages;
 			o2tb->Text=experimental.o2.ToString("g4");
 			o4tb->Text=experimental.o4.ToString("g4");
 			o6tb->Text=experimental.o6.ToString("g4");
+			 }
 		 };
 private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
 			 	 
@@ -400,6 +406,7 @@ if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK 
 					 experimental.o2=1e-20;
 					 experimental.o4=1e-20;
 					 experimental.o6=1e-20;
+					 experimental.filled=true;
 }
 		 }
 private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {

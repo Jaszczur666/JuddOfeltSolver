@@ -18,6 +18,11 @@ double o4;
 double o6;
 std::vector <double> fexp;
 double j;
+bool filled;
+ Experiment()
+  {
+    filled=false;
+  }
 };
 void MarshalString ( String ^ s, string& os ) {
 	using namespace Runtime::InteropServices;
