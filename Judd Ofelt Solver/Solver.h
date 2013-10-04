@@ -117,11 +117,12 @@ double lambda,chi2s,chi2n;
 	cout << "Effective relative error "<< 100*(error(0)/o2+error(1)/o4+error(2)/o6)<<"%"<<endl;
 	for (int i=0;i<size;i++){
 		sumdfexp=sumdfexp+abs(pow((fexp[i]-f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)),2));
-		sumfexp=sumfexp+fexp[i]*fexp[i];
+		sumfexp=sumfexp+fexp[i]/size;
 	cout << fexp[i]<<" " << f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)<<"  "<< endl;
 	}
 	cout<<"-----------------------------------------------"<<endl;
-	cout<< sqrt(sumdfexp/(size-3))<<" "<<sqrt((sumdfexp/(size-3))/sumfexp)<<endl;
+	cout<<"RMS = " <<sqrt(sumdfexp/(size-3))<<" RMS/avg f "<<100*sqrt(sumdfexp/(size-3))/sumfexp<<"%"<<endl;
+	MSG+="RMS = "+sqrt(sumdfexp/(size-3)).ToString("G4")+" RMS/avg f = "+ (100*sqrt(sumdfexp/(size-3))/sumfexp).ToString("G3")+"% \r\n";
 
 }
 

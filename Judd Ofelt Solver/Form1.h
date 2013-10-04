@@ -68,9 +68,14 @@ namespace JuddOfeltSolver {
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::ToolStripMenuItem^  quitToolStripMenuItem;
 	private: System::Windows::Forms::TabControl^  tabControl1;
-	private: System::Windows::Forms::TabPage^  tabPage1;
-	private: System::Windows::Forms::TabPage^  tabPage2;
+	private: System::Windows::Forms::TabPage^  tabData;
+
+	private: System::Windows::Forms::TabPage^  tabResult;
+
 	private: System::Windows::Forms::TextBox^  OutTB;
+	private: System::Windows::Forms::TabPage^  tabLaTeX;
+
+	private: System::Windows::Forms::TextBox^  textBox1;
 	protected: 
 
 	private:
@@ -107,14 +112,17 @@ namespace JuddOfeltSolver {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
-			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
-			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
+			this->tabData = (gcnew System::Windows::Forms::TabPage());
+			this->tabResult = (gcnew System::Windows::Forms::TabPage());
 			this->OutTB = (gcnew System::Windows::Forms::TextBox());
+			this->tabLaTeX = (gcnew System::Windows::Forms::TabPage());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
-			this->tabPage1->SuspendLayout();
-			this->tabPage2->SuspendLayout();
+			this->tabData->SuspendLayout();
+			this->tabResult->SuspendLayout();
+			this->tabLaTeX->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// button2
@@ -267,35 +275,36 @@ namespace JuddOfeltSolver {
 			// 
 			// tabControl1
 			// 
-			this->tabControl1->Controls->Add(this->tabPage1);
-			this->tabControl1->Controls->Add(this->tabPage2);
+			this->tabControl1->Controls->Add(this->tabResult);
+			this->tabControl1->Controls->Add(this->tabData);
+			this->tabControl1->Controls->Add(this->tabLaTeX);
 			this->tabControl1->Location = System::Drawing::Point(82, 27);
 			this->tabControl1->Name = L"tabControl1";
 			this->tabControl1->SelectedIndex = 0;
 			this->tabControl1->Size = System::Drawing::Size(685, 259);
 			this->tabControl1->TabIndex = 15;
 			// 
-			// tabPage1
+			// tabData
 			// 
-			this->tabPage1->Controls->Add(this->dataGridView1);
-			this->tabPage1->Location = System::Drawing::Point(4, 22);
-			this->tabPage1->Name = L"tabPage1";
-			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage1->Size = System::Drawing::Size(677, 233);
-			this->tabPage1->TabIndex = 0;
-			this->tabPage1->Text = L"Data";
-			this->tabPage1->UseVisualStyleBackColor = true;
+			this->tabData->Controls->Add(this->dataGridView1);
+			this->tabData->Location = System::Drawing::Point(4, 22);
+			this->tabData->Name = L"tabData";
+			this->tabData->Padding = System::Windows::Forms::Padding(3);
+			this->tabData->Size = System::Drawing::Size(677, 233);
+			this->tabData->TabIndex = 0;
+			this->tabData->Text = L"Data";
+			this->tabData->UseVisualStyleBackColor = true;
 			// 
-			// tabPage2
+			// tabResult
 			// 
-			this->tabPage2->Controls->Add(this->OutTB);
-			this->tabPage2->Location = System::Drawing::Point(4, 22);
-			this->tabPage2->Name = L"tabPage2";
-			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage2->Size = System::Drawing::Size(677, 233);
-			this->tabPage2->TabIndex = 1;
-			this->tabPage2->Text = L"Results";
-			this->tabPage2->UseVisualStyleBackColor = true;
+			this->tabResult->Controls->Add(this->OutTB);
+			this->tabResult->Location = System::Drawing::Point(4, 22);
+			this->tabResult->Name = L"tabResult";
+			this->tabResult->Padding = System::Windows::Forms::Padding(3);
+			this->tabResult->Size = System::Drawing::Size(677, 233);
+			this->tabResult->TabIndex = 1;
+			this->tabResult->Text = L"Results";
+			this->tabResult->UseVisualStyleBackColor = true;
 			// 
 			// OutTB
 			// 
@@ -305,6 +314,26 @@ namespace JuddOfeltSolver {
 			this->OutTB->Name = L"OutTB";
 			this->OutTB->Size = System::Drawing::Size(671, 227);
 			this->OutTB->TabIndex = 0;
+			// 
+			// tabLaTeX
+			// 
+			this->tabLaTeX->Controls->Add(this->textBox1);
+			this->tabLaTeX->Location = System::Drawing::Point(4, 22);
+			this->tabLaTeX->Name = L"tabLaTeX";
+			this->tabLaTeX->Padding = System::Windows::Forms::Padding(3);
+			this->tabLaTeX->Size = System::Drawing::Size(677, 233);
+			this->tabLaTeX->TabIndex = 2;
+			this->tabLaTeX->Text = L"LaTeX Report";
+			this->tabLaTeX->UseVisualStyleBackColor = true;
+			// 
+			// textBox1
+			// 
+			this->textBox1->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->textBox1->Location = System::Drawing::Point(3, 3);
+			this->textBox1->Multiline = true;
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(671, 227);
+			this->textBox1->TabIndex = 0;
 			// 
 			// Form1
 			// 
@@ -328,9 +357,11 @@ namespace JuddOfeltSolver {
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
 			this->tabControl1->ResumeLayout(false);
-			this->tabPage1->ResumeLayout(false);
-			this->tabPage2->ResumeLayout(false);
-			this->tabPage2->PerformLayout();
+			this->tabData->ResumeLayout(false);
+			this->tabResult->ResumeLayout(false);
+			this->tabResult->PerformLayout();
+			this->tabLaTeX->ResumeLayout(false);
+			this->tabLaTeX->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
