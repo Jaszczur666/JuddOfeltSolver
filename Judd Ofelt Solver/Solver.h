@@ -16,6 +16,14 @@ double f(double u2, double u4, double u6, double lambda0,double n,double twojplu
 	return (((pow(n*n+2,2)/(9*n))*(8*pi*pi*m*c))/(3*h*twojplusone*lambda0))*(u2*o2+u4*o4+u6*o6);
 };
 
+double exponent(double x)
+{
+return	floor(log10(x));
+};
+double mantissa(double x)
+{
+	return x/pow(10.0,exponent(x));
+};
 double sellmeier(double a, double b, double c, double d, double lambda)
 {
 return sqrt(a+b/(lambda*lambda-c)-d*lambda*lambda);
@@ -64,7 +72,7 @@ void CalculateHessian(vector <double> u2, vector<double> u4, vector <double> u6,
 //	cout <<"_________________________________"<<endl;
 };
 
-void FitLM(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double twojplusone,double &o2, double &o4, double &o6, vector <double> fexp,System::String^ &MSG)
+void FitLM(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double twojplusone,double &o2, double &o4, double &o6, vector <double> fexp,System::String^ &MSG,System::String^ &LATEX)
 {
 MatrixXd Hessian,Hessiandiag;
 MatrixXd Grad;
@@ -112,9 +120,13 @@ double lambda,chi2s,chi2n;
 	cout <<"Errors "<< error(0)<<" "<<error(1)<<" "<< error(2)<<endl;
 	MSG+="Parameters\t o2="+o2.ToString("G4")+"\t o4="+o4.ToString("G4")+"\t o6="+o6.ToString("G4")+"\r\n";
 	MSG+="Errors \t do2="+error(0).ToString("G2")+"\t do4="+error(1).ToString("G2")+"\t do6="+error(2).ToString("G2")+"\r\n";
+	LATEX+="$\\Omega_2$ ="+mantissa(o2).ToString("G4")+"$\\cdot$ 10$^{"+exponent(o2)+"}$ $\\Omega_4$ ="+mantissa(o4).ToString("G4")+"$\\cdot$ 10$^{"+exponent(o4)+"}$ $\\Omega_6$ ="+mantissa(o6).ToString("G4")+"$\\cdot$ 10$^{"+exponent(o6)+"}$ \\\\ \r\n";
+	LATEX+="$\\Delta\\Omega_2$ ="+mantissa(error(0)).ToString("G4")+"$\\cdot 10^{"+exponent(error(0))+"}$ $\\Delta\\Omega_4$ ="+mantissa(error(1)).ToString("G4")+"$\\cdot 10^{"+exponent(error(1))+"}$ $\\Delta\\Omega_6$ ="+mantissa(error(2)).ToString("G4")+"$\\cdot 10^{"+exponent(error(2))+"}$ \\\\ \r\n";
 	cout << "Relative errors " << 100*error(0)/o2 <<"% "<<100*error(1)/o4 <<"% "<<100*error(2)/o6<<"%"<<endl;
 	MSG+="Relative errors \t" + (100*error(0)/o2).ToString("G3") +"%\t"+(100*error(1)/o4).ToString("G3") +"%\t"+(100*error(2)/o6).ToString("G3")+"% \r\n";
+	LATEX+="$\\frac{\\Delta\\Omega_2}{\\Omega_2}=$"+(100*error(0)/o2).ToString("G3")+"\\% $\\frac{\\Delta\\Omega_4}{\\Omega_4}=$" +(100*error(1)/o4).ToString("G3")+"\\% $\\frac{\\Delta\\Omega_6}{\\Omega_6}=$"+(100*error(2)/o6).ToString("G3")+" \\%  \\ \\\r\n";
 	cout << "Effective relative error "<< 100*(error(0)/o2+error(1)/o4+error(2)/o6)<<"%"<<endl;
+	LATEX+="$\\frac{\\Delta f}{f}= "+(100*(error(0)/o2+error(1)/o4+error(2)/o6)).ToString("G3")+"\\% ";
 	for (int i=0;i<size;i++){
 		sumdfexp=sumdfexp+abs(pow((fexp[i]-f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)),2));
 		sumfexp=sumfexp+fexp[i]/size;

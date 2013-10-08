@@ -74,8 +74,9 @@ namespace JuddOfeltSolver {
 
 	private: System::Windows::Forms::TextBox^  OutTB;
 	private: System::Windows::Forms::TabPage^  tabLaTeX;
+	private: System::Windows::Forms::TextBox^  latexBox;
 
-	private: System::Windows::Forms::TextBox^  textBox1;
+
 	protected: 
 
 	private:
@@ -112,16 +113,16 @@ namespace JuddOfeltSolver {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
-			this->tabData = (gcnew System::Windows::Forms::TabPage());
 			this->tabResult = (gcnew System::Windows::Forms::TabPage());
 			this->OutTB = (gcnew System::Windows::Forms::TextBox());
+			this->tabData = (gcnew System::Windows::Forms::TabPage());
 			this->tabLaTeX = (gcnew System::Windows::Forms::TabPage());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->latexBox = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
-			this->tabData->SuspendLayout();
 			this->tabResult->SuspendLayout();
+			this->tabData->SuspendLayout();
 			this->tabLaTeX->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -187,7 +188,7 @@ namespace JuddOfeltSolver {
 			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->fileToolStripMenuItem});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(767, 24);
+			this->menuStrip1->Size = System::Drawing::Size(823, 24);
 			this->menuStrip1->TabIndex = 7;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -281,8 +282,28 @@ namespace JuddOfeltSolver {
 			this->tabControl1->Location = System::Drawing::Point(82, 27);
 			this->tabControl1->Name = L"tabControl1";
 			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(685, 259);
+			this->tabControl1->Size = System::Drawing::Size(729, 259);
 			this->tabControl1->TabIndex = 15;
+			// 
+			// tabResult
+			// 
+			this->tabResult->Controls->Add(this->OutTB);
+			this->tabResult->Location = System::Drawing::Point(4, 22);
+			this->tabResult->Name = L"tabResult";
+			this->tabResult->Padding = System::Windows::Forms::Padding(3);
+			this->tabResult->Size = System::Drawing::Size(721, 233);
+			this->tabResult->TabIndex = 1;
+			this->tabResult->Text = L"Results";
+			this->tabResult->UseVisualStyleBackColor = true;
+			// 
+			// OutTB
+			// 
+			this->OutTB->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->OutTB->Location = System::Drawing::Point(3, 3);
+			this->OutTB->Multiline = true;
+			this->OutTB->Name = L"OutTB";
+			this->OutTB->Size = System::Drawing::Size(715, 227);
+			this->OutTB->TabIndex = 0;
 			// 
 			// tabData
 			// 
@@ -295,29 +316,9 @@ namespace JuddOfeltSolver {
 			this->tabData->Text = L"Data";
 			this->tabData->UseVisualStyleBackColor = true;
 			// 
-			// tabResult
-			// 
-			this->tabResult->Controls->Add(this->OutTB);
-			this->tabResult->Location = System::Drawing::Point(4, 22);
-			this->tabResult->Name = L"tabResult";
-			this->tabResult->Padding = System::Windows::Forms::Padding(3);
-			this->tabResult->Size = System::Drawing::Size(677, 233);
-			this->tabResult->TabIndex = 1;
-			this->tabResult->Text = L"Results";
-			this->tabResult->UseVisualStyleBackColor = true;
-			// 
-			// OutTB
-			// 
-			this->OutTB->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->OutTB->Location = System::Drawing::Point(3, 3);
-			this->OutTB->Multiline = true;
-			this->OutTB->Name = L"OutTB";
-			this->OutTB->Size = System::Drawing::Size(671, 227);
-			this->OutTB->TabIndex = 0;
-			// 
 			// tabLaTeX
 			// 
-			this->tabLaTeX->Controls->Add(this->textBox1);
+			this->tabLaTeX->Controls->Add(this->latexBox);
 			this->tabLaTeX->Location = System::Drawing::Point(4, 22);
 			this->tabLaTeX->Name = L"tabLaTeX";
 			this->tabLaTeX->Padding = System::Windows::Forms::Padding(3);
@@ -326,20 +327,20 @@ namespace JuddOfeltSolver {
 			this->tabLaTeX->Text = L"LaTeX Report";
 			this->tabLaTeX->UseVisualStyleBackColor = true;
 			// 
-			// textBox1
+			// latexBox
 			// 
-			this->textBox1->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->textBox1->Location = System::Drawing::Point(3, 3);
-			this->textBox1->Multiline = true;
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(671, 227);
-			this->textBox1->TabIndex = 0;
+			this->latexBox->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->latexBox->Location = System::Drawing::Point(3, 3);
+			this->latexBox->Multiline = true;
+			this->latexBox->Name = L"latexBox";
+			this->latexBox->Size = System::Drawing::Size(671, 227);
+			this->latexBox->TabIndex = 0;
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(767, 343);
+			this->ClientSize = System::Drawing::Size(823, 343);
 			this->Controls->Add(this->tabControl1);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
@@ -357,9 +358,9 @@ namespace JuddOfeltSolver {
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
 			this->tabControl1->ResumeLayout(false);
-			this->tabData->ResumeLayout(false);
 			this->tabResult->ResumeLayout(false);
 			this->tabResult->PerformLayout();
+			this->tabData->ResumeLayout(false);
 			this->tabLaTeX->ResumeLayout(false);
 			this->tabLaTeX->PerformLayout();
 			this->ResumeLayout(false);
@@ -393,14 +394,15 @@ namespace JuddOfeltSolver {
 //				 CalculateHessian(experimental.u2,experimental.u4,experimental.u6,experimental.lambda,1.9,1e-24, 1e-24, 1e-24, experimental.fexp, Hess,Res);
 };
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
-			 String ^messages;
+			 String ^messages,^latex;
 			 if (experimental.filled==false){
 				 loadFromFileToolStripMenuItem_Click(sender, e);
 			 }
 			 else
 			 {
-			FitLM(experimental.u2, experimental.u4, experimental.u6, experimental.lambda,experimental.n,experimental.j,experimental.o2,experimental.o4, experimental.o6, experimental.fexp,messages);
+			FitLM(experimental.u2, experimental.u4, experimental.u6, experimental.lambda,experimental.n,experimental.j,experimental.o2,experimental.o4, experimental.o6, experimental.fexp,messages,latex);
 			OutTB->Text+=messages;
+			latexBox->Text+=latex;
 			o2tb->Text=experimental.o2.ToString("g4");
 			o4tb->Text=experimental.o4.ToString("g4");
 			o6tb->Text=experimental.o6.ToString("g4");
