@@ -24,6 +24,11 @@ double mantissa(double x)
 {
 	return x/pow(10.0,exponent(x));
 };
+System::String ^lf(double x) // Latex format
+{
+	return mantissa(x).ToString("G3")+"$ \\cdot 10 ^{"+exponent(x)+"}$";
+};
+
 double sellmeier(double a, double b, double c, double d, double lambda)
 {
 return sqrt(a+b/(lambda*lambda-c)-d*lambda*lambda);
@@ -116,12 +121,13 @@ double lambda,chi2s,chi2n;
 	MSG+="Fitting finished \r\n";
 	int size=u2.size();
 	error=(Hessiandiag.inverse().diagonal()*chi2n/(size-3));
-	for (int i=0;i<3;i++) error(i)=sqrt(error(i));
+	for (int i=0;i<3;i++) error(i)=abs(sqrt(error(i)));
 	cout <<"Errors "<< error(0)<<" "<<error(1)<<" "<< error(2)<<endl;
 	MSG+="Parameters\t o2="+o2.ToString("G4")+"\t o4="+o4.ToString("G4")+"\t o6="+o6.ToString("G4")+"\r\n";
 	MSG+="Errors \t do2="+error(0).ToString("G2")+"\t do4="+error(1).ToString("G2")+"\t do6="+error(2).ToString("G2")+"\r\n";
-	LATEX+="$\\Omega_2$ ="+mantissa(o2).ToString("G4")+"$\\cdot$ 10$^{"+exponent(o2)+"}$ $\\Omega_4$ ="+mantissa(o4).ToString("G4")+"$\\cdot$ 10$^{"+exponent(o4)+"}$ $\\Omega_6$ ="+mantissa(o6).ToString("G4")+"$\\cdot$ 10$^{"+exponent(o6)+"}$ \\\\ \r\n";
-	LATEX+="$\\Delta\\Omega_2$ ="+mantissa(error(0)).ToString("G4")+"$\\cdot 10^{"+exponent(error(0))+"}$ $\\Delta\\Omega_4$ ="+mantissa(error(1)).ToString("G4")+"$\\cdot 10^{"+exponent(error(1))+"}$ $\\Delta\\Omega_6$ ="+mantissa(error(2)).ToString("G4")+"$\\cdot 10^{"+exponent(error(2))+"}$ \\\\ \r\n";
+	//LATEX+="$\\Omega_2$ ="+mantissa(o2).ToString("G4")+"$\\cdot$ 10$^{"+exponent(o2)+"}$ $\\Omega_4$ ="+mantissa(o4).ToString("G4")+"$\\cdot$ 10$^{"+exponent(o4)+"}$ $\\Omega_6$ ="+mantissa(o6).ToString("G4")+"$\\cdot$ 10$^{"+exponent(o6)+"}$ \\\\ \r\n";
+	LATEX+="$\\Omega_2$ ="+lf(o2)+" $\\Omega_4$ ="+lf(o4)+" $\\Omega_6$ ="+lf(o6) +"\\\\ \r\n";
+	LATEX+="$\\Delta\\Omega_2$ ="+lf(error(0))+" $\\Delta\\Omega_4$ ="+lf(error(1))+" $\\Delta\\Omega_6$ ="+lf(error(2))+" \\\\ \r\n";
 	cout << "Relative errors " << 100*error(0)/o2 <<"% "<<100*error(1)/o4 <<"% "<<100*error(2)/o6<<"%"<<endl;
 	MSG+="Relative errors \t" + (100*error(0)/o2).ToString("G3") +"%\t"+(100*error(1)/o4).ToString("G3") +"%\t"+(100*error(2)/o6).ToString("G3")+"% \r\n";
 	LATEX+="$\\frac{\\Delta\\Omega_2}{\\Omega_2}=$"+(100*error(0)/o2).ToString("G3")+"\\% $\\frac{\\Delta\\Omega_4}{\\Omega_4}=$" +(100*error(1)/o4).ToString("G3")+"\\% $\\frac{\\Delta\\Omega_6}{\\Omega_6}=$"+(100*error(2)/o6).ToString("G3")+" \\%  \\ \\\r\n";
