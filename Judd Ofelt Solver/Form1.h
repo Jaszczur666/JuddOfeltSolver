@@ -458,7 +458,7 @@ private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  s
 			 if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
 			 {
 				 LoadEmDataFromFile(openFileDialog1->FileNames[0],SmEmmision);
-				 CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,SmEmmision.j,SmEmmision.lambda,experimental.n,experimental.o2,experimental.o4,experimental.o6,a);
+				 CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,SmEmmision.j,SmEmmision.lambda,SmEmmision.n,experimental.o2,experimental.o4,experimental.o6,a);
 				 size=a.size();
 				 for (int i=0;i<size;i++) Ajj+=a[i];
 				 cout <<"Effective lifetime " <<1e3/Ajj <<" ms"<<endl;
