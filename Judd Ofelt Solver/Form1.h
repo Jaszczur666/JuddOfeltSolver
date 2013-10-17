@@ -414,13 +414,7 @@ private: System::Void button5_Click(System::Object^  sender, System::EventArgs^ 
 private: System::Void dataGridView1_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
 		 }
 private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
-			 vector <double> a;
-			
-			 CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,6,SmEmmision.lambda,experimental.n,experimental.o2,experimental.o4,experimental.o6,a);
-			 cout <<"FFFFFFFF"<<endl;
-			 CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,6,SmEmmision.lambda,2.12,1.4e-20,2.23e-20,0.9e-20,a);
-			 cout <<"FFFFFFFF"<<endl;
-			 CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,6,SmEmmision.lambda,1.85,1.12e-20,5.57e-20,2.78e-20,a);
+
 		 }
 private: System::Void loadFromFileToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 			 int size;
@@ -458,9 +452,11 @@ private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  s
 			 if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
 			 {
 				 SmEmmision.LoadEmDataFromFile(openFileDialog1->FileNames[0]);
-				 CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,SmEmmision.j,SmEmmision.lambda,SmEmmision.n,experimental.o2,experimental.o4,experimental.o6,a);
-				 size=a.size();
-				 for (int i=0;i<size;i++) Ajj+=a[i];
+				 SmEmmision.GetParameters(experimental);
+				 //CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,SmEmmision.j,SmEmmision.lambda,SmEmmision.n,experimental.o2,experimental.o4,experimental.o6,a);
+				 SmEmmision.CalculateRates();
+				 size=SmEmmision.Ajj.size();
+				 for (int i=0;i<size;i++) Ajj+=SmEmmision.Ajj[i];
 				 cout <<"Effective lifetime " <<1e3/Ajj <<" ms"<<endl;
 			 }
 		 }
