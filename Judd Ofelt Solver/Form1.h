@@ -426,7 +426,7 @@ private: System::Void loadFromFileToolStripMenuItem_Click(System::Object^  sende
 			 int size;
 if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
 				 {
-					 LoadAbsoDataFromFile(openFileDialog1->FileNames[0],experimental);
+					 experimental.LoadAbsoDataFromFile(openFileDialog1->FileNames[0]);
 					 size=experimental.u2.size();				
 				 dataGridView1->RowCount=size;
 				 for (int i=0;i<size;i++){
@@ -457,7 +457,7 @@ private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  s
 			 Ajj=0;
 			 if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
 			 {
-				 LoadEmDataFromFile(openFileDialog1->FileNames[0],SmEmmision);
+				 SmEmmision.LoadEmDataFromFile(openFileDialog1->FileNames[0]);
 				 CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,SmEmmision.j,SmEmmision.lambda,SmEmmision.n,experimental.o2,experimental.o4,experimental.o6,a);
 				 size=a.size();
 				 for (int i=0;i<size;i++) Ajj+=a[i];
