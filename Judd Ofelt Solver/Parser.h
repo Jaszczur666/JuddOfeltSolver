@@ -25,6 +25,7 @@ void LoadAbsoDataFromFile(String^ Filename);
 void LoadEmDataFromFile(String^ Filename);
 void GetParameters(Experiment donor);
 void CalculateRates();
+void FitLevMar(String^ &messages, String^ &latex);
  Experiment()
   {
     filled=false;
@@ -126,4 +127,9 @@ void Experiment::GetParameters(Experiment donor)
 this->o2=donor.o2;
 this->o4=donor.o4;
 this->o6=donor.o6;
+}
+
+void Experiment::FitLevMar(System::String^ &messages,System::String^ &latex)
+{
+FitLM(this->u2, this->u4, this->u6, this->lambda,this->n,this->j,this->o2,this->o4, this->o6, this->fexp,messages,latex);
 }

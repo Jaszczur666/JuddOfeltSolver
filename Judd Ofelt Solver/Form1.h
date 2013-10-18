@@ -400,7 +400,8 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 			 }
 			 else
 			 {
-			FitLM(experimental.u2, experimental.u4, experimental.u6, experimental.lambda,experimental.n,experimental.j,experimental.o2,experimental.o4, experimental.o6, experimental.fexp,messages,latex);
+			//FitLM(experimental.u2, experimental.u4, experimental.u6, experimental.lambda,experimental.n,experimental.j,experimental.o2,experimental.o4, experimental.o6, experimental.fexp,messages,latex);
+			experimental.FitLevMar(messages,latex);	 
 			OutTB->Text+=messages;
 			latexBox->Text+=latex;
 			o2tb->Text=experimental.o2.ToString("g4");
@@ -455,9 +456,9 @@ private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  s
 				 SmEmmision.GetParameters(experimental);
 				 //CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,SmEmmision.j,SmEmmision.lambda,SmEmmision.n,experimental.o2,experimental.o4,experimental.o6,a);
 				 SmEmmision.CalculateRates();
-				 size=SmEmmision.Ajj.size();
-				 for (int i=0;i<size;i++) Ajj+=SmEmmision.Ajj[i];
-				 cout <<"Effective lifetime " <<1e3/Ajj <<" ms"<<endl;
+				 //size=SmEmmision.Ajj.size();
+				/* for (int i=0;i<size;i++) Ajj+=SmEmmision.Ajj[i];
+				 cout <<"Effective lifetime " <<1e3/Ajj <<" ms"<<endl;*/
 			 }
 		 }
 private: System::Void quitToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
