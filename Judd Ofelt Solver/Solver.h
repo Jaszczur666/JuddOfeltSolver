@@ -132,7 +132,7 @@ double lambda,chi2s,chi2n;
 	MSG+="Relative errors \t" + (100*error(0)/o2).ToString("G3") +"%\t"+(100*error(1)/o4).ToString("G3") +"%\t"+(100*error(2)/o6).ToString("G3")+"% \r\n";
 	LATEX+="$\\frac{\\Delta\\Omega_2}{\\Omega_2}=$"+(100*error(0)/o2).ToString("G3")+"\\% $\\frac{\\Delta\\Omega_4}{\\Omega_4}=$" +(100*error(1)/o4).ToString("G3")+"\\% $\\frac{\\Delta\\Omega_6}{\\Omega_6}=$"+(100*error(2)/o6).ToString("G3")+" \\%  \\\\\r\n";
 	cout << "Effective relative error "<< 100*(error(0)/o2+error(1)/o4+error(2)/o6)<<"%"<<endl;
-	LATEX+="$\\frac{\\Delta f}{f}=$ "+(100*(error(0)/o2+error(1)/o4+error(2)/o6)).ToString("G3")+"\\% \r\n\r\n";
+	LATEX+="$\\frac{\\Delta f}{f}=$ "+(100*(error(0)/o2+error(1)/o4+error(2)/o6)).ToString("G3")+"\\% \r\n";
 	for (int i=0;i<size;i++){
 		sumdfexp=sumdfexp+abs(pow((fexp[i]-f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)),2));
 		sumfexp=sumfexp+fexp[i]/size;
@@ -140,6 +140,7 @@ double lambda,chi2s,chi2n;
 	}
 	cout<<"-----------------------------------------------"<<endl;
 	cout<<"RMS = " <<sqrt(sumdfexp/(size-3))<<" RMS/avg f "<<100*sqrt(sumdfexp/(size-3))/sumfexp<<"%"<<endl;
+	LATEX+="RMS = "+lf(sqrt(sumdfexp/(size-3)))+"$\\frac{RMS}{\\underline{f}}$= "+(100*sqrt(sumdfexp/(size-3))/sumfexp).ToString("G3") +"\\%\r\n\r\n";
 	MSG+="RMS = "+sqrt(sumdfexp/(size-3)).ToString("G4")+" RMS/avg f = "+ (100*sqrt(sumdfexp/(size-3))/sumfexp).ToString("G3")+"% \r\n";
 
 }
