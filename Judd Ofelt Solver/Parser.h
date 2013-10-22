@@ -21,10 +21,12 @@ double o6;
 std::vector <double> fexp;
 double j;
 bool filled;
+double sumrate;
 void LoadAbsoDataFromFile(String^ Filename);
 void LoadEmDataFromFile(String^ Filename);
 void GetParameters(Experiment donor);
 void CalculateRates();
+void ReportRates(String^ &messages, String^ &latex);
 void FitLevMar(String^ &messages, String^ &latex);
  Experiment()
   {
@@ -119,6 +121,7 @@ void Experiment::CalculateRates()//vector <double> u2, vector<double> u4, vector
 		this->Ajj.push_back(rate);
 		sumrate+=rate;
 	}
+	this->sumrate=sumrate;
 	cout << "Effective rate = "<<sumrate<<" which amounts to lifetime of "<<1e3/sumrate<<" ms"<<endl;
 }
 
@@ -132,4 +135,24 @@ this->o6=donor.o6;
 void Experiment::FitLevMar(System::String^ &messages,System::String^ &latex)
 {
 FitLM(this->u2, this->u4, this->u6, this->lambda,this->n,this->j,this->o2,this->o4, this->o6, this->fexp,messages,latex);
+}
+
+void Experiment::ReportRates(System::String^ &messages,System::String^ &latex)
+{
+	int size;
+	size=this->u2.size();
+	if (size>0) {
+		latex+="\\begin{tabular}{|l|l|l|l|}\r\n";
+		latex+="\\hline\r\n";
+		latex+="Multiplet&Wavenumber&Rate&Branching ratio\\\\\r\n";
+		latex+="\\hline\r\n";
+
+	}
+	cout <<"Rates of radiative transmition calculated"<<endl;
+	for (int i=0;i<size;i++)
+	{
+		messages+=(1./this->lambda[i]).ToString("G5")+" "+(this->Ajj[i]).ToString("F0")+" "+(100*this->Ajj[i]/this->sumrate).ToString("F0")+"%\r\n";
+		latex+="&"+(1./this->lambda[i]).ToString("G5")+" & "+(this->Ajj[i]).ToString("F0")+" & "+(100*this->Ajj[i]/this->sumrate).ToString("F0")+"\\% \\\\\r\n\\hline\r\n";
+	}
+	latex+="\\end{tabular}\r\n";
 }

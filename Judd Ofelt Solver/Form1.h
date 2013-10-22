@@ -447,7 +447,7 @@ private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs
 		 }
 private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 			 vector <double> a;
-			 int size;
+			  String ^messages,^latex;
 			 double Ajj;
 			 Ajj=0;
 			 if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
@@ -456,9 +456,10 @@ private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  s
 				 SmEmmision.GetParameters(experimental);
 				 //CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,SmEmmision.j,SmEmmision.lambda,SmEmmision.n,experimental.o2,experimental.o4,experimental.o6,a);
 				 SmEmmision.CalculateRates();
-				 //size=SmEmmision.Ajj.size();
-				/* for (int i=0;i<size;i++) Ajj+=SmEmmision.Ajj[i];
-				 cout <<"Effective lifetime " <<1e3/Ajj <<" ms"<<endl;*/
+				 SmEmmision.ReportRates(messages,latex);
+				 			OutTB->Text+=messages;
+			latexBox->Text+=latex;
+				 
 			 }
 		 }
 private: System::Void quitToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
