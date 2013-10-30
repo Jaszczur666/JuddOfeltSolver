@@ -273,6 +273,7 @@ namespace JuddOfeltSolver {
 			this->label2->Size = System::Drawing::Size(22, 13);
 			this->label2->TabIndex = 14;
 			this->label2->Text = L"Ω6";
+			this->label2->Click += gcnew System::EventHandler(this, &Form1::label2_Click);
 			// 
 			// tabControl1
 			// 
@@ -311,7 +312,7 @@ namespace JuddOfeltSolver {
 			this->tabData->Location = System::Drawing::Point(4, 22);
 			this->tabData->Name = L"tabData";
 			this->tabData->Padding = System::Windows::Forms::Padding(3);
-			this->tabData->Size = System::Drawing::Size(677, 233);
+			this->tabData->Size = System::Drawing::Size(721, 233);
 			this->tabData->TabIndex = 0;
 			this->tabData->Text = L"Data";
 			this->tabData->UseVisualStyleBackColor = true;
@@ -322,7 +323,7 @@ namespace JuddOfeltSolver {
 			this->tabLaTeX->Location = System::Drawing::Point(4, 22);
 			this->tabLaTeX->Name = L"tabLaTeX";
 			this->tabLaTeX->Padding = System::Windows::Forms::Padding(3);
-			this->tabLaTeX->Size = System::Drawing::Size(677, 233);
+			this->tabLaTeX->Size = System::Drawing::Size(721, 233);
 			this->tabLaTeX->TabIndex = 2;
 			this->tabLaTeX->Text = L"LaTeX Report";
 			this->tabLaTeX->UseVisualStyleBackColor = true;
@@ -464,6 +465,8 @@ private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  s
 		 }
 private: System::Void quitToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 			 exit(0);
+		 }
+private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
 		 }
 };
 }

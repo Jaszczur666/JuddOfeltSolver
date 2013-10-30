@@ -51,9 +51,10 @@ void MarshalString ( String ^ s, wstring& os ) {
 void Experiment::LoadAbsoDataFromFile(String^ Filename)//, struct Experiment &experimental)
 {
 	double n, j,u2,u4,u6,wavenumber,pexp;
-	string name,str;
+	wstring name,str;
 	MarshalString(Filename,name);
 	ifstream inpfile(name);
+//	cout<<name<<endl;
 //	getline(inpfile,str);
 	inpfile>>j>>n;
 	cout <<"Loading file "<<endl;
@@ -82,7 +83,7 @@ void Experiment::LoadAbsoDataFromFile(String^ Filename)//, struct Experiment &ex
 void Experiment::LoadEmDataFromFile(String^ Filename)//, struct Experiment &experimental)
 {
 	double n, j,u2,u4,u6,wavenumber,pexp;
-	string name,str;
+	wstring name,str;
 	MarshalString(Filename,name);
 	ifstream inpfile(name);
 //	getline(inpfile,str);
