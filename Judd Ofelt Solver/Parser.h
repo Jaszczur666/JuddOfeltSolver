@@ -155,8 +155,8 @@ void Experiment::ReportRates(System::String^ &messages,System::String^ &latex)
 	cout <<"Rates of radiative transmition calculated"<<endl;
 	for (int i=0;i<size;i++)
 	{
-		messages+=(1./this->lambda[i]).ToString("G5")+" "+(this->Ajj[i]).ToString("F0")+" "+(100*this->Ajj[i]/this->sumrate).ToString("F0")+"%\r\n";
-		latex+="&"+(1./this->lambda[i]).ToString("G5")+" & "+(this->Ajj[i]).ToString("F0")+" & "+(100*this->Ajj[i]/this->sumrate).ToString("F0")+"\\% \\\\\r\n\\hline\r\n";
+		messages+=(1./this->lambda[i]).ToString("G5")+" "+(this->Ajj[i]).ToString("F1")+" "+(100*this->Ajj[i]/this->sumrate).ToString("F1")+"%\r\n";
+		latex+="&"+(1./this->lambda[i]).ToString("G5")+" & "+(this->Ajj[i]).ToString("F1")+" & "+(100*this->Ajj[i]/this->sumrate).ToString("F1")+"\\% \\\\\r\n\\hline\r\n";
 	}
 	latex+="\\hline\r\n\\multicolumn{3}{|l|}{Lifetime}&"+(1000./this->sumrate).ToString("G3")+"ms \\\\\r\n\\hline\r\n ";
 	latex+="\\end{tabular}\r\n";
