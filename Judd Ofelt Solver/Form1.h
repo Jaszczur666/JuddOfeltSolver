@@ -75,6 +75,7 @@ namespace JuddOfeltSolver {
 	private: System::Windows::Forms::TextBox^  OutTB;
 	private: System::Windows::Forms::TabPage^  tabLaTeX;
 	private: System::Windows::Forms::TextBox^  latexBox;
+	private: System::Windows::Forms::Button^  button1;
 
 
 	protected: 
@@ -118,6 +119,7 @@ namespace JuddOfeltSolver {
 			this->tabData = (gcnew System::Windows::Forms::TabPage());
 			this->tabLaTeX = (gcnew System::Windows::Forms::TabPage());
 			this->latexBox = (gcnew System::Windows::Forms::TextBox());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
@@ -334,14 +336,25 @@ namespace JuddOfeltSolver {
 			this->latexBox->Location = System::Drawing::Point(3, 3);
 			this->latexBox->Multiline = true;
 			this->latexBox->Name = L"latexBox";
-			this->latexBox->Size = System::Drawing::Size(671, 227);
+			this->latexBox->Size = System::Drawing::Size(715, 227);
 			this->latexBox->TabIndex = 0;
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(628, 298);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(75, 23);
+			this->button1->TabIndex = 16;
+			this->button1->Text = L"button1";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click_2);
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(823, 343);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->tabControl1);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
@@ -467,6 +480,11 @@ private: System::Void quitToolStripMenuItem_Click(System::Object^  sender, Syste
 			 exit(0);
 		 }
 private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
+		 }
+private: System::Void button1_Click_2(System::Object^  sender, System::EventArgs^  e) {
+			 experimental.o2=(Convert::ToDouble(o2tb->Text));
+			  experimental.o4=(Convert::ToDouble(o4tb->Text));
+			   experimental.o6=(Convert::ToDouble(o6tb->Text));
 		 }
 };
 }
