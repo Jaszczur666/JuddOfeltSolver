@@ -76,6 +76,7 @@ namespace JuddOfeltSolver {
 	private: System::Windows::Forms::TabPage^  tabLaTeX;
 	private: System::Windows::Forms::TextBox^  latexBox;
 	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::Button^  button3;
 
 
 	protected: 
@@ -120,6 +121,7 @@ namespace JuddOfeltSolver {
 			this->tabLaTeX = (gcnew System::Windows::Forms::TabPage());
 			this->latexBox = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->button3 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
@@ -349,11 +351,22 @@ namespace JuddOfeltSolver {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click_2);
 			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(12, 58);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(64, 25);
+			this->button3->TabIndex = 17;
+			this->button3->Text = L"LMSol";
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &Form1::button3_Click_1);
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(823, 343);
+			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->tabControl1);
 			this->Controls->Add(this->label2);
@@ -485,6 +498,23 @@ private: System::Void button1_Click_2(System::Object^  sender, System::EventArgs
 			 experimental.o2=(Convert::ToDouble(o2tb->Text));
 			  experimental.o4=(Convert::ToDouble(o4tb->Text));
 			   experimental.o6=(Convert::ToDouble(o6tb->Text));
+		 }
+private: System::Void button3_Click_1(System::Object^  sender, System::EventArgs^  e) {
+			 			 String ^messages,^latex;
+			 if (experimental.filled==false){
+				 loadFromFileToolStripMenuItem_Click(sender, e);
+			 }
+			 else
+			 {
+			//FitLM(experimental.u2, experimental.u4, experimental.u6, experimental.lambda,experimental.n,experimental.j,experimental.o2,experimental.o4, experimental.o6, experimental.fexp,messages,latex);
+			experimental.FitLevMarSol(messages,latex);	 
+			OutTB->Text+=messages;
+			latexBox->Text+=latex;
+			o2tb->Text=experimental.o2.ToString("g4");
+			o4tb->Text=experimental.o4.ToString("g4");
+			o6tb->Text=experimental.o6.ToString("g4");
+			 }
+
 		 }
 };
 }

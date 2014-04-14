@@ -28,6 +28,7 @@ void GetParameters(Experiment donor);
 void CalculateRates();
 void ReportRates(String^ &messages, String^ &latex);
 void FitLevMar(String^ &messages, String^ &latex);
+void FitLevMarSol(String^ &messages, String^ &latex);
  Experiment()
   {
     filled=false;
@@ -139,6 +140,10 @@ this->o6=donor.o6;
 void Experiment::FitLevMar(System::String^ &messages,System::String^ &latex)
 {
 FitLM(this->u2, this->u4, this->u6, this->lambda,this->n,this->j,this->o2,this->o4, this->o6, this->fexp,messages,latex);
+}
+void Experiment::FitLevMarSol(System::String^ &messages,System::String^ &latex)
+{
+FitSolarz(this->u2, this->u4, this->u6, this->lambda,this->n,this->j,this->o2,this->o4, this->o6, this->fexp,messages,latex);
 }
 
 void Experiment::ReportRates(System::String^ &messages,System::String^ &latex)
