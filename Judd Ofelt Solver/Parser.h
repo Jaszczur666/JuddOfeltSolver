@@ -166,4 +166,3 @@ void Experiment::ReportRates(System::String^ &messages,System::String^ &latex)
 	latex+="\\hline\r\n\\multicolumn{3}{|l|}{Lifetime}&"+(1000./this->sumrate).ToString("G3")+"ms \\\\\r\n\\hline\r\n ";
 	latex+="\\end{tabular}\r\n";
 }
-//test gita
