@@ -98,7 +98,7 @@ void Experiment::LoadEmDataFromFile(String^ Filename)//, struct Experiment &expe
 	this->n=n;
 	this->j=j;
 cout <<"Loading file "<<endl;
-cout<<"Wavenumber \t u2\t u4 \t u6";
+cout<<"Wavenumber \t u2\t u4 \t u6"<<endl;
 	while(inpfile >> wavenumber>>u2>>u4>>u6){
 		this->fexp.push_back(pexp);
 		this->u2.push_back(u2);
