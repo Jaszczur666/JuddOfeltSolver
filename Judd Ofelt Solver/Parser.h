@@ -22,7 +22,8 @@ std::vector <double> fexp;
 double j;
 bool filled;
 double sumrate;
-void LoadAbsoDataFromFile(String^ Filename);
+wstring AbsoDatafile;
+void LoadAbsoDataFromFile(String^ Filename,String^ &MSG);
 void LoadEmDataFromFile(String^ Filename);
 void GetParameters(Experiment donor);
 void CalculateRates();
@@ -49,16 +50,19 @@ void MarshalString ( String ^ s, wstring& os ) {
 	os = chars;
 	Marshal::FreeHGlobal(IntPtr((void*)chars));
 }
-void Experiment::LoadAbsoDataFromFile(String^ Filename)//, struct Experiment &experimental)
+void Experiment::LoadAbsoDataFromFile(String^ Filename,String^ &MSG)//, struct Experiment &experimental)
 {
 	double n, j,u2,u4,u6,wavenumber,pexp;
 	wstring name,str;
 	MarshalString(Filename,name);
 	ifstream inpfile(name);
+	this->AbsoDatafile=name;
 //	cout<<name<<endl;
 //	getline(inpfile,str);
 	inpfile>>j>>n;
+	MSG+="Loading file "+Filename+"\r\n";
 	cout <<"Loading file "<<endl;
+	MSG+="n= "+n.ToString("G3")+" 2J+1= "+j.ToString()+"\r\n";
 	cout <<"n= "<< n <<" 2J+1= "<<j<<endl;
 	this->lambda.clear();
 	this->u2.clear();
@@ -70,6 +74,7 @@ void Experiment::LoadAbsoDataFromFile(String^ Filename)//, struct Experiment &ex
 	this->o2=1e-20;
 	this->o4=1e-20;
 	this->o6=1e-20;
+	MSG+="fexp \t wvnmb[cm^-1] \t u2 \t u4 \t u6\r\n";
 	cout<<"fexp \t wvlgth[nm] \t u2 \t u4 \t u6"<<endl;
 	while(inpfile >> pexp >> wavenumber>>u2>>u4>>u6){
 		this->fexp.push_back(pexp);
@@ -78,6 +83,7 @@ void Experiment::LoadAbsoDataFromFile(String^ Filename)//, struct Experiment &ex
 		this->u6.push_back(u6);
 		this->lambda.push_back(1./wavenumber);
 		cout <<pexp <<" \t"<<1.0e7/wavenumber <<"\t "<<u2<<"\t "<<"\t "<<u4<<"\t "<< u6<<endl;
+		MSG+=pexp.ToString("G5")+"\t"+wavenumber.ToString("G5")+"\t"+u2.ToString("G5")+"\t"+u4.ToString("G5")+"\t"+u6.ToString("G5")+"\r\n";
 	}
 }
 

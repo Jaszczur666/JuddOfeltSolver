@@ -144,14 +144,14 @@ double lambda,chi2s,chi2n;
 	LATEX+="$\\frac{\\Delta\\Omega_2}{\\Omega_2}=$"+(100*error(0)/o2).ToString("G3")+"\\% $\\frac{\\Delta\\Omega_4}{\\Omega_4}=$" +(100*error(1)/o4).ToString("G3")+"\\% $\\frac{\\Delta\\Omega_6}{\\Omega_6}=$"+(100*error(2)/o6).ToString("G3")+" \\%  \\\\\r\n";
 	cout << "Effective relative error "<< 100*(error(0)/o2+error(1)/o4+error(2)/o6)<<"%"<<endl;
 	LATEX+="$\\frac{\\Delta f}{f}=$ "+(100*(error(0)/o2+error(1)/o4+error(2)/o6)).ToString("G3")+"\\% \r\n";
-	MSG+="Wavenumber Pexp Ptheor \r\n";
+	MSG+="Wavenumber\tPexp\tPtheor \r\n";
 	for (int i=0;i<size;i++){
 		double ftheor;
 		ftheor=f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6);
 		sumdfexp=sumdfexp+abs(pow((fexp[i]-ftheor),2));
 		sumfexp=sumfexp+fexp[i]/size;
 	cout << fexp[i]<<" " << ftheor<<"  "<< endl;
-	MSG+=(1.0/lambda0[i]).ToString()+" "+fexp[i].ToString("G4")+" "+ftheor.ToString("G4")+"\r\n";
+	MSG+=(1.0/lambda0[i]).ToString()+"\t"+fexp[i].ToString("G4")+"\t"+ftheor.ToString("G4")+"\r\n";
 	}
 	MSG+="-----------------------------------------------\r\n";
 	cout<<"-----------------------------------------------"<<endl;
@@ -217,7 +217,7 @@ double lambda,chi2s,chi2n;
 	LATEX+="$\\frac{\\Delta\\Omega_2}{\\Omega_2}=$"+(100*error(0)/o2).ToString("G3")+"\\% $\\frac{\\Delta\\Omega_4}{\\Omega_4}=$" +(100*error(1)/o4).ToString("G3")+"\\% $\\frac{\\Delta\\Omega_6}{\\Omega_6}=$"+(100*error(2)/o6).ToString("G3")+" \\%  \\\\\r\n";
 	cout << "Effective relative error "<< 100*(error(0)/o2+error(1)/o4+error(2)/o6)<<"%"<<endl;
 	LATEX+="$\\frac{\\Delta f}{f}=$ "+(100*(error(0)/o2+error(1)/o4+error(2)/o6)).ToString("G3")+"\\% \r\n";
-	MSG+="Pexp Ptheor \r\n";
+	MSG+="Pexp\tPtheor \r\n";
 	for (int i=0;i<size;i++){
 		sumdfexp=sumdfexp+abs(pow((fexp[i]-f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)),2));
 		sumfexp=sumfexp+fexp[i]/size;

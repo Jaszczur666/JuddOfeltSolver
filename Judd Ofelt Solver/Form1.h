@@ -44,8 +44,10 @@ namespace JuddOfeltSolver {
 		}
 
 	private: System::Windows::Forms::Button^  button2;
+	private: System::Windows::Forms::Button^  LevMarButt;
 
-	private: System::Windows::Forms::Button^  button4;
+
+
 
 	private: System::Windows::Forms::DataGridView^  dataGridView1;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  u2;
@@ -99,7 +101,7 @@ namespace JuddOfeltSolver {
 		void InitializeComponent(void)
 		{
 			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->LevMarButt = (gcnew System::Windows::Forms::Button());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->u2 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->u4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -149,15 +151,15 @@ namespace JuddOfeltSolver {
 			this->button2->Visible = false;
 			this->button2->Click += gcnew System::EventHandler(this, &Form1::button2_Click);
 			// 
-			// button4
+			// LevMarButt
 			// 
-			this->button4->Location = System::Drawing::Point(12, 27);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(64, 25);
-			this->button4->TabIndex = 3;
-			this->button4->Text = L"Load data";
-			this->button4->UseVisualStyleBackColor = true;
-			this->button4->Click += gcnew System::EventHandler(this, &Form1::button4_Click);
+			this->LevMarButt->Location = System::Drawing::Point(12, 27);
+			this->LevMarButt->Name = L"LevMarButt";
+			this->LevMarButt->Size = System::Drawing::Size(64, 25);
+			this->LevMarButt->TabIndex = 3;
+			this->LevMarButt->Text = L"Load data";
+			this->LevMarButt->UseVisualStyleBackColor = true;
+			this->LevMarButt->Click += gcnew System::EventHandler(this, &Form1::button4_Click);
 			// 
 			// dataGridView1
 			// 
@@ -388,8 +390,8 @@ namespace JuddOfeltSolver {
 			// toolStripStatusLabel2
 			// 
 			this->toolStripStatusLabel2->Name = L"toolStripStatusLabel2";
-			this->toolStripStatusLabel2->Size = System::Drawing::Size(109, 17);
-			this->toolStripStatusLabel2->Text = L"toolStripStatusLabel2";
+			this->toolStripStatusLabel2->Size = System::Drawing::Size(71, 17);
+			this->toolStripStatusLabel2->Text = L"No fit to data";
 			// 
 			// Form1
 			// 
@@ -406,7 +408,7 @@ namespace JuddOfeltSolver {
 			this->Controls->Add(this->o6tb);
 			this->Controls->Add(this->o4tb);
 			this->Controls->Add(this->o2tb);
-			this->Controls->Add(this->button4);
+			this->Controls->Add(this->LevMarButt);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->menuStrip1);
 			this->MainMenuStrip = this->menuStrip1;
@@ -456,12 +458,17 @@ namespace JuddOfeltSolver {
 };
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
 			 String ^messages,^latex;
+			 DateTime now;
+			 now=DateTime::Now;
+			 String ^date=now.ToString("yyyyMMddHHmmss");
+			 //System::Console->WriteLine(date);
+			 
 			 if (experimental.filled==false){
 				 loadFromFileToolStripMenuItem_Click(sender, e);
 				 
 				 if (experimental.filled==true){
 					 toolStripStatusLabel1->Text=openFileDialog1->FileNames[0]+ " was loaded";
-					 button4->Text="LM";
+					 LevMarButt->Text="LM";
 				 };
 			 }
 			 else
@@ -473,6 +480,9 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 			o2tb->Text=experimental.o2.ToString("g4");
 			o4tb->Text=experimental.o4.ToString("g4");
 			o6tb->Text=experimental.o6.ToString("g4");
+			System::IO::StreamWriter^ sw=gcnew System::IO::StreamWriter(date+".log");
+			sw->WriteLine(OutTB->Text);
+			sw->Close();
 			 }
 		 };
 private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -485,9 +495,11 @@ private: System::Void button6_Click(System::Object^  sender, System::EventArgs^ 
 		 }
 private: System::Void loadFromFileToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 			 int size;
+			 String ^MSG;
 if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
 				 {
-					 experimental.LoadAbsoDataFromFile(openFileDialog1->FileNames[0]);
+					 experimental.LoadAbsoDataFromFile(openFileDialog1->FileNames[0],MSG);
+					  OutTB->Text+=MSG;
 					 size=experimental.u2.size();				
 				 dataGridView1->RowCount=size;
 				 for (int i=0;i<size;i++){
@@ -501,6 +513,7 @@ if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK 
 					 experimental.o4=1e-20;
 					 experimental.o6=1e-20;
 					 experimental.filled=true;
+					
 }
 		 }
 private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
