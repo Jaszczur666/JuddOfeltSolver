@@ -102,7 +102,7 @@ double lambda,chi2s,chi2n;
 	sumdfexp=0;
 	sumfexp=0;
 	chi2s=0;
-	MSG+="Num.      \tChi2              \tO2                 \tO4               \tO6\r\n";
+	MSG+="Num.\tChi2\tO2\tO4\tO6\r\n";
 	cout <<"Beginnig fitting procedure."<<endl;
 	for(int i=1;i<10;i++)
 	{
@@ -144,14 +144,14 @@ double lambda,chi2s,chi2n;
 	LATEX+="$\\frac{\\Delta\\Omega_2}{\\Omega_2}=$"+(100*error(0)/o2).ToString("G3")+"\\% $\\frac{\\Delta\\Omega_4}{\\Omega_4}=$" +(100*error(1)/o4).ToString("G3")+"\\% $\\frac{\\Delta\\Omega_6}{\\Omega_6}=$"+(100*error(2)/o6).ToString("G3")+" \\%  \\\\\r\n";
 	cout << "Effective relative error "<< 100*(error(0)/o2+error(1)/o4+error(2)/o6)<<"%"<<endl;
 	LATEX+="$\\frac{\\Delta f}{f}=$ "+(100*(error(0)/o2+error(1)/o4+error(2)/o6)).ToString("G3")+"\\% \r\n";
-	MSG+="Wavenumber\tPexp\tPtheor \r\n";
+	MSG+="Wavenumber\tPexp\tPtheor\t(Pexp-Ptheor)/Pexp \r\n";
 	for (int i=0;i<size;i++){
 		double ftheor;
 		ftheor=f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6);
 		sumdfexp=sumdfexp+abs(pow((fexp[i]-ftheor),2));
 		sumfexp=sumfexp+fexp[i]/size;
-	cout << fexp[i]<<" " << ftheor<<"  "<< endl;
-	MSG+=(1.0/lambda0[i]).ToString()+"\t"+fexp[i].ToString("G4")+"\t"+ftheor.ToString("G4")+"\r\n";
+	cout << fexp[i]<<" " << ftheor<<"  "<< (fexp[i]-ftheor)/fexp[i]<<" "<< endl;
+	MSG+=(1.0/lambda0[i]).ToString()+"\t"+fexp[i].ToString("G4")+"\t"+ftheor.ToString("G4")+"\t"+(abs(100*(fexp[i]-ftheor)/fexp[i])).ToString("G4")+"%\r\n";
 	}
 	MSG+="-----------------------------------------------\r\n";
 	cout<<"-----------------------------------------------"<<endl;
