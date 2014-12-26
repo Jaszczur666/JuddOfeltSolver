@@ -82,6 +82,7 @@ namespace JuddOfeltSolver {
 	private: System::Windows::Forms::StatusStrip^  statusStrip1;
 	private: System::Windows::Forms::ToolStripStatusLabel^  toolStripStatusLabel1;
 	private: System::Windows::Forms::ToolStripStatusLabel^  toolStripStatusLabel2;
+	private: System::Windows::Forms::OpenFileDialog^  openFileDialog2;
 
 
 
@@ -131,6 +132,7 @@ namespace JuddOfeltSolver {
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
 			this->toolStripStatusLabel1 = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->toolStripStatusLabel2 = (gcnew System::Windows::Forms::ToolStripStatusLabel());
+			this->openFileDialog2 = (gcnew System::Windows::Forms::OpenFileDialog());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
@@ -213,6 +215,7 @@ namespace JuddOfeltSolver {
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
 			this->fileToolStripMenuItem->Size = System::Drawing::Size(35, 20);
 			this->fileToolStripMenuItem->Text = L"File";
+			this->fileToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::fileToolStripMenuItem_Click);
 			// 
 			// loadFromFileToolStripMenuItem
 			// 
@@ -393,6 +396,12 @@ namespace JuddOfeltSolver {
 			this->toolStripStatusLabel2->Size = System::Drawing::Size(71, 17);
 			this->toolStripStatusLabel2->Text = L"No fit to data";
 			// 
+			// openFileDialog2
+			// 
+			this->openFileDialog2->FileName = L"openFileDialog2";
+			this->openFileDialog2->Filter = L"Text files|*.txt|All files|*.*";
+			this->openFileDialog2->Multiselect = true;
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -457,30 +466,28 @@ namespace JuddOfeltSolver {
 //				 CalculateHessian(experimental.u2,experimental.u4,experimental.u6,experimental.lambda,1.9,1e-24, 1e-24, 1e-24, experimental.fexp, Hess,Res);
 };
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
-			 String ^messages,^latex;
+			 String ^messages,^latex, ^fname;
 			 DateTime now;
 			 now=DateTime::Now;
 			 String ^date=now.ToString("yyyyMMddHHmmss");
-			 //System::Console->WriteLine(date);
-			 
+			 Console::WriteLine(date);
 			 if (experimental.filled==false){
 				 loadFromFileToolStripMenuItem_Click(sender, e);
 				 
-				 if (experimental.filled==true){
-					 toolStripStatusLabel1->Text=openFileDialog1->FileNames[0]+ " was loaded";
-					 LevMarButt->Text="LM";
-				 };
+
 			 }
 			 else
 			 {
 			//FitLM(experimental.u2, experimental.u4, experimental.u6, experimental.lambda,experimental.n,experimental.j,experimental.o2,experimental.o4, experimental.o6, experimental.fexp,messages,latex);
 			experimental.FitLevMar(messages,latex);	 
+			OutTB->Text+=now.ToString();
 			OutTB->Text+=messages;
 			latexBox->Text+=latex;
 			o2tb->Text=experimental.o2.ToString("g4");
 			o4tb->Text=experimental.o4.ToString("g4");
 			o6tb->Text=experimental.o6.ToString("g4");
-			System::IO::StreamWriter^ sw=gcnew System::IO::StreamWriter(date+".log");
+			fname=System::IO::Path::GetFileNameWithoutExtension(openFileDialog1->FileNames[0]);
+			System::IO::StreamWriter^ sw=gcnew System::IO::StreamWriter(fname+" "+date+".log");
 			sw->WriteLine(OutTB->Text);
 			sw->Close();
 			 }
@@ -513,6 +520,8 @@ if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK 
 					 experimental.o4=1e-20;
 					 experimental.o6=1e-20;
 					 experimental.filled=true;
+					 toolStripStatusLabel1->Text=openFileDialog1->FileNames[0]+ " was loaded";
+					 LevMarButt->Text="LM";
 					
 }
 		 }
@@ -526,20 +535,36 @@ private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs
 		 }
 private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 			 vector <double> a;
-			  String ^messages,^latex;
+			 String ^messages,^latex,^emi,^fname;
 			 double Ajj;
 			 Ajj=0;
-			 if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
+			 DateTime now;
+			 now=DateTime::Now;
+			 String ^date=now.ToString("yyyyMMddHHmmss");
+			 if (openFileDialog2->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
 			 {
-				 SmEmmision.LoadEmDataFromFile(openFileDialog1->FileNames[0]);
-				 SmEmmision.GetParameters(experimental);
-				 //CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,SmEmmision.j,SmEmmision.lambda,SmEmmision.n,experimental.o2,experimental.o4,experimental.o6,a);
-				 SmEmmision.CalculateRates();
-				 SmEmmision.ReportRates(messages,latex);
-				 			OutTB->Text+=messages;
-			latexBox->Text+=latex;
-				 
+				 int numload=openFileDialog2->FileNames->Length;
+
+				 for (int i=0;i<numload;i++){
+					 SmEmmision.LoadEmDataFromFile(openFileDialog2->FileNames[i]);
+					 SmEmmision.GetParameters(experimental);
+					 OutTB->Text+="File "+openFileDialog2->FileNames[i]+" loaded\r\n";
+					 //CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,SmEmmision.j,SmEmmision.lambda,SmEmmision.n,experimental.o2,experimental.o4,experimental.o6,a);
+					 SmEmmision.CalculateRates();
+					 SmEmmision.ReportRates(messages,latex);
+					 SmEmmision.DumpEmiData(emi);
+					 OutTB->Text+=emi;
+					 OutTB->Text+=messages;
+					 OutTB->Text+="___________________________________\r\n";
+					 latexBox->Text+=latex;
+					 messages="";
+					 latex="";
+				 }
 			 }
+			 fname=gcnew String(experimental.AbsoDatafile.c_str());
+			System::IO::StreamWriter^ sw=gcnew System::IO::StreamWriter(fname+" "+date+".log");
+			sw->WriteLine(OutTB->Text);
+			sw->Close();
 		 }
 private: System::Void quitToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 			 exit(0);
@@ -571,6 +596,8 @@ private: System::Void button3_Click_1(System::Object^  sender, System::EventArgs
 private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 		 }
 private: System::Void toolStripStatusLabel1_Click(System::Object^  sender, System::EventArgs^  e) {
+		 }
+private: System::Void fileToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 		 }
 };
 }

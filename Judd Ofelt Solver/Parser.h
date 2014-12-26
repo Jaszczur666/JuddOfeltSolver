@@ -30,6 +30,7 @@ void CalculateRates();
 void ReportRates(String^ &messages, String^ &latex);
 void FitLevMar(String^ &messages, String^ &latex);
 void FitLevMarSol(String^ &messages, String^ &latex);
+void DumpEmiData(String^ &emi);
  Experiment()
   {
     filled=false;
@@ -89,7 +90,7 @@ void Experiment::LoadAbsoDataFromFile(String^ Filename,String^ &MSG)//, struct E
 
 void Experiment::LoadEmDataFromFile(String^ Filename)//, struct Experiment &experimental)
 {
-	double n, j,u2,u4,u6,wavenumber,pexp;
+	double n, j,u2,u4,u6,wavenumber;
 	wstring name,str;
 	MarshalString(Filename,name);
 	ifstream inpfile(name);
@@ -106,7 +107,7 @@ void Experiment::LoadEmDataFromFile(String^ Filename)//, struct Experiment &expe
 cout <<"Loading file "<<endl;
 cout<<"Wavenumber \t u2\t u4 \t u6"<<endl;
 	while(inpfile >> wavenumber>>u2>>u4>>u6){
-		this->fexp.push_back(pexp);
+		//this->fexp.push_back(pexp);
 		this->u2.push_back(u2);
 		this->u4.push_back(u4);
 		this->u6.push_back(u6);
@@ -164,11 +165,28 @@ void Experiment::ReportRates(System::String^ &messages,System::String^ &latex)
 
 	}
 	cout <<"Rates of radiative transmition calculated"<<endl;
+	messages+="Wavenumber\t Transition rate\tBranching ratio\r\n";
 	for (int i=0;i<size;i++)
 	{
-		messages+=(1./this->lambda[i]).ToString("G5")+" "+(this->Ajj[i]).ToString("F1")+" "+(100*this->Ajj[i]/this->sumrate).ToString("F1")+"%\r\n";
+		messages+=(1./this->lambda[i]).ToString("G5")+"\t"+(this->Ajj[i]).ToString("F1")+"\t"+(100*this->Ajj[i]/this->sumrate).ToString("F1")+"%\r\n";
 		latex+="&"+(1./this->lambda[i]).ToString("G5")+" & "+(this->Ajj[i]).ToString("F1")+" & "+(100*this->Ajj[i]/this->sumrate).ToString("F1")+"\\% \\\\\r\n\\hline\r\n";
 	}
+	messages+="Summary rate ="+(this->sumrate).ToString("G5")+" which amounts to lifetime "+(1000./this->sumrate).ToString("G5")+"ms\r\n";
 	latex+="\\hline\r\n\\multicolumn{3}{|l|}{Lifetime}&"+(1000./this->sumrate).ToString("G3")+"ms \\\\\r\n\\hline\r\n ";
 	latex+="\\end{tabular}\r\n";
+}
+void Experiment::DumpEmiData(String^ &emi)
+{
+	int size;
+	emi="";
+	size=this->u2.size();
+	if (size>0) {
+		emi+="2J+1= "+this->j+" n= "+this->n+"\r\n";
+		for (int i=0;i<size;i++){
+			emi+=(1/this->lambda[i]).ToString("G5")+"\t"+this->u2[i]+"\t"+this->u4[i]+"\t"+this->u6[i]+"\r\n";
+
+		}
+	emi+="";
+	}
+
 }
