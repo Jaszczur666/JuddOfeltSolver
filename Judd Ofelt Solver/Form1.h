@@ -81,7 +81,7 @@ namespace JuddOfeltSolver {
 	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::StatusStrip^  statusStrip1;
 	private: System::Windows::Forms::ToolStripStatusLabel^  toolStripStatusLabel1;
-	private: System::Windows::Forms::ToolStripStatusLabel^  toolStripStatusLabel2;
+	private: System::Windows::Forms::ToolStripStatusLabel^  FitStatusLabel;
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog2;
 	private: System::Windows::Forms::GroupBox^  FitGB;
 
@@ -138,7 +138,7 @@ namespace JuddOfeltSolver {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
 			this->toolStripStatusLabel1 = (gcnew System::Windows::Forms::ToolStripStatusLabel());
-			this->toolStripStatusLabel2 = (gcnew System::Windows::Forms::ToolStripStatusLabel());
+			this->FitStatusLabel = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->openFileDialog2 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->FitGB = (gcnew System::Windows::Forms::GroupBox());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
@@ -393,7 +393,7 @@ namespace JuddOfeltSolver {
 			// statusStrip1
 			// 
 			this->statusStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->toolStripStatusLabel1, 
-				this->toolStripStatusLabel2});
+				this->FitStatusLabel});
 			this->statusStrip1->Location = System::Drawing::Point(0, 321);
 			this->statusStrip1->Name = L"statusStrip1";
 			this->statusStrip1->Size = System::Drawing::Size(823, 22);
@@ -406,11 +406,11 @@ namespace JuddOfeltSolver {
 			this->toolStripStatusLabel1->Text = L"No data file koaded";
 			this->toolStripStatusLabel1->Click += gcnew System::EventHandler(this, &Form1::toolStripStatusLabel1_Click);
 			// 
-			// toolStripStatusLabel2
+			// FitStatusLabel
 			// 
-			this->toolStripStatusLabel2->Name = L"toolStripStatusLabel2";
-			this->toolStripStatusLabel2->Size = System::Drawing::Size(71, 17);
-			this->toolStripStatusLabel2->Text = L"No fit to data";
+			this->FitStatusLabel->Name = L"FitStatusLabel";
+			this->FitStatusLabel->Size = System::Drawing::Size(71, 17);
+			this->FitStatusLabel->Text = L"No fit to data";
 			// 
 			// openFileDialog2
 			// 
@@ -559,7 +559,7 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 			o2tb->Text=experimental.o2.ToString("g4");
 			o4tb->Text=experimental.o4.ToString("g4");
 			o6tb->Text=experimental.o6.ToString("g4");
-			toolStripStatusLabel2->Text="Data fitted";
+			FitStatusLabel->Text="Data fitted";
 			RateGB->Enabled=true;
 			fname=System::IO::Path::GetFileNameWithoutExtension(openFileDialog1->FileNames[0]);
 			System::IO::StreamWriter^ sw=gcnew System::IO::StreamWriter("abso"+fname+" "+date+".log");
@@ -664,7 +664,7 @@ private: System::Void button3_Click_1(System::Object^  sender, System::EventArgs
 			experimental.FitLevMarSol(messages,latex);	 
 			OutTB->Text+=messages;
 			latexBox->Text+=latex;
-			toolStripStatusLabel2->Text="Data fitted";
+			FitStatusLabel->Text="Data fitted";
 			RateGB->Enabled=true;
 			o2tb->Text=experimental.o2.ToString("g4");
 			o4tb->Text=experimental.o4.ToString("g4");
