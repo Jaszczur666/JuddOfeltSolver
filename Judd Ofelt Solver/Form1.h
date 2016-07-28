@@ -90,6 +90,7 @@ namespace JuddOfeltSolver {
 	private: System::Windows::Forms::Button^  LoadButt;
 	private: System::Windows::Forms::GroupBox^  RateGB;
 	private: System::Windows::Forms::Button^  button4;
+	private: System::Windows::Forms::Button^  button5;
 
 
 
@@ -145,6 +146,7 @@ namespace JuddOfeltSolver {
 			this->LoadButt = (gcnew System::Windows::Forms::Button());
 			this->RateGB = (gcnew System::Windows::Forms::GroupBox());
 			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->button5 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
@@ -420,12 +422,13 @@ namespace JuddOfeltSolver {
 			// 
 			// FitGB
 			// 
+			this->FitGB->Controls->Add(this->button5);
 			this->FitGB->Controls->Add(this->button3);
 			this->FitGB->Controls->Add(this->LevMarButt);
 			this->FitGB->Enabled = false;
 			this->FitGB->Location = System::Drawing::Point(12, 99);
 			this->FitGB->Name = L"FitGB";
-			this->FitGB->Size = System::Drawing::Size(91, 82);
+			this->FitGB->Size = System::Drawing::Size(91, 120);
 			this->FitGB->TabIndex = 19;
 			this->FitGB->TabStop = false;
 			this->FitGB->Text = L"Fitting";
@@ -454,7 +457,7 @@ namespace JuddOfeltSolver {
 			// 
 			this->RateGB->Controls->Add(this->button4);
 			this->RateGB->Enabled = false;
-			this->RateGB->Location = System::Drawing::Point(15, 187);
+			this->RateGB->Location = System::Drawing::Point(12, 225);
 			this->RateGB->Name = L"RateGB";
 			this->RateGB->Size = System::Drawing::Size(88, 73);
 			this->RateGB->TabIndex = 21;
@@ -463,13 +466,23 @@ namespace JuddOfeltSolver {
 			// 
 			// button4
 			// 
-			this->button4->Location = System::Drawing::Point(6, 19);
+			this->button4->Location = System::Drawing::Point(7, 19);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(75, 48);
 			this->button4->TabIndex = 0;
 			this->button4->Text = L"Calculate rates";
 			this->button4->UseVisualStyleBackColor = true;
 			this->button4->Click += gcnew System::EventHandler(this, &Form1::button4_Click_1);
+			// 
+			// button5
+			// 
+			this->button5->Location = System::Drawing::Point(9, 81);
+			this->button5->Name = L"button5";
+			this->button5->Size = System::Drawing::Size(75, 23);
+			this->button5->TabIndex = 18;
+			this->button5->Text = L"Matrix";
+			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &Form1::button5_Click_1);
 			// 
 			// Form1
 			// 
@@ -683,6 +696,16 @@ private: System::Void LoadButt_Click(System::Object^  sender, System::EventArgs^
 		 }
 private: System::Void button4_Click_1(System::Object^  sender, System::EventArgs^  e) {
 			 loadEmissionDataToolStripMenuItem_Click(sender,e);
+		 }
+private: System::Void button5_Click_1(System::Object^  sender, System::EventArgs^  e) {
+			 String ^msg;
+			 if (experimental.filled==false){
+				 loadFromFileToolStripMenuItem_Click(sender, e);
+			 }
+			 else
+			 {
+			 experimental.MatrixJO(msg);
+			 }
 		 }
 };
 }

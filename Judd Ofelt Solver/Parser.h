@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-
+#include "Constants.h"
 using namespace System;
 using namespace std;
 class Experiment{
@@ -30,12 +30,14 @@ void CalculateRates();
 void ReportRates(String^ &messages, String^ &latex);
 void FitLevMar(String^ &messages, String^ &latex);
 void FitLevMarSol(String^ &messages, String^ &latex);
+void MatrixJO(String^ &messages);
 void DumpEmiData(String^ &emi);
  Experiment()
   {
     filled=false;
   }
 };
+double KFunction(double u2, double u4, double u6, double lambda0,double n,double twojplusone);
 void MarshalString ( String ^ s, string& os ) {
 	using namespace Runtime::InteropServices;
 	const char* chars = 
@@ -190,3 +192,35 @@ void Experiment::DumpEmiData(String^ &emi)
 	}
 
 }
+void Experiment::MatrixJO(String^ &msg){
+	double XF=0.0,YF=0.0,ZF=0.0,XX=0.0,XY=0.0,XZ=0.0,YY=0.0,YZ=0.0,ZZ=0.0,K=0.0;
+	double x=0.0,y=0.0,z=0.0;
+	MatrixXd Dmat(3,3),Om2(3,3),Om4(3,3),Om6(3,3);
+	for (int i=0;i<this->u2.size();i++){
+		K=KFunction(this->u2[i],this->u4[i],this->u6[i],this->lambda[i],this->n,this->j);
+			x=K*this->u2[i];
+		y=K*this->u4[i];
+		z=K*this->u6[i];
+		XF+=x*fexp[i];
+		YF+=y*fexp[i];
+		ZF+=z*fexp[i];
+		XX+=x*x;
+		XY+=x*y;
+		XZ+=x*z;
+		YY+=y*y;
+		YZ+=y*z;
+		ZZ+=z*z;
+		//cout<<K<<endl;
+}
+	Dmat<<XX,XY,XZ,XY,YY,YZ,XZ,YZ,ZZ;
+	cout<<Dmat<<endl;
+	Om2<<XF,XY,XZ,YF,YY,YZ,ZF,YZ,ZZ;
+	Om4<<XX,XF,XZ,XY,YF,YZ,XZ,ZF,ZZ;
+	Om6<<XX,XY,XF,XY,YY,YF,XZ,YZ,ZF;
+	double d;
+	d=Dmat.determinant();
+	cout<<d<<" "<<1/d*Om2.determinant()<<" "<<1/d*Om4.determinant()<<" "<<1/d*Om6.determinant()<<endl;
+}
+double KFunction(double u2, double u4, double u6, double lambda0,double n,double twojplusone){
+	return ((pow(n*n+2,2)/(9*n))*(8*pi*pi*m*c))/(3*h*twojplusone*lambda0);
+};
