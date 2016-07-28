@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "Solver.h"
-#include "Parser.h"
+#include "SolvingAlgorithms.h"
+#include "Experiment.h"
 #include <vector>
 #define EIGEN_NO_CPUID
  #include <intrin.h>
