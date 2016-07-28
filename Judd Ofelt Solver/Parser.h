@@ -1,3 +1,5 @@
+#ifndef parser_h
+#define parser_h
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -224,3 +226,4 @@ void Experiment::MatrixJO(String^ &msg){
 double KFunction(double u2, double u4, double u6, double lambda0,double n,double twojplusone){
 	return ((pow(n*n+2,2)/(9*n))*(8*pi*pi*m*c))/(3*h*twojplusone*lambda0);
 };
+#endif

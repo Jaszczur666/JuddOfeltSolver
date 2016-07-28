@@ -1,3 +1,5 @@
+#ifndef solver_h
+#define solver_h
 #include <math.h>
 #include <vector>
 #include <string>
@@ -240,3 +242,4 @@ double lambda,chi2s,chi2n;
 //		a.push_back(rate);
 //	}
 //}
+#endif
