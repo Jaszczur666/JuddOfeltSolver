@@ -30,7 +30,7 @@ public:
 	void DumpEmiData(String^ &emi);
 	Experiment()
 	{
-		
+
 	}
 };
 

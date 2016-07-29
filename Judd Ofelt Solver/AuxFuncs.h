@@ -9,5 +9,5 @@ System::String ^lf(double x);
 double sellmeier(double a, double b, double c, double d, double lambda);
 double KFunction(double u2, double u4, double u6, double lambda0,double n,double twojplusone);
 void MarshalString ( String ^ s, string& os);
-	void MarshalString ( String ^ s, wstring& os);
+void MarshalString ( String ^ s, wstring& os);
 #endif
