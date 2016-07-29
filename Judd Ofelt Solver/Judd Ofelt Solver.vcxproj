@@ -88,13 +88,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="AuxFuncs.cpp" />
+    <ClCompile Include="Experiment.cpp" />
     <ClCompile Include="Judd Ofelt Solver.cpp" />
+    <ClCompile Include="SolvingAlgorithms.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AuxFuncs.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
