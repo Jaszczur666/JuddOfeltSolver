@@ -537,14 +537,14 @@ namespace JuddOfeltSolver {
 			 }
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		int size;
-		size=experimental.u2.size();				
+		size=experimental.AbsoMulti.u2.size();				
 				 dataGridView1->RowCount=size;
 				 for (int i=0;i<size;i++){
-				 dataGridView1->Rows[i]->Cells[0]->Value= experimental.u2[i].ToString();
-				 dataGridView1->Rows[i]->Cells[1]->Value= experimental.u4[i].ToString();
-				 dataGridView1->Rows[i]->Cells[2]->Value= experimental.u6[i].ToString();
-				 dataGridView1->Rows[i]->Cells[3]->Value= (1e7*experimental.lambda[i]).ToString();
-				 dataGridView1->Rows[i]->Cells[4]->Value= experimental.fexp[i].ToString();
+				 dataGridView1->Rows[i]->Cells[0]->Value= experimental.AbsoMulti.u2[i].ToString();
+				 dataGridView1->Rows[i]->Cells[1]->Value= experimental.AbsoMulti.u4[i].ToString();
+				 dataGridView1->Rows[i]->Cells[2]->Value= experimental.AbsoMulti.u6[i].ToString();
+				 dataGridView1->Rows[i]->Cells[3]->Value= (1e7*experimental.AbsoMulti.lambda[i]).ToString();
+				 dataGridView1->Rows[i]->Cells[4]->Value= experimental.AbsoMulti.fexp[i].ToString();
 				 }
 			 }
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -557,7 +557,7 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 			 now=DateTime::Now;
 			 String ^date=now.ToString("yyyyMMddHHmmss");
 			 Console::WriteLine(date);
-			 if (experimental.filled==false){
+			 if (experimental.AbsoMulti.filled==false){
 				 loadFromFileToolStripMenuItem_Click(sender, e);
 				 
 
@@ -595,19 +595,19 @@ if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK 
 				 {
 					 experimental.LoadAbsoDataFromFile(openFileDialog1->FileNames[0],MSG);
 					  OutTB->Text+=MSG;
-					 size=experimental.u2.size();				
+					 size=experimental.AbsoMulti.u2.size();				
 				 dataGridView1->RowCount=size;
 				 for (int i=0;i<size;i++){
-				 dataGridView1->Rows[i]->Cells[0]->Value= experimental.u2[i].ToString("g5");
-				 dataGridView1->Rows[i]->Cells[1]->Value= experimental.u4[i].ToString("g5");
-				 dataGridView1->Rows[i]->Cells[2]->Value= experimental.u6[i].ToString("g5");
-				 dataGridView1->Rows[i]->Cells[3]->Value= (1e7*experimental.lambda[i]).ToString("g4");
-				 dataGridView1->Rows[i]->Cells[4]->Value= experimental.fexp[i].ToString("g4");
+				 dataGridView1->Rows[i]->Cells[0]->Value= experimental.AbsoMulti.u2[i].ToString("g5");
+				 dataGridView1->Rows[i]->Cells[1]->Value= experimental.AbsoMulti.u4[i].ToString("g5");
+				 dataGridView1->Rows[i]->Cells[2]->Value= experimental.AbsoMulti.u6[i].ToString("g5");
+				 dataGridView1->Rows[i]->Cells[3]->Value= (1e7*experimental.AbsoMulti.lambda[i]).ToString("g4");
+				 dataGridView1->Rows[i]->Cells[4]->Value= experimental.AbsoMulti.fexp[i].ToString("g4");
 				 }
 					 experimental.o2=1e-20;
 					 experimental.o4=1e-20;
 					 experimental.o6=1e-20;
-					 experimental.filled=true;
+					 experimental.AbsoMulti.filled=true;
 					 toolStripStatusLabel1->Text=openFileDialog1->FileNames[0]+ " was loaded";
 					 LevMarButt->Text="LM";
 					 FitGB->Enabled=true;
@@ -668,7 +668,7 @@ private: System::Void button1_Click_2(System::Object^  sender, System::EventArgs
 		 }
 private: System::Void button3_Click_1(System::Object^  sender, System::EventArgs^  e) {
 			 			 String ^messages,^latex;
-			 if (experimental.filled==false){
+			 if (experimental.AbsoMulti.filled==false){
 				 loadFromFileToolStripMenuItem_Click(sender, e);
 			 }
 			 else
@@ -699,7 +699,7 @@ private: System::Void button4_Click_1(System::Object^  sender, System::EventArgs
 		 }
 private: System::Void button5_Click_1(System::Object^  sender, System::EventArgs^  e) {
 			 String ^msg;
-			 if (experimental.filled==false){
+			 if (experimental.AbsoMulti.filled==false){
 				 loadFromFileToolStripMenuItem_Click(sender, e);
 			 }
 			 else
