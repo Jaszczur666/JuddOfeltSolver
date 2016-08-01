@@ -7,6 +7,7 @@
 #include "Eigen\Dense"
 #include "Constants.h"
 #include "AuxFuncs.h"
+#include "Experiment.h"
 using namespace std;
 using Eigen::MatrixXd;
 double chi2(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double twojplusone,double o2, double o4, double o6, vector <double> fexp);
@@ -15,6 +16,7 @@ double Residue(double fexp, double o2, double o4, double o6,double u2, double u4
 void CalculateHessian(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double twojplusone,double o2, double o4, double o6, vector <double> fexp, MatrixXd &Hess, MatrixXd &Grad);
 void FitLM(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double twojplusone,double &o2, double &o4, double &o6, vector <double> fexp,System::String^ &MSG,System::String^ &LATEX);
 void FitSolarz(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double twojplusone,double &o2, double &o4, double &o6, vector <double> fexp,System::String^ &MSG,System::String^ &LATEX);
+void FitBranching(Experiment BExp,System::String^ &MSG,System::String^ &LATEX);
 
 //void CalculateRates(vector <double> u2, vector<double> u4, vector <double> u6, double twojplusone, vector <double> lambda0,double n,double o2, double o4, double o6, vector <double> &a)
 //{

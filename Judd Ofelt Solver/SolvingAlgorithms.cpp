@@ -6,28 +6,41 @@
 #include "Eigen\Dense"
 #include "Constants.h"
 #include "AuxFuncs.h"
+#include "Experiment.h"
 using namespace std;
 using Eigen::MatrixXd;
 double chi2(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double twojplusone,double o2, double o4, double o6, vector <double> fexp)
 {
-int size;
-double tempchi2=0;
-size=u2.size();
-for (int i=0;i<size;i++){
-tempchi2=tempchi2+pow(f(u2[i],u4[i],u6[i],lambda0[i],n,twojplusone,o2,o4,o6)-fexp[i],2);
+	int size;
+	double tempchi2=0;
+	size=u2.size();
+	for (int i=0;i<size;i++){
+		tempchi2=tempchi2+pow(f(u2[i],u4[i],u6[i],lambda0[i],n,twojplusone,o2,o4,o6)-fexp[i],2);
+	};
+	return tempchi2;
 };
-return tempchi2;
-};
-
+double chi2br(Experiment BExp, double o2, double o4, double o6, double femi){
+	int size;
+	double tempchi2=0;
+	size=BExp.AbsoMulti.u2.size();
+	for (int i=0;i<size;i++){
+		tempchi2=tempchi2+pow(f(BExp.AbsoMulti.u2[i],BExp.AbsoMulti.u4[i],BExp.AbsoMulti.u6[i],BExp.AbsoMulti.lambda[i],BExp.n,BExp.AbsoMulti.twojplusone,BExp.o2,BExp.o4,BExp.o6)-BExp.AbsoMulti.fexp[i],2);
+	};
+	size=BExp.BMulti.u2.size();
+	for (int i=0;i<size;i++){
+		tempchi2=tempchi2+pow(f(BExp.BMulti.u2[i],BExp.BMulti.u4[i],BExp.BMulti.u6[i],BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.twojplusone,o2,o4,o6)-femi*BExp.BMulti.branching[i],2);
+	};
+	return tempchi2;
+}
 double chi2Solarz(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double twojplusone,double o2, double o4, double o6, vector <double> fexp)
 {
-int size;
-double tempchi2=0;
-size=u2.size();
-for (int i=0;i<size;i++){
-tempchi2=tempchi2+pow((f(abs(u2[i]),abs(u4[i]),abs(u6[i]),lambda0[i],n,twojplusone,o2,o4,o6)-fexp[i])/fexp[i],2);
-};
-return tempchi2;
+	int size;
+	double tempchi2=0;
+	size=u2.size();
+	for (int i=0;i<size;i++){
+		tempchi2=tempchi2+pow((f(abs(u2[i]),abs(u4[i]),abs(u6[i]),lambda0[i],n,twojplusone,o2,o4,o6)-fexp[i])/fexp[i],2);
+	};
+	return tempchi2;
 };
 
 double Residue(double fexp, double o2, double o4, double o6,double u2, double u4, double u6, double lambda, double n, double twojplusone)
@@ -46,32 +59,73 @@ void CalculateHessian(vector <double> u2, vector<double> u4, vector <double> u6,
 	MatrixXd Jaco(size,3);
 	//cout <<"Debug " <<o2<<" "<<o4<<" "<<o6<<endl;
 	for (i=0;i<size;i++){
-	res=Residue(fexp[i], o2, o4, o6,u2[i], u4[i], u6[i], lambda0[i],n,twojplusone);
-	ro2=Residue(fexp[i], o2+delta, o4, o6,u2[i], u4[i], u6[i], lambda0[i],n,twojplusone);
-	ro4=Residue(fexp[i], o2, o4+delta, o6,u2[i], u4[i], u6[i], lambda0[i],n,twojplusone);
-	ro6=Residue(fexp[i], o2, o4, o6+delta,u2[i], u4[i], u6[i], lambda0[i],n,twojplusone);
-	Jaco(i,0)=(ro2-res)/delta;
-	Jaco(i,1)=(ro4-res)/delta;
-	Jaco(i,2)=(ro6-res)/delta;
-	Res(i,0)=res;
+		res=Residue(fexp[i], o2, o4, o6,u2[i], u4[i], u6[i], lambda0[i],n,twojplusone);
+		ro2=Residue(fexp[i], o2+delta, o4, o6,u2[i], u4[i], u6[i], lambda0[i],n,twojplusone);
+		ro4=Residue(fexp[i], o2, o4+delta, o6,u2[i], u4[i], u6[i], lambda0[i],n,twojplusone);
+		ro6=Residue(fexp[i], o2, o4, o6+delta,u2[i], u4[i], u6[i], lambda0[i],n,twojplusone);
+		Jaco(i,0)=(ro2-res)/delta;
+		Jaco(i,1)=(ro4-res)/delta;
+		Jaco(i,2)=(ro6-res)/delta;
+		Res(i,0)=res;
 	};
 	Hess=Jaco.transpose()*Jaco;
 	Grad=Jaco.transpose()*Res;
-//	cout <<"_________________________________"<<endl;
-//	cout << Hess<<endl;
-//	cout <<"_________________________________"<<endl;
+/*		cout <<"_________________________________"<<std::endl;
+		cout << Hess<<std::endl;
+		cout <<"_________________________________"<<std::endl;*/
 };
-
+void CalculateHessianBr(Experiment BExp, double o2,double o4, double o6,double femi, MatrixXd &Hess, MatrixXd &Grad)
+{
+	int i,size,size1,size2;
+	MatrixXd Hessian;
+	double ro2,ro4,ro6,rfemi,res,delta;
+	size=BExp.AbsoMulti.u2.size()+BExp.BMulti.u2.size();
+	size1=BExp.AbsoMulti.u2.size();
+	size2=BExp.BMulti.u2.size();
+	MatrixXd Res(size,1);
+	delta=1e-23;
+	MatrixXd Jaco(size,4);
+	//cout <<"Debug " <<o2<<" "<<o4<<" "<<o6<<endl;
+	for (i=0;i<size1;i++){
+		res=Residue(BExp.AbsoMulti.fexp[i], o2, o4, o6,BExp.AbsoMulti.u2[i], BExp.AbsoMulti.u4[i], BExp.AbsoMulti.u6[i], BExp.AbsoMulti.lambda[i],BExp.n,BExp.AbsoMulti.twojplusone);
+		ro2=Residue(BExp.AbsoMulti.fexp[i], o2+delta, o4, o6,BExp.AbsoMulti.u2[i], BExp.AbsoMulti.u4[i], BExp.AbsoMulti.u6[i], BExp.AbsoMulti.lambda[i],BExp.n,BExp.AbsoMulti.twojplusone);
+		ro4=Residue(BExp.AbsoMulti.fexp[i], o2, o4+delta, o6,BExp.AbsoMulti.u2[i], BExp.AbsoMulti.u4[i], BExp.AbsoMulti.u6[i], BExp.AbsoMulti.lambda[i],BExp.n,BExp.AbsoMulti.twojplusone);
+		ro6=Residue(BExp.AbsoMulti.fexp[i], o2, o4, o6+delta,BExp.AbsoMulti.u2[i], BExp.AbsoMulti.u4[i], BExp.AbsoMulti.u6[i], BExp.AbsoMulti.lambda[i],BExp.n,BExp.AbsoMulti.twojplusone);
+		Jaco(i,0)=(ro2-res)/delta;
+		Jaco(i,1)=(ro4-res)/delta;
+		Jaco(i,2)=(ro6-res)/delta;
+		Jaco(i,3)=0;
+		Res(i,0)=res;
+	};
+	for (i=0;i<size2;i++){
+		res=Residue(BExp.BMulti.branching[i]*femi, o2, o4, o6,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.twojplusone);
+		ro2=Residue(BExp.BMulti.branching[i]*femi, o2+delta, o4, o6,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.twojplusone);
+		ro4=Residue(BExp.BMulti.branching[i]*femi, o2, o4+delta, o6,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.twojplusone);
+		ro6=Residue(BExp.BMulti.branching[i]*femi, o2, o4, o6+delta,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.twojplusone);
+		rfemi=Residue(BExp.BMulti.branching[i]*(femi+delta*1e15), o2, o4, o6,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.twojplusone);
+		Jaco(size1+i-1,0)=(ro2-res)/delta;
+		Jaco(size1+i-1,1)=(ro4-res)/delta;
+		Jaco(size1+i-1,2)=(ro6-res)/delta;
+		Jaco(size1+i-1,3)=(rfemi-res)/(delta*1e15);
+		Res(size1+i-1,0)=res;
+		//cout<<"res="<<res<<" rfemi="<<rfemi<<" rfemi-res="<<(rfemi-res)<<std::endl;
+	}
+	Hess=Jaco.transpose()*Jaco;
+	Grad=Jaco.transpose()*Res;
+	/*	cout <<"_________________________________"<<std::endl;
+		cout <<	Jaco<<std::endl;
+		cout <<"_________________________________"<<std::endl;*/
+};
 void FitLM(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double twojplusone,double &o2, double &o4, double &o6, vector <double> fexp,System::String^ &MSG,System::String^ &LATEX)
 {
-MatrixXd Hessian,Hessiandiag;
-MatrixXd Grad;
-MatrixXd parameters(3,1);
-MatrixXd newparams(3,1);
-MatrixXd error(3,1);
-parameters<<o2,o4,o6;
-double no2,no4,no6,sumfexp,sumdfexp;
-double lambda,chi2s,chi2n;
+	MatrixXd Hessian,Hessiandiag;
+	MatrixXd Grad;
+	MatrixXd parameters(3,1);
+	MatrixXd newparams(3,1);
+	MatrixXd error(3,1);
+	parameters<<o2,o4,o6;
+	double no2,no4,no6,sumfexp,sumdfexp;
+	double lambda,chi2s,chi2n;
 	lambda=1/1024.0;
 	sumdfexp=0;
 	sumfexp=0;
@@ -80,23 +134,23 @@ double lambda,chi2s,chi2n;
 	cout <<"Beginnig fitting procedure."<<endl;
 	for(int i=1;i<10;i++)
 	{
-	chi2s=chi2(u2,u4,u6,lambda0,n,twojplusone,o2,o4,o6,fexp);
-	CalculateHessian(u2,u4,u6,lambda0,n,twojplusone,o2, o4, o6, fexp, Hessian,Grad);
-	Hessiandiag=Hessian.diagonal().asDiagonal();
-	newparams=parameters-((Hessian+lambda*Hessiandiag).inverse()*Grad);
-	no2=(newparams(0,0));
-	no4=(newparams(1,0));
-	no6=(newparams(2,0));
-	chi2n=chi2(u2,u4,u6,lambda0,n,twojplusone,no2,no4,no6,fexp);
-	cout<< i <<" "<< chi2s <<" " <<no2<<" "<<no4<<" "<<no6<<endl;
-	MSG+=i.ToString()+"\t"+chi2s.ToString("G6")+"\t"+no2.ToString("G6")+"\t"+no4.ToString("G6")+"\t"+no6.ToString("G6")+"\r\n";
+		chi2s=chi2(u2,u4,u6,lambda0,n,twojplusone,o2,o4,o6,fexp);
+		CalculateHessian(u2,u4,u6,lambda0,n,twojplusone,o2, o4, o6, fexp, Hessian,Grad);
+		Hessiandiag=Hessian.diagonal().asDiagonal();
+		newparams=parameters-((Hessian+lambda*Hessiandiag).inverse()*Grad);
+		no2=(newparams(0,0));
+		no4=(newparams(1,0));
+		no6=(newparams(2,0));
+		chi2n=chi2(u2,u4,u6,lambda0,n,twojplusone,no2,no4,no6,fexp);
+		cout<< i <<" "<< chi2s <<" " <<no2<<" "<<no4<<" "<<no6<<endl;
+		MSG+=i.ToString()+"\t"+chi2s.ToString("G6")+"\t"+no2.ToString("G6")+"\t"+no4.ToString("G6")+"\t"+no6.ToString("G6")+"\r\n";
 		if (chi2n<chi2s){
 			parameters=newparams;
 			o2=no2;
 			o4=no4;
 			o6=no6;
 			lambda=lambda*1.1;
-			}
+		}
 		else
 		{
 			lambda=lambda/1.1;
@@ -124,8 +178,8 @@ double lambda,chi2s,chi2n;
 		ftheor=f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6);
 		sumdfexp=sumdfexp+abs(pow((fexp[i]-ftheor),2));
 		sumfexp=sumfexp+fexp[i]/size;
-	cout << fexp[i]<<" " << ftheor<<"  "<< (fexp[i]-ftheor)/fexp[i]<<" "<< endl;
-	MSG+=(1.0/lambda0[i]).ToString()+"\t"+fexp[i].ToString("G4")+"\t"+ftheor.ToString("G4")+"\t"+(abs(100*(fexp[i]-ftheor)/fexp[i])).ToString("G4")+"%\r\n";
+		cout << fexp[i]<<" " << ftheor<<"  "<< (fexp[i]-ftheor)/fexp[i]<<" "<< endl;
+		MSG+=(1.0/lambda0[i]).ToString()+"\t"+fexp[i].ToString("G4")+"\t"+ftheor.ToString("G4")+"\t"+(abs(100*(fexp[i]-ftheor)/fexp[i])).ToString("G4")+"%\r\n";
 	}
 	MSG+="-----------------------------------------------\r\n";
 	cout<<"-----------------------------------------------"<<endl;
@@ -137,14 +191,14 @@ double lambda,chi2s,chi2n;
 
 void FitSolarz(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double twojplusone,double &o2, double &o4, double &o6, vector <double> fexp,System::String^ &MSG,System::String^ &LATEX)
 {
-MatrixXd Hessian,Hessiandiag;
-MatrixXd Grad;
-MatrixXd parameters(3,1);
-MatrixXd newparams(3,1);
-MatrixXd error(3,1);
-parameters<<o2,o4,o6;
-double no2,no4,no6,sumfexp,sumdfexp;
-double lambda,chi2s,chi2n;
+	MatrixXd Hessian,Hessiandiag;
+	MatrixXd Grad;
+	MatrixXd parameters(3,1);
+	MatrixXd newparams(3,1);
+	MatrixXd error(3,1);
+	parameters<<o2,o4,o6;
+	double no2,no4,no6,sumfexp,sumdfexp;
+	double lambda,chi2s,chi2n;
 	lambda=1/1024.0;
 	sumdfexp=0;
 	sumfexp=0;
@@ -153,23 +207,23 @@ double lambda,chi2s,chi2n;
 	cout <<"Beginnig fitting procedure."<<endl;
 	for(int i=1;i<100;i++)
 	{
-	chi2s=chi2Solarz(u2,u4,u6,lambda0,n,twojplusone,o2,o4,o6,fexp);
-	CalculateHessian(u2,u4,u6,lambda0,n,twojplusone,o2, o4, o6, fexp, Hessian,Grad);
-	Hessiandiag=Hessian.diagonal().asDiagonal();
-	newparams=parameters-((Hessian+lambda*Hessiandiag).inverse()*Grad);
-	no2=abs(newparams(0,0));
-	no4=abs(newparams(1,0));
-	no6=abs(newparams(2,0));
-	chi2n=chi2Solarz(u2,u4,u6,lambda0,n,twojplusone,no2,no4,no6,fexp);
-	cout<< i <<" "<< chi2s <<" " <<no2<<" "<<no4<<" "<<no6<<endl;
-	MSG+=i.ToString()+"\t"+chi2s.ToString("G6")+"\t"+no2.ToString("G6")+"\t"+no4.ToString("G6")+"\t"+no6.ToString("G6")+"\r\n";
+		chi2s=chi2Solarz(u2,u4,u6,lambda0,n,twojplusone,o2,o4,o6,fexp);
+		CalculateHessian(u2,u4,u6,lambda0,n,twojplusone,o2, o4, o6, fexp, Hessian,Grad);
+		Hessiandiag=Hessian.diagonal().asDiagonal();
+		newparams=parameters-((Hessian+lambda*Hessiandiag).inverse()*Grad);
+		no2=abs(newparams(0,0));
+		no4=abs(newparams(1,0));
+		no6=abs(newparams(2,0));
+		chi2n=chi2Solarz(u2,u4,u6,lambda0,n,twojplusone,no2,no4,no6,fexp);
+		cout<< i <<" "<< chi2s <<" " <<no2<<" "<<no4<<" "<<no6<<endl;
+		MSG+=i.ToString()+"\t"+chi2s.ToString("G6")+"\t"+no2.ToString("G6")+"\t"+no4.ToString("G6")+"\t"+no6.ToString("G6")+"\r\n";
 		if (chi2n<chi2s){
 			parameters=newparams;
 			o2=no2;
 			o4=no4;
 			o6=no6;
 			lambda=lambda*1.1;
-			}
+		}
 		else
 		{
 			lambda=lambda/1.1;
@@ -195,8 +249,8 @@ double lambda,chi2s,chi2n;
 	for (int i=0;i<size;i++){
 		sumdfexp=sumdfexp+abs(pow((fexp[i]-f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)),2));
 		sumfexp=sumfexp+fexp[i]/size;
-	cout << fexp[i]<<" " << f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)<<"  "<< endl;
-	MSG+=fexp[i].ToString()+f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6).ToString()+"\r\n";
+		cout << fexp[i]<<" " << f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6)<<"  "<< endl;
+		MSG+=fexp[i].ToString()+f(u2[i], u4[i], u6[i], lambda0[i],n,twojplusone,o2, o4,o6).ToString()+"\r\n";
 	}
 	MSG+="-----------------------------------------------\r\n";
 	cout<<"-----------------------------------------------"<<endl;
@@ -204,4 +258,57 @@ double lambda,chi2s,chi2n;
 	LATEX+="RMS = "+lf(sqrt(sumdfexp/(size-3)))+"$\\frac{RMS}{\\underline{f}}$= "+(100*sqrt(sumdfexp/(size-3))/sumfexp).ToString("G3") +"\\%\r\n\r\n";
 	MSG+="RMS = "+sqrt(sumdfexp/(size-3)).ToString("G4")+" RMS/avg f = "+ (100*sqrt(sumdfexp/(size-3))/sumfexp).ToString("G3")+"% \r\n";
 
+}
+
+void FitBranching(Experiment BExp,System::String^ &MSG,System::String^ &LATEX){
+	MatrixXd Hessian,Hessiandiag;
+	MatrixXd Grad;
+	MatrixXd parameters(4,1);
+	MatrixXd newparams(4,1);
+	MatrixXd error(4,1);
+	double o2,o4,o6,femi;
+	parameters<<BExp.o2,BExp.o4,BExp.o6,BExp.femi;
+	cout <<parameters<<std::endl;
+	o2=BExp.o2;
+	o4=BExp.o4;
+	o6=BExp.o6;
+	femi=BExp.femi;
+	double no2,no4,no6,sumfexp,sumdfexp;
+	double lambda,chi2s,chi2n,nfemi;
+	lambda=1/1024.0;
+	sumdfexp=0;
+	sumfexp=0;
+	chi2s=0;
+	MSG+="Num.\tChi2\tO2\tO4\tO6\r\n";
+	cout <<"Begining fitting procedure."<<endl;
+	for(int i=1;i<100;i++)
+	{
+		chi2s=chi2br(BExp,o2,o4,o6,femi);
+		CalculateHessianBr(BExp,o2,o4,o6,femi,Hessian,Grad);
+		Hessiandiag=Hessian.diagonal().asDiagonal();
+		newparams=parameters-((Hessian+lambda*Hessiandiag).inverse()*Grad);
+		no2=newparams(0,0);
+		no4=newparams(1,0);
+		no6=newparams(2,0);
+		nfemi=newparams(3,0);
+		chi2n=chi2br(BExp,no2,no4,no6,nfemi);
+		cout<< i <<" "<< chi2s <<" " <<no2<<" "<<no4<<" "<<no6<<" "<<nfemi<<endl;
+		if (chi2n<chi2s){
+			parameters=newparams;
+			o2=no2;
+			o4=no4;
+			o6=no6;
+			femi=nfemi;
+			lambda=lambda*1.1;
+		}
+		else
+		{
+			lambda=lambda/1.1;
+		}
+	}
+	int size;
+	size=BExp.AbsoMulti.u2.size()+BExp.BMulti.u2.size();
+	error=(Hessiandiag.inverse().diagonal()*chi2n/(size-4));
+	for (int i=0;i<4;i++) error(i)=abs(sqrt(error(i)));
+	cout <<"Errors "<< error(0)<<" "<<error(1)<<" "<< error(2)<<" "<<error(3)<<endl;
 }

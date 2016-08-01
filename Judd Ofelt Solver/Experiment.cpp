@@ -9,7 +9,7 @@ void Experiment::LoadEmDataFromFile(String^ Filename)//, struct Experiment &expe
 	wstring name,str;
 	MarshalString(Filename,name);
 	ifstream inpfile(name);
-//	getline(inpfile,str);
+	//	getline(inpfile,str);
 	inpfile>>twojplusone>>n;
 	cout << n <<" "<<twojplusone<<endl;
 	this->EmiMulti.lambda.clear();
@@ -19,8 +19,8 @@ void Experiment::LoadEmDataFromFile(String^ Filename)//, struct Experiment &expe
 	this->EmiMulti.fexp.clear();
 	this->n=n;
 	this->EmiMulti.twojplusone=twojplusone;
-cout <<"Loading file "<<endl;
-cout<<"Wavenumber \t u2\t u4 \t u6"<<endl;
+	cout <<"Loading file "<<endl;
+	cout<<"Wavenumber \t u2\t u4 \t u6"<<endl;
 	while(inpfile >> wavenumber>>u2>>u4>>u6){
 		//this->fexp.push_back(pexp);
 		this->EmiMulti.u2.push_back(u2);
@@ -30,7 +30,7 @@ cout<<"Wavenumber \t u2\t u4 \t u6"<<endl;
 		this->o2=1e-20;
 		this->o4=1e-20;
 		this->o6=1e-20;
-	cout  <<1.0e7/wavenumber <<" "<<u2<<" "<<" "<<u4<<" "<< u6<<endl;
+		cout  <<1.0e7/wavenumber <<" "<<u2<<" "<<" "<<u4<<" "<< u6<<endl;
 	}
 }
 
@@ -54,18 +54,18 @@ void Experiment::CalculateRates()//vector <double> u2, vector<double> u4, vector
 
 void Experiment::GetParameters(Experiment donor)
 {
-this->o2=donor.o2;
-this->o4=donor.o4;
-this->o6=donor.o6;
+	this->o2=donor.o2;
+	this->o4=donor.o4;
+	this->o6=donor.o6;
 }
 
 void Experiment::FitLevMar(System::String^ &messages,System::String^ &latex)
 {
-FitLM(this->AbsoMulti.u2, this->AbsoMulti.u4, this->AbsoMulti.u6, this->AbsoMulti.lambda,this->n,this->AbsoMulti.twojplusone,this->o2,this->o4, this->o6, this->AbsoMulti.fexp,messages,latex);
+	FitLM(this->AbsoMulti.u2, this->AbsoMulti.u4, this->AbsoMulti.u6, this->AbsoMulti.lambda,this->n,this->AbsoMulti.twojplusone,this->o2,this->o4, this->o6, this->AbsoMulti.fexp,messages,latex);
 }
 void Experiment::FitLevMarSol(System::String^ &messages,System::String^ &latex)
 {
-FitSolarz(this->AbsoMulti.u2, this->AbsoMulti.u4, this->AbsoMulti.u6, this->AbsoMulti.lambda,this->n,this->AbsoMulti.twojplusone,this->o2,this->o4, this->o6, this->AbsoMulti.fexp,messages,latex);
+	FitSolarz(this->AbsoMulti.u2, this->AbsoMulti.u4, this->AbsoMulti.u6, this->AbsoMulti.lambda,this->n,this->AbsoMulti.twojplusone,this->o2,this->o4, this->o6, this->AbsoMulti.fexp,messages,latex);
 }
 
 void Experiment::ReportRates(System::String^ &messages,System::String^ &latex)
@@ -101,7 +101,7 @@ void Experiment::DumpEmiData(String^ &emi)
 			emi+=(1/this->EmiMulti.lambda[i]).ToString("G5")+"\t"+this->EmiMulti.u2[i]+"\t"+this->EmiMulti.u4[i]+"\t"+this->EmiMulti.u6[i]+"\r\n";
 
 		}
-	emi+="";
+		emi+="";
 	}
 
 }
@@ -111,7 +111,7 @@ void Experiment::MatrixJO(String^ &msg){
 	MatrixXd Dmat(3,3),Om2(3,3),Om4(3,3),Om6(3,3);
 	for (int i=0;i<this->AbsoMulti.u2.size();i++){
 		K=KFunction(this->AbsoMulti.u2[i],this->AbsoMulti.u4[i],this->AbsoMulti.u6[i],this->AbsoMulti.lambda[i],this->n,this->AbsoMulti.twojplusone);
-			x=K*this->AbsoMulti.u2[i];
+		x=K*this->AbsoMulti.u2[i];
 		y=K*this->AbsoMulti.u4[i];
 		z=K*this->AbsoMulti.u6[i];
 		XF+=x*AbsoMulti.fexp[i];
@@ -124,7 +124,7 @@ void Experiment::MatrixJO(String^ &msg){
 		YZ+=y*z;
 		ZZ+=z*z;
 		//cout<<K<<endl;
-}
+	}
 	Dmat<<XX,XY,XZ,XY,YY,YZ,XZ,YZ,ZZ;
 	cout<<Dmat<<endl;
 	Om2<<XF,XY,XZ,YF,YY,YZ,ZF,YZ,ZZ;
@@ -141,8 +141,8 @@ void Experiment::LoadAbsoDataFromFile(String^ Filename,String^ &MSG)//, struct E
 	MarshalString(Filename,name);
 	ifstream inpfile(name);
 	this->AbsoDatafile=name;
-//	cout<<name<<endl;
-//	getline(inpfile,str);
+	//	cout<<name<<endl;
+	//	getline(inpfile,str);
 	inpfile>>j>>n;
 	MSG+="Loading file "+Filename+"\r\n";
 	cout <<"Loading file "<<endl;
@@ -169,4 +169,44 @@ void Experiment::LoadAbsoDataFromFile(String^ Filename,String^ &MSG)//, struct E
 		cout <<pexp <<" \t"<<1.0e7/wavenumber <<"\t "<<u2<<"\t "<<"\t "<<u4<<"\t "<< u6<<endl;
 		MSG+=pexp.ToString("G5")+"\t"+wavenumber.ToString("G5")+"\t"+u2.ToString("G5")+"\t"+u4.ToString("G5")+"\t"+u6.ToString("G5")+"\r\n";
 	}
+}
+void Experiment::LoadEmBranchFromFile(String^ Filename ,String^ &MSG){
+	wstring name,str;
+	double branching,wavenumber,u2,u4,u6,twojplusone;
+	int size;
+	double branchsum,branchnorm;
+	MarshalString(Filename,name);
+	ifstream inpfile(name);
+	MSG+="Loading file "+Filename+"\r\n";
+	cout <<"Loading file "<<endl;
+	inpfile>>twojplusone;
+	this->BMulti.twojplusone=twojplusone;
+	this->BMulti.u2.clear();
+	this->BMulti.u4.clear();
+	this->BMulti.u6.clear();
+	this->BMulti.branching.clear();
+	this->BMulti.lambda.clear();
+	while(inpfile >> branching >> wavenumber>>u2>>u4>>u6){
+		cout<<branching<<" "<<wavenumber<<" "<<u2<<" "<<u4<<" "<<u6<<std::endl;
+		this->BMulti.branching.push_back(branching);
+		this->BMulti.u2.push_back(u2);
+		this->BMulti.u4.push_back(u4);
+		this->BMulti.u6.push_back(u6);
+		this->BMulti.lambda.push_back(1./wavenumber);
+	}
+	size=BMulti.u2.size();
+	branchsum=0.0;
+	branchnorm=BMulti.branching[0];
+	for (int i=0;i<size;i++){
+	branchsum+=BMulti.branching[i];
+	BMulti.branching[i]*=(1/branchnorm);
+	cout<<i<<" "<<BMulti.branching[i]<<std::endl;
+	}
+	cout<<branchsum<<std::endl;
+	for (int i=0;i<size;i++){
+		cout <<i<<" "<<BMulti.branching[i]<<" "<<std::endl;
+	}
+}
+void Experiment::FitLevMarBranching(String^ &messages, String^ &latex){
+	FitBranching(*this,messages,latex);
 }

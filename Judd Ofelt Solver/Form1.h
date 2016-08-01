@@ -91,6 +91,7 @@ namespace JuddOfeltSolver {
 	private: System::Windows::Forms::GroupBox^  RateGB;
 	private: System::Windows::Forms::Button^  button4;
 	private: System::Windows::Forms::Button^  button5;
+	private: System::Windows::Forms::Button^  button6;
 
 
 
@@ -142,11 +143,12 @@ namespace JuddOfeltSolver {
 			this->FitStatusLabel = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->openFileDialog2 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->FitGB = (gcnew System::Windows::Forms::GroupBox());
+			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->LoadButt = (gcnew System::Windows::Forms::Button());
 			this->RateGB = (gcnew System::Windows::Forms::GroupBox());
 			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->button5 = (gcnew System::Windows::Forms::Button());
+			this->button6 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
@@ -433,6 +435,16 @@ namespace JuddOfeltSolver {
 			this->FitGB->TabStop = false;
 			this->FitGB->Text = L"Fitting";
 			// 
+			// button5
+			// 
+			this->button5->Location = System::Drawing::Point(9, 81);
+			this->button5->Name = L"button5";
+			this->button5->Size = System::Drawing::Size(75, 23);
+			this->button5->TabIndex = 18;
+			this->button5->Text = L"Matrix";
+			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &Form1::button5_Click_1);
+			// 
 			// groupBox2
 			// 
 			this->groupBox2->Controls->Add(this->LoadButt);
@@ -474,21 +486,22 @@ namespace JuddOfeltSolver {
 			this->button4->UseVisualStyleBackColor = true;
 			this->button4->Click += gcnew System::EventHandler(this, &Form1::button4_Click_1);
 			// 
-			// button5
+			// button6
 			// 
-			this->button5->Location = System::Drawing::Point(9, 81);
-			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(75, 23);
-			this->button5->TabIndex = 18;
-			this->button5->Text = L"Matrix";
-			this->button5->UseVisualStyleBackColor = true;
-			this->button5->Click += gcnew System::EventHandler(this, &Form1::button5_Click_1);
+			this->button6->Location = System::Drawing::Point(718, 288);
+			this->button6->Name = L"button6";
+			this->button6->Size = System::Drawing::Size(64, 24);
+			this->button6->TabIndex = 22;
+			this->button6->Text = L"test";
+			this->button6->UseVisualStyleBackColor = true;
+			this->button6->Click += gcnew System::EventHandler(this, &Form1::button6_Click_1);
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(823, 343);
+			this->Controls->Add(this->button6);
 			this->Controls->Add(this->RateGB);
 			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->FitGB);
@@ -706,6 +719,12 @@ private: System::Void button5_Click_1(System::Object^  sender, System::EventArgs
 			 {
 			 experimental.MatrixJO(msg);
 			 }
+		 }
+private: System::Void button6_Click_1(System::Object^  sender, System::EventArgs^  e) {
+			 String ^fake,^fake2;
+			 experimental.LoadAbsoDataFromFile("d:\\prace\\2016\\PoligonJO\\dla196.txt",fake);
+			 experimental.LoadEmBranchFromFile("d:\\prace\\2016\\PoligonJO\\samarbranch.txt",fake);
+			 experimental.FitLevMarBranching(fake,fake2);
 		 }
 };
 }
