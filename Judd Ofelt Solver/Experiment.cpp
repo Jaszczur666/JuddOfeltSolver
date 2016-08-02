@@ -5,20 +5,20 @@
 #include "SolvingAlgorithms.h"
 void Experiment::LoadEmDataFromFile(String^ Filename)//, struct Experiment &experimental)
 {
-	double n, twojplusone,u2,u4,u6,wavenumber;
+	double n, TwoJPlusOne,u2,u4,u6,wavenumber;
 	wstring name,str;
 	MarshalString(Filename,name);
 	ifstream inpfile(name);
 	//	getline(inpfile,str);
-	inpfile>>twojplusone>>n;
-	cout << n <<" "<<twojplusone<<endl;
+	inpfile>>TwoJPlusOne>>n;
+	cout << n <<" "<<TwoJPlusOne<<endl;
 	this->EmiMulti.lambda.clear();
 	this->EmiMulti.u2.clear();
 	this->EmiMulti.u4.clear();
 	this->EmiMulti.u6.clear();
 	this->EmiMulti.fexp.clear();
 	this->n=n;
-	this->EmiMulti.twojplusone=twojplusone;
+	this->EmiMulti.TwoJPlusOne=TwoJPlusOne;
 	cout <<"Loading file "<<endl;
 	cout<<"Wavenumber \t u2\t u4 \t u6"<<endl;
 	while(inpfile >> wavenumber>>u2>>u4>>u6){
@@ -34,7 +34,7 @@ void Experiment::LoadEmDataFromFile(String^ Filename)//, struct Experiment &expe
 	}
 }
 
-void Experiment::CalculateRates()//vector <double> u2, vector<double> u4, vector <double> u6, double twojplusone, vector <double> lambda0,double n,double o2, double o4, double o6, vector <double> &a)
+void Experiment::CalculateRates()//vector <double> u2, vector<double> u4, vector <double> u6, double TwoJPlusOne, vector <double> lambda0,double n,double o2, double o4, double o6, vector <double> &a)
 {
 	int size;
 	double rate,sumrate;
@@ -42,8 +42,8 @@ void Experiment::CalculateRates()//vector <double> u2, vector<double> u4, vector
 	this->EmiMulti.Ajj.clear();
 	sumrate=0;
 	for(int i=0;i<size;i++){
-		//rate=((64*pow(pi,4)*qe*qe)/(3*h*pow(lambda0[i],3)*twojplusone))*(n*pow(n*n+2,2)/9)*(u2[i]*o2+u4[i]*o4+u6[i]*o6);
-		rate=((64*pow(pi,4)*qe*qe)/(3*h*pow(this->EmiMulti.lambda[i],3)*this->EmiMulti.twojplusone))*(this->n*pow(this->n*this->n+2,2)/9)*(this->EmiMulti.u2[i]*this->o2+this->EmiMulti.u4[i]*this->o4+this->EmiMulti.u6[i]*this->o6);
+		//rate=((64*pow(pi,4)*qe*qe)/(3*h*pow(lambda0[i],3)*TwoJPlusOne))*(n*pow(n*n+2,2)/9)*(u2[i]*o2+u4[i]*o4+u6[i]*o6);
+		rate=((64*pow(pi,4)*qe*qe)/(3*h*pow(this->EmiMulti.lambda[i],3)*this->EmiMulti.TwoJPlusOne))*(this->n*pow(this->n*this->n+2,2)/9)*(this->EmiMulti.u2[i]*this->o2+this->EmiMulti.u4[i]*this->o4+this->EmiMulti.u6[i]*this->o6);
 		cout <<1e7*this->EmiMulti.lambda[i] <<" "<< rate <<endl;
 		this->EmiMulti.Ajj.push_back(rate);
 		sumrate+=rate;
@@ -61,11 +61,11 @@ void Experiment::GetParameters(Experiment donor)
 
 void Experiment::FitLevMar(System::String^ &messages,System::String^ &latex)
 {
-	FitLM(this->AbsoMulti.u2, this->AbsoMulti.u4, this->AbsoMulti.u6, this->AbsoMulti.lambda,this->n,this->AbsoMulti.twojplusone,this->o2,this->o4, this->o6, this->AbsoMulti.fexp,messages,latex);
+	FitLM(this->AbsoMulti.u2, this->AbsoMulti.u4, this->AbsoMulti.u6, this->AbsoMulti.lambda,this->n,this->AbsoMulti.TwoJPlusOne,this->o2,this->o4, this->o6, this->AbsoMulti.fexp,messages,latex);
 }
 void Experiment::FitLevMarSol(System::String^ &messages,System::String^ &latex)
 {
-	FitSolarz(this->AbsoMulti.u2, this->AbsoMulti.u4, this->AbsoMulti.u6, this->AbsoMulti.lambda,this->n,this->AbsoMulti.twojplusone,this->o2,this->o4, this->o6, this->AbsoMulti.fexp,messages,latex);
+	FitSolarz(this->AbsoMulti.u2, this->AbsoMulti.u4, this->AbsoMulti.u6, this->AbsoMulti.lambda,this->n,this->AbsoMulti.TwoJPlusOne,this->o2,this->o4, this->o6, this->AbsoMulti.fexp,messages,latex);
 }
 
 void Experiment::ReportRates(System::String^ &messages,System::String^ &latex)
@@ -96,7 +96,7 @@ void Experiment::DumpEmiData(String^ &emi)
 	emi="";
 	size=this->EmiMulti.u2.size();
 	if (size>0) {
-		emi+="2J+1= "+this->EmiMulti.twojplusone+" n= "+this->n+"\r\n";
+		emi+="2J+1= "+this->EmiMulti.TwoJPlusOne+" n= "+this->n+"\r\n";
 		for (int i=0;i<size;i++){
 			emi+=(1/this->EmiMulti.lambda[i]).ToString("G5")+"\t"+this->EmiMulti.u2[i]+"\t"+this->EmiMulti.u4[i]+"\t"+this->EmiMulti.u6[i]+"\r\n";
 
@@ -110,7 +110,7 @@ void Experiment::MatrixJO(String^ &msg){
 	double x=0.0,y=0.0,z=0.0;
 	MatrixXd Dmat(3,3),Om2(3,3),Om4(3,3),Om6(3,3);
 	for (int i=0;i<this->AbsoMulti.u2.size();i++){
-		K=KFunction(this->AbsoMulti.u2[i],this->AbsoMulti.u4[i],this->AbsoMulti.u6[i],this->AbsoMulti.lambda[i],this->n,this->AbsoMulti.twojplusone);
+		K=KFunction(this->AbsoMulti.u2[i],this->AbsoMulti.u4[i],this->AbsoMulti.u6[i],this->AbsoMulti.lambda[i],this->n,this->AbsoMulti.TwoJPlusOne);
 		x=K*this->AbsoMulti.u2[i];
 		y=K*this->AbsoMulti.u4[i];
 		z=K*this->AbsoMulti.u6[i];
@@ -154,7 +154,7 @@ void Experiment::LoadAbsoDataFromFile(String^ Filename,String^ &MSG)//, struct E
 	this->AbsoMulti.u6.clear();
 	this->AbsoMulti.fexp.clear();
 	this->n=n;
-	this->AbsoMulti.twojplusone=j;
+	this->AbsoMulti.TwoJPlusOne=j;
 	this->o2=1e-20;
 	this->o4=1e-20;
 	this->o6=1e-20;
@@ -172,15 +172,15 @@ void Experiment::LoadAbsoDataFromFile(String^ Filename,String^ &MSG)//, struct E
 }
 void Experiment::LoadEmBranchFromFile(String^ Filename ,String^ &MSG){
 	wstring name,str;
-	double branching,wavenumber,u2,u4,u6,twojplusone;
+	double branching,wavenumber,u2,u4,u6,TwoJPlusOne;
 	int size;
 	double branchsum,branchnorm;
 	MarshalString(Filename,name);
 	ifstream inpfile(name);
 	MSG+="Loading file "+Filename+"\r\n";
 	cout <<"Loading file "<<endl;
-	inpfile>>twojplusone;
-	this->BMulti.twojplusone=twojplusone;
+	inpfile>>TwoJPlusOne;
+	this->BMulti.TwoJPlusOne=TwoJPlusOne;
 	this->BMulti.u2.clear();
 	this->BMulti.u4.clear();
 	this->BMulti.u6.clear();

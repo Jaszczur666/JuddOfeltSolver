@@ -92,6 +92,9 @@ namespace JuddOfeltSolver {
 	private: System::Windows::Forms::Button^  button4;
 	private: System::Windows::Forms::Button^  button5;
 	private: System::Windows::Forms::Button^  button6;
+	private: System::Windows::Forms::Button^  button7;
+	private: System::Windows::Forms::Button^  brButt;
+	private: System::Windows::Forms::Button^  emiButt;
 
 
 
@@ -149,6 +152,9 @@ namespace JuddOfeltSolver {
 			this->RateGB = (gcnew System::Windows::Forms::GroupBox());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button6 = (gcnew System::Windows::Forms::Button());
+			this->emiButt = (gcnew System::Windows::Forms::Button());
+			this->brButt = (gcnew System::Windows::Forms::Button());
+			this->button7 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
@@ -163,7 +169,7 @@ namespace JuddOfeltSolver {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(12, 304);
+			this->button2->Location = System::Drawing::Point(22, 514);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(73, 29);
 			this->button2->TabIndex = 1;
@@ -223,7 +229,7 @@ namespace JuddOfeltSolver {
 			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->fileToolStripMenuItem});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(823, 24);
+			this->menuStrip1->Size = System::Drawing::Size(1013, 24);
 			this->menuStrip1->TabIndex = 7;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -232,7 +238,7 @@ namespace JuddOfeltSolver {
 			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->loadFromFileToolStripMenuItem, 
 				this->loadEmissionDataToolStripMenuItem, this->quitToolStripMenuItem});
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
-			this->fileToolStripMenuItem->Size = System::Drawing::Size(35, 20);
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(37, 20);
 			this->fileToolStripMenuItem->Text = L"File";
 			this->fileToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::fileToolStripMenuItem_Click);
 			// 
@@ -264,21 +270,21 @@ namespace JuddOfeltSolver {
 			// 
 			// o2tb
 			// 
-			this->o2tb->Location = System::Drawing::Point(203, 292);
+			this->o2tb->Location = System::Drawing::Point(196, 515);
 			this->o2tb->Name = L"o2tb";
 			this->o2tb->Size = System::Drawing::Size(100, 20);
 			this->o2tb->TabIndex = 9;
 			// 
 			// o4tb
 			// 
-			this->o4tb->Location = System::Drawing::Point(345, 292);
+			this->o4tb->Location = System::Drawing::Point(336, 515);
 			this->o4tb->Name = L"o4tb";
 			this->o4tb->Size = System::Drawing::Size(100, 20);
 			this->o4tb->TabIndex = 10;
 			// 
 			// o6tb
 			// 
-			this->o6tb->Location = System::Drawing::Point(487, 292);
+			this->o6tb->Location = System::Drawing::Point(480, 515);
 			this->o6tb->Name = L"o6tb";
 			this->o6tb->Size = System::Drawing::Size(100, 20);
 			this->o6tb->TabIndex = 11;
@@ -286,7 +292,7 @@ namespace JuddOfeltSolver {
 			// o2label
 			// 
 			this->o2label->AutoSize = true;
-			this->o2label->Location = System::Drawing::Point(171, 296);
+			this->o2label->Location = System::Drawing::Point(168, 522);
 			this->o2label->Name = L"o2label";
 			this->o2label->Size = System::Drawing::Size(22, 13);
 			this->o2label->TabIndex = 12;
@@ -295,7 +301,7 @@ namespace JuddOfeltSolver {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(313, 296);
+			this->label1->Location = System::Drawing::Point(308, 522);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(22, 13);
 			this->label1->TabIndex = 13;
@@ -304,7 +310,7 @@ namespace JuddOfeltSolver {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(455, 296);
+			this->label2->Location = System::Drawing::Point(452, 522);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(22, 13);
 			this->label2->TabIndex = 14;
@@ -319,7 +325,7 @@ namespace JuddOfeltSolver {
 			this->tabControl1->Location = System::Drawing::Point(109, 27);
 			this->tabControl1->Name = L"tabControl1";
 			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(702, 259);
+			this->tabControl1->Size = System::Drawing::Size(881, 398);
 			this->tabControl1->TabIndex = 15;
 			// 
 			// tabResult
@@ -328,7 +334,7 @@ namespace JuddOfeltSolver {
 			this->tabResult->Location = System::Drawing::Point(4, 22);
 			this->tabResult->Name = L"tabResult";
 			this->tabResult->Padding = System::Windows::Forms::Padding(3);
-			this->tabResult->Size = System::Drawing::Size(694, 233);
+			this->tabResult->Size = System::Drawing::Size(873, 372);
 			this->tabResult->TabIndex = 1;
 			this->tabResult->Text = L"Results";
 			this->tabResult->UseVisualStyleBackColor = true;
@@ -340,7 +346,7 @@ namespace JuddOfeltSolver {
 			this->OutTB->Multiline = true;
 			this->OutTB->Name = L"OutTB";
 			this->OutTB->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
-			this->OutTB->Size = System::Drawing::Size(688, 227);
+			this->OutTB->Size = System::Drawing::Size(867, 366);
 			this->OutTB->TabIndex = 0;
 			// 
 			// tabData
@@ -349,7 +355,7 @@ namespace JuddOfeltSolver {
 			this->tabData->Location = System::Drawing::Point(4, 22);
 			this->tabData->Name = L"tabData";
 			this->tabData->Padding = System::Windows::Forms::Padding(3);
-			this->tabData->Size = System::Drawing::Size(694, 233);
+			this->tabData->Size = System::Drawing::Size(873, 372);
 			this->tabData->TabIndex = 0;
 			this->tabData->Text = L"Data";
 			this->tabData->UseVisualStyleBackColor = true;
@@ -360,7 +366,7 @@ namespace JuddOfeltSolver {
 			this->tabLaTeX->Location = System::Drawing::Point(4, 22);
 			this->tabLaTeX->Name = L"tabLaTeX";
 			this->tabLaTeX->Padding = System::Windows::Forms::Padding(3);
-			this->tabLaTeX->Size = System::Drawing::Size(694, 233);
+			this->tabLaTeX->Size = System::Drawing::Size(873, 372);
 			this->tabLaTeX->TabIndex = 2;
 			this->tabLaTeX->Text = L"LaTeX Report";
 			this->tabLaTeX->UseVisualStyleBackColor = true;
@@ -371,12 +377,12 @@ namespace JuddOfeltSolver {
 			this->latexBox->Location = System::Drawing::Point(3, 3);
 			this->latexBox->Multiline = true;
 			this->latexBox->Name = L"latexBox";
-			this->latexBox->Size = System::Drawing::Size(688, 227);
+			this->latexBox->Size = System::Drawing::Size(867, 366);
 			this->latexBox->TabIndex = 0;
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(628, 290);
+			this->button1->Location = System::Drawing::Point(604, 515);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 23);
 			this->button1->TabIndex = 16;
@@ -398,22 +404,22 @@ namespace JuddOfeltSolver {
 			// 
 			this->statusStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->toolStripStatusLabel1, 
 				this->FitStatusLabel});
-			this->statusStrip1->Location = System::Drawing::Point(0, 321);
+			this->statusStrip1->Location = System::Drawing::Point(0, 550);
 			this->statusStrip1->Name = L"statusStrip1";
-			this->statusStrip1->Size = System::Drawing::Size(823, 22);
+			this->statusStrip1->Size = System::Drawing::Size(1013, 22);
 			this->statusStrip1->TabIndex = 18;
 			// 
 			// toolStripStatusLabel1
 			// 
 			this->toolStripStatusLabel1->Name = L"toolStripStatusLabel1";
-			this->toolStripStatusLabel1->Size = System::Drawing::Size(100, 17);
+			this->toolStripStatusLabel1->Size = System::Drawing::Size(110, 17);
 			this->toolStripStatusLabel1->Text = L"No data file koaded";
 			this->toolStripStatusLabel1->Click += gcnew System::EventHandler(this, &Form1::toolStripStatusLabel1_Click);
 			// 
 			// FitStatusLabel
 			// 
 			this->FitStatusLabel->Name = L"FitStatusLabel";
-			this->FitStatusLabel->Size = System::Drawing::Size(71, 17);
+			this->FitStatusLabel->Size = System::Drawing::Size(77, 17);
 			this->FitStatusLabel->Text = L"No fit to data";
 			// 
 			// openFileDialog2
@@ -424,13 +430,14 @@ namespace JuddOfeltSolver {
 			// 
 			// FitGB
 			// 
+			this->FitGB->Controls->Add(this->button7);
 			this->FitGB->Controls->Add(this->button5);
 			this->FitGB->Controls->Add(this->button3);
 			this->FitGB->Controls->Add(this->LevMarButt);
 			this->FitGB->Enabled = false;
-			this->FitGB->Location = System::Drawing::Point(12, 99);
+			this->FitGB->Location = System::Drawing::Point(12, 192);
 			this->FitGB->Name = L"FitGB";
-			this->FitGB->Size = System::Drawing::Size(91, 120);
+			this->FitGB->Size = System::Drawing::Size(91, 167);
 			this->FitGB->TabIndex = 19;
 			this->FitGB->TabStop = false;
 			this->FitGB->Text = L"Fitting";
@@ -447,10 +454,12 @@ namespace JuddOfeltSolver {
 			// 
 			// groupBox2
 			// 
+			this->groupBox2->Controls->Add(this->brButt);
+			this->groupBox2->Controls->Add(this->emiButt);
 			this->groupBox2->Controls->Add(this->LoadButt);
 			this->groupBox2->Location = System::Drawing::Point(12, 40);
 			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(91, 53);
+			this->groupBox2->Size = System::Drawing::Size(91, 146);
 			this->groupBox2->TabIndex = 20;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Loading";
@@ -459,7 +468,7 @@ namespace JuddOfeltSolver {
 			// 
 			this->LoadButt->Location = System::Drawing::Point(9, 19);
 			this->LoadButt->Name = L"LoadButt";
-			this->LoadButt->Size = System::Drawing::Size(64, 25);
+			this->LoadButt->Size = System::Drawing::Size(73, 25);
 			this->LoadButt->TabIndex = 4;
 			this->LoadButt->Text = L"Load data";
 			this->LoadButt->UseVisualStyleBackColor = true;
@@ -469,7 +478,7 @@ namespace JuddOfeltSolver {
 			// 
 			this->RateGB->Controls->Add(this->button4);
 			this->RateGB->Enabled = false;
-			this->RateGB->Location = System::Drawing::Point(12, 225);
+			this->RateGB->Location = System::Drawing::Point(12, 365);
 			this->RateGB->Name = L"RateGB";
 			this->RateGB->Size = System::Drawing::Size(88, 73);
 			this->RateGB->TabIndex = 21;
@@ -488,7 +497,7 @@ namespace JuddOfeltSolver {
 			// 
 			// button6
 			// 
-			this->button6->Location = System::Drawing::Point(718, 288);
+			this->button6->Location = System::Drawing::Point(926, 516);
 			this->button6->Name = L"button6";
 			this->button6->Size = System::Drawing::Size(64, 24);
 			this->button6->TabIndex = 22;
@@ -496,11 +505,38 @@ namespace JuddOfeltSolver {
 			this->button6->UseVisualStyleBackColor = true;
 			this->button6->Click += gcnew System::EventHandler(this, &Form1::button6_Click_1);
 			// 
+			// emiButt
+			// 
+			this->emiButt->Location = System::Drawing::Point(10, 50);
+			this->emiButt->Name = L"emiButt";
+			this->emiButt->Size = System::Drawing::Size(75, 23);
+			this->emiButt->TabIndex = 5;
+			this->emiButt->Text = L"Load emi";
+			this->emiButt->UseVisualStyleBackColor = true;
+			// 
+			// brButt
+			// 
+			this->brButt->Location = System::Drawing::Point(10, 79);
+			this->brButt->Name = L"brButt";
+			this->brButt->Size = System::Drawing::Size(75, 23);
+			this->brButt->TabIndex = 6;
+			this->brButt->Text = L"Load br";
+			this->brButt->UseVisualStyleBackColor = true;
+			// 
+			// button7
+			// 
+			this->button7->Location = System::Drawing::Point(7, 110);
+			this->button7->Name = L"button7";
+			this->button7->Size = System::Drawing::Size(75, 23);
+			this->button7->TabIndex = 19;
+			this->button7->Text = L"Branching fit";
+			this->button7->UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(823, 343);
+			this->ClientSize = System::Drawing::Size(1013, 572);
 			this->Controls->Add(this->button6);
 			this->Controls->Add(this->RateGB);
 			this->Controls->Add(this->groupBox2);
@@ -648,13 +684,13 @@ private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  s
 				 int numload=openFileDialog2->FileNames->Length;
 
 				 for (int i=0;i<numload;i++){
-					 SmEmmision.LoadEmDataFromFile(openFileDialog2->FileNames[i]);
-					 SmEmmision.GetParameters(experimental);
+					 experimental.LoadEmDataFromFile(openFileDialog2->FileNames[i]);
+					 //SmEmmision.GetParameters(experimental);
 					 OutTB->Text+="File "+openFileDialog2->FileNames[i]+" loaded\r\n";
 					 //CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,SmEmmision.j,SmEmmision.lambda,SmEmmision.n,experimental.o2,experimental.o4,experimental.o6,a);
-					 SmEmmision.CalculateRates();
-					 SmEmmision.ReportRates(messages,latex);
-					 SmEmmision.DumpEmiData(emi);
+					 experimental.CalculateRates();
+					 experimental.ReportRates(messages,latex);
+					 experimental.DumpEmiData(emi);
 					 OutTB->Text+=emi;
 					 OutTB->Text+=messages;
 					 OutTB->Text+="___________________________________\r\n";

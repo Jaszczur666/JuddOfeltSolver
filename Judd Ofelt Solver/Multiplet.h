@@ -11,7 +11,7 @@ public:
 	std::vector <double> Ajj;
 	std::vector <double> fexp;
 	std::vector <double> branching;
-	double twojplusone;
+	double TwoJPlusOne;
 	bool filled;
 	Multiplet(void);
 	~Multiplet(void);
