@@ -3,11 +3,11 @@
 #include "Experiment.h"
 #include <vector>
 #define EIGEN_NO_CPUID
- #include <intrin.h>
+#include <intrin.h>
 using namespace std;
 
-	Experiment experimental;
-	Experiment SmEmmision;
+Experiment experimental;
+Experiment SmEmmision;
 namespace JuddOfeltSolver {
 
 	using namespace System;
@@ -95,6 +95,7 @@ namespace JuddOfeltSolver {
 	private: System::Windows::Forms::Button^  button7;
 	private: System::Windows::Forms::Button^  brButt;
 	private: System::Windows::Forms::Button^  emiButt;
+	private: System::Windows::Forms::ToolStripStatusLabel^  toolStripStatusLabel2;
 
 
 
@@ -146,15 +147,16 @@ namespace JuddOfeltSolver {
 			this->FitStatusLabel = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->openFileDialog2 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->FitGB = (gcnew System::Windows::Forms::GroupBox());
+			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
+			this->brButt = (gcnew System::Windows::Forms::Button());
+			this->emiButt = (gcnew System::Windows::Forms::Button());
 			this->LoadButt = (gcnew System::Windows::Forms::Button());
 			this->RateGB = (gcnew System::Windows::Forms::GroupBox());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button6 = (gcnew System::Windows::Forms::Button());
-			this->emiButt = (gcnew System::Windows::Forms::Button());
-			this->brButt = (gcnew System::Windows::Forms::Button());
-			this->button7 = (gcnew System::Windows::Forms::Button());
+			this->toolStripStatusLabel2 = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
@@ -238,7 +240,7 @@ namespace JuddOfeltSolver {
 			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->loadFromFileToolStripMenuItem, 
 				this->loadEmissionDataToolStripMenuItem, this->quitToolStripMenuItem});
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
-			this->fileToolStripMenuItem->Size = System::Drawing::Size(37, 20);
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(35, 20);
 			this->fileToolStripMenuItem->Text = L"File";
 			this->fileToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::fileToolStripMenuItem_Click);
 			// 
@@ -402,8 +404,8 @@ namespace JuddOfeltSolver {
 			// 
 			// statusStrip1
 			// 
-			this->statusStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->toolStripStatusLabel1, 
-				this->FitStatusLabel});
+			this->statusStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->toolStripStatusLabel1, 
+				this->FitStatusLabel, this->toolStripStatusLabel2});
 			this->statusStrip1->Location = System::Drawing::Point(0, 550);
 			this->statusStrip1->Name = L"statusStrip1";
 			this->statusStrip1->Size = System::Drawing::Size(1013, 22);
@@ -412,14 +414,14 @@ namespace JuddOfeltSolver {
 			// toolStripStatusLabel1
 			// 
 			this->toolStripStatusLabel1->Name = L"toolStripStatusLabel1";
-			this->toolStripStatusLabel1->Size = System::Drawing::Size(110, 17);
+			this->toolStripStatusLabel1->Size = System::Drawing::Size(100, 17);
 			this->toolStripStatusLabel1->Text = L"No data file koaded";
 			this->toolStripStatusLabel1->Click += gcnew System::EventHandler(this, &Form1::toolStripStatusLabel1_Click);
 			// 
 			// FitStatusLabel
 			// 
 			this->FitStatusLabel->Name = L"FitStatusLabel";
-			this->FitStatusLabel->Size = System::Drawing::Size(77, 17);
+			this->FitStatusLabel->Size = System::Drawing::Size(71, 17);
 			this->FitStatusLabel->Text = L"No fit to data";
 			// 
 			// openFileDialog2
@@ -442,6 +444,16 @@ namespace JuddOfeltSolver {
 			this->FitGB->TabStop = false;
 			this->FitGB->Text = L"Fitting";
 			// 
+			// button7
+			// 
+			this->button7->Location = System::Drawing::Point(7, 110);
+			this->button7->Name = L"button7";
+			this->button7->Size = System::Drawing::Size(75, 23);
+			this->button7->TabIndex = 19;
+			this->button7->Text = L"Branching fit";
+			this->button7->UseVisualStyleBackColor = true;
+			this->button7->Click += gcnew System::EventHandler(this, &Form1::button7_Click);
+			// 
 			// button5
 			// 
 			this->button5->Location = System::Drawing::Point(9, 81);
@@ -463,6 +475,26 @@ namespace JuddOfeltSolver {
 			this->groupBox2->TabIndex = 20;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Loading";
+			// 
+			// brButt
+			// 
+			this->brButt->Location = System::Drawing::Point(10, 79);
+			this->brButt->Name = L"brButt";
+			this->brButt->Size = System::Drawing::Size(75, 23);
+			this->brButt->TabIndex = 6;
+			this->brButt->Text = L"Load br";
+			this->brButt->UseVisualStyleBackColor = true;
+			this->brButt->Click += gcnew System::EventHandler(this, &Form1::brButt_Click);
+			// 
+			// emiButt
+			// 
+			this->emiButt->ForeColor = System::Drawing::SystemColors::Desktop;
+			this->emiButt->Location = System::Drawing::Point(10, 50);
+			this->emiButt->Name = L"emiButt";
+			this->emiButt->Size = System::Drawing::Size(75, 23);
+			this->emiButt->TabIndex = 5;
+			this->emiButt->Text = L"Load emi";
+			this->emiButt->UseVisualStyleBackColor = true;
 			// 
 			// LoadButt
 			// 
@@ -505,32 +537,11 @@ namespace JuddOfeltSolver {
 			this->button6->UseVisualStyleBackColor = true;
 			this->button6->Click += gcnew System::EventHandler(this, &Form1::button6_Click_1);
 			// 
-			// emiButt
+			// toolStripStatusLabel2
 			// 
-			this->emiButt->Location = System::Drawing::Point(10, 50);
-			this->emiButt->Name = L"emiButt";
-			this->emiButt->Size = System::Drawing::Size(75, 23);
-			this->emiButt->TabIndex = 5;
-			this->emiButt->Text = L"Load emi";
-			this->emiButt->UseVisualStyleBackColor = true;
-			// 
-			// brButt
-			// 
-			this->brButt->Location = System::Drawing::Point(10, 79);
-			this->brButt->Name = L"brButt";
-			this->brButt->Size = System::Drawing::Size(75, 23);
-			this->brButt->TabIndex = 6;
-			this->brButt->Text = L"Load br";
-			this->brButt->UseVisualStyleBackColor = true;
-			// 
-			// button7
-			// 
-			this->button7->Location = System::Drawing::Point(7, 110);
-			this->button7->Name = L"button7";
-			this->button7->Size = System::Drawing::Size(75, 23);
-			this->button7->TabIndex = 19;
-			this->button7->Text = L"Branching fit";
-			this->button7->UseVisualStyleBackColor = true;
+			this->toolStripStatusLabel2->Name = L"toolStripStatusLabel2";
+			this->toolStripStatusLabel2->Size = System::Drawing::Size(197, 17);
+			this->toolStripStatusLabel2->Text = L"Dziękuje uprzejmie przyjadę autobusem";
 			// 
 			// Form1
 			// 
@@ -575,7 +586,7 @@ namespace JuddOfeltSolver {
 
 		}
 #pragma endregion
-	
+
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 				 //double fpom;
 				 //fpom=chi2(experimental.u2,experimental.u4,experimental.u6,experimental.lambda,2.07,1.4322e-020,2.0218e-020,4.69421e-021,experimental.fexp);
@@ -585,74 +596,74 @@ namespace JuddOfeltSolver {
 				 ////button1->Text=fpom.ToString();
 			 }
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-		int size;
-		size=experimental.AbsoMulti.u2.size();				
+				 int size;
+				 size=experimental.AbsoMulti.u2.size();				
 				 dataGridView1->RowCount=size;
 				 for (int i=0;i<size;i++){
-				 dataGridView1->Rows[i]->Cells[0]->Value= experimental.AbsoMulti.u2[i].ToString();
-				 dataGridView1->Rows[i]->Cells[1]->Value= experimental.AbsoMulti.u4[i].ToString();
-				 dataGridView1->Rows[i]->Cells[2]->Value= experimental.AbsoMulti.u6[i].ToString();
-				 dataGridView1->Rows[i]->Cells[3]->Value= (1e7*experimental.AbsoMulti.lambda[i]).ToString();
-				 dataGridView1->Rows[i]->Cells[4]->Value= experimental.AbsoMulti.fexp[i].ToString();
+					 dataGridView1->Rows[i]->Cells[0]->Value= experimental.AbsoMulti.u2[i].ToString();
+					 dataGridView1->Rows[i]->Cells[1]->Value= experimental.AbsoMulti.u4[i].ToString();
+					 dataGridView1->Rows[i]->Cells[2]->Value= experimental.AbsoMulti.u6[i].ToString();
+					 dataGridView1->Rows[i]->Cells[3]->Value= (1e7*experimental.AbsoMulti.lambda[i]).ToString();
+					 dataGridView1->Rows[i]->Cells[4]->Value= experimental.AbsoMulti.fexp[i].ToString();
 				 }
 			 }
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
 				 MatrixXd Hess,Res;
-//				 CalculateHessian(experimental.u2,experimental.u4,experimental.u6,experimental.lambda,1.9,1e-24, 1e-24, 1e-24, experimental.fexp, Hess,Res);
-};
-private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
-			 String ^messages,^latex, ^fname;
-			 DateTime now;
-			 now=DateTime::Now;
-			 String ^date=now.ToString("yyyyMMddHHmmss");
-			 Console::WriteLine(date);
-			 if (experimental.AbsoMulti.filled==false){
-				 loadFromFileToolStripMenuItem_Click(sender, e);
-				 
+				 //				 CalculateHessian(experimental.u2,experimental.u4,experimental.u6,experimental.lambda,1.9,1e-24, 1e-24, 1e-24, experimental.fexp, Hess,Res);
+			 };
+	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+				 String ^messages,^latex, ^fname;
+				 DateTime now;
+				 now=DateTime::Now;
+				 String ^date=now.ToString("yyyyMMddHHmmss");
+				 Console::WriteLine(date);
+				 if (experimental.AbsoMulti.filled==false){
+					 loadFromFileToolStripMenuItem_Click(sender, e);
+
+
+				 }
+				 else
+				 {
+					 //FitLM(experimental.u2, experimental.u4, experimental.u6, experimental.lambda,experimental.n,experimental.j,experimental.o2,experimental.o4, experimental.o6, experimental.fexp,messages,latex);
+					 experimental.FitLevMar(messages,latex);	 
+					 OutTB->Text+=now.ToString()+"\r\n";
+					 OutTB->Text+=messages;
+					 latexBox->Text+=latex;
+					 o2tb->Text=experimental.o2.ToString("g4");
+					 o4tb->Text=experimental.o4.ToString("g4");
+					 o6tb->Text=experimental.o6.ToString("g4");
+					 FitStatusLabel->Text="Data fitted";
+					 RateGB->Enabled=true;
+					 fname=System::IO::Path::GetFileNameWithoutExtension(openFileDialog1->FileNames[0]);
+					 System::IO::StreamWriter^ sw=gcnew System::IO::StreamWriter("abso"+fname+" "+date+".log");
+					 sw->WriteLine(OutTB->Text);
+					 sw->Close();
+				 }
+			 };
+	private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
 
 			 }
-			 else
-			 {
-			//FitLM(experimental.u2, experimental.u4, experimental.u6, experimental.lambda,experimental.n,experimental.j,experimental.o2,experimental.o4, experimental.o6, experimental.fexp,messages,latex);
-			experimental.FitLevMar(messages,latex);	 
-			OutTB->Text+=now.ToString()+"\r\n";
-			OutTB->Text+=messages;
-			latexBox->Text+=latex;
-			o2tb->Text=experimental.o2.ToString("g4");
-			o4tb->Text=experimental.o4.ToString("g4");
-			o6tb->Text=experimental.o6.ToString("g4");
-			FitStatusLabel->Text="Data fitted";
-			RateGB->Enabled=true;
-			fname=System::IO::Path::GetFileNameWithoutExtension(openFileDialog1->FileNames[0]);
-			System::IO::StreamWriter^ sw=gcnew System::IO::StreamWriter("abso"+fname+" "+date+".log");
-			sw->WriteLine(OutTB->Text);
-			sw->Close();
+	private: System::Void dataGridView1_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
 			 }
-		 };
-private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
-			 	 
-		 }
-private: System::Void dataGridView1_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
-		 }
-private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
 
-		 }
-private: System::Void loadFromFileToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-			 int size;
-			 String ^MSG;
-if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
+			 }
+	private: System::Void loadFromFileToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+				 int size;
+				 String ^MSG;
+				 if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
 				 {
 					 experimental.LoadAbsoDataFromFile(openFileDialog1->FileNames[0],MSG);
-					  OutTB->Text+=MSG;
+					 OutTB->Text+=MSG;
 					 size=experimental.AbsoMulti.u2.size();				
-				 dataGridView1->RowCount=size;
-				 for (int i=0;i<size;i++){
-				 dataGridView1->Rows[i]->Cells[0]->Value= experimental.AbsoMulti.u2[i].ToString("g5");
-				 dataGridView1->Rows[i]->Cells[1]->Value= experimental.AbsoMulti.u4[i].ToString("g5");
-				 dataGridView1->Rows[i]->Cells[2]->Value= experimental.AbsoMulti.u6[i].ToString("g5");
-				 dataGridView1->Rows[i]->Cells[3]->Value= (1e7*experimental.AbsoMulti.lambda[i]).ToString("g4");
-				 dataGridView1->Rows[i]->Cells[4]->Value= experimental.AbsoMulti.fexp[i].ToString("g4");
-				 }
+					 dataGridView1->RowCount=size;
+					 for (int i=0;i<size;i++){
+						 dataGridView1->Rows[i]->Cells[0]->Value= experimental.AbsoMulti.u2[i].ToString("g5");
+						 dataGridView1->Rows[i]->Cells[1]->Value= experimental.AbsoMulti.u4[i].ToString("g5");
+						 dataGridView1->Rows[i]->Cells[2]->Value= experimental.AbsoMulti.u6[i].ToString("g5");
+						 dataGridView1->Rows[i]->Cells[3]->Value= (1e7*experimental.AbsoMulti.lambda[i]).ToString("g4");
+						 dataGridView1->Rows[i]->Cells[4]->Value= experimental.AbsoMulti.fexp[i].ToString("g4");
+					 }
 					 experimental.o2=1e-20;
 					 experimental.o4=1e-20;
 					 experimental.o6=1e-20;
@@ -660,108 +671,127 @@ if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK 
 					 toolStripStatusLabel1->Text=openFileDialog1->FileNames[0]+ " was loaded";
 					 LevMarButt->Text="LM";
 					 FitGB->Enabled=true;
-					
-}
-		 }
-private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
-		 }
-private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
-			/*experimental.o2=0.14727E-19;
-			experimental.o4=0.19006E-19;
-			experimental.o6=0.86311E-20;
-			cout <<chi2(experimental.u2,experimental.u4,experimental.u6,experimental.lambda,experimental.n,experimental.o2,experimental.o4,experimental.o6,experimental.fexp);*/
-		 }
-private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-			 vector <double> a;
-			 String ^messages,^latex,^emi,^fname;
-			 double Ajj;
-			 Ajj=0;
-			 DateTime now;
-			 now=DateTime::Now;
-			 String ^date=now.ToString("yyyyMMddHHmmss");
-			 if (openFileDialog2->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
-			 {
-				 int numload=openFileDialog2->FileNames->Length;
 
-				 for (int i=0;i<numload;i++){
-					 experimental.LoadEmDataFromFile(openFileDialog2->FileNames[i]);
-					 //SmEmmision.GetParameters(experimental);
-					 OutTB->Text+="File "+openFileDialog2->FileNames[i]+" loaded\r\n";
-					 //CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,SmEmmision.j,SmEmmision.lambda,SmEmmision.n,experimental.o2,experimental.o4,experimental.o6,a);
-					 experimental.CalculateRates();
-					 experimental.ReportRates(messages,latex);
-					 experimental.DumpEmiData(emi);
-					 OutTB->Text+=emi;
-					 OutTB->Text+=messages;
-					 OutTB->Text+="___________________________________\r\n";
-					 latexBox->Text+=latex;
-					 messages="";
-					 latex="";
 				 }
 			 }
-			 fname=gcnew String(experimental.AbsoDatafile.c_str());
-			 fname=System::IO::Path::GetFileNameWithoutExtension(fname);
-			System::IO::StreamWriter^ sw=gcnew System::IO::StreamWriter("emi"+fname+" "+date+".log");
-			sw->WriteLine(OutTB->Text);
-			sw->Close();
-		 }
-private: System::Void quitToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-			 exit(0);
-		 }
-private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
-		 }
-private: System::Void button1_Click_2(System::Object^  sender, System::EventArgs^  e) {
-			 experimental.o2=(Convert::ToDouble(o2tb->Text));
-			  experimental.o4=(Convert::ToDouble(o4tb->Text));
-			   experimental.o6=(Convert::ToDouble(o6tb->Text));
-		 }
-private: System::Void button3_Click_1(System::Object^  sender, System::EventArgs^  e) {
-			 			 String ^messages,^latex;
-			 if (experimental.AbsoMulti.filled==false){
-				 loadFromFileToolStripMenuItem_Click(sender, e);
+	private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 			 }
-			 else
-			 {
-			//FitLM(experimental.u2, experimental.u4, experimental.u6, experimental.lambda,experimental.n,experimental.j,experimental.o2,experimental.o4, experimental.o6, experimental.fexp,messages,latex);
-			experimental.FitLevMarSol(messages,latex);	 
-			OutTB->Text+=messages;
-			latexBox->Text+=latex;
-			FitStatusLabel->Text="Data fitted";
-			RateGB->Enabled=true;
-			o2tb->Text=experimental.o2.ToString("g4");
-			o4tb->Text=experimental.o4.ToString("g4");
-			o6tb->Text=experimental.o6.ToString("g4");
+	private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
+				 /*experimental.o2=0.14727E-19;
+				 experimental.o4=0.19006E-19;
+				 experimental.o6=0.86311E-20;
+				 cout <<chi2(experimental.u2,experimental.u4,experimental.u6,experimental.lambda,experimental.n,experimental.o2,experimental.o4,experimental.o6,experimental.fexp);*/
 			 }
+	private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+				 vector <double> a;
+				 String ^messages,^latex,^emi,^fname;
+				 double Ajj;
+				 Ajj=0;
+				 DateTime now;
+				 now=DateTime::Now;
+				 String ^date=now.ToString("yyyyMMddHHmmss");
+				 if (openFileDialog2->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
+				 {
+					 int numload=openFileDialog2->FileNames->Length;
 
-		 }
-private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
-		 }
-private: System::Void toolStripStatusLabel1_Click(System::Object^  sender, System::EventArgs^  e) {
-		 }
-private: System::Void fileToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-		 }
-private: System::Void LoadButt_Click(System::Object^  sender, System::EventArgs^  e) {
- loadFromFileToolStripMenuItem_Click(sender, e);
-		 }
-private: System::Void button4_Click_1(System::Object^  sender, System::EventArgs^  e) {
-			 loadEmissionDataToolStripMenuItem_Click(sender,e);
-		 }
-private: System::Void button5_Click_1(System::Object^  sender, System::EventArgs^  e) {
-			 String ^msg;
-			 if (experimental.AbsoMulti.filled==false){
+					 for (int i=0;i<numload;i++){
+						 experimental.LoadEmDataFromFile(openFileDialog2->FileNames[i]);
+						 //SmEmmision.GetParameters(experimental);
+						 OutTB->Text+="File "+openFileDialog2->FileNames[i]+" loaded\r\n";
+						 //CalculateRates(SmEmmision.u2,SmEmmision.u4,SmEmmision.u6,SmEmmision.j,SmEmmision.lambda,SmEmmision.n,experimental.o2,experimental.o4,experimental.o6,a);
+						 experimental.CalculateRates();
+						 experimental.ReportRates(messages,latex);
+						 experimental.DumpEmiData(emi);
+						 OutTB->Text+=emi;
+						 OutTB->Text+=messages;
+						 OutTB->Text+="___________________________________\r\n";
+						 latexBox->Text+=latex;
+						 messages="";
+						 latex="";
+					 }
+				 }
+				 fname=gcnew String(experimental.AbsoDatafile.c_str());
+				 fname=System::IO::Path::GetFileNameWithoutExtension(fname);
+				 System::IO::StreamWriter^ sw=gcnew System::IO::StreamWriter("emi"+fname+" "+date+".log");
+				 sw->WriteLine(OutTB->Text);
+				 sw->Close();
+			 }
+	private: System::Void quitToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+				 exit(0);
+			 }
+	private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
+			 }
+	private: System::Void button1_Click_2(System::Object^  sender, System::EventArgs^  e) {
+				 experimental.o2=(Convert::ToDouble(o2tb->Text));
+				 experimental.o4=(Convert::ToDouble(o4tb->Text));
+				 experimental.o6=(Convert::ToDouble(o6tb->Text));
+			 }
+	private: System::Void button3_Click_1(System::Object^  sender, System::EventArgs^  e) {
+				 String ^messages,^latex;
+				 if (experimental.AbsoMulti.filled==false){
+					 loadFromFileToolStripMenuItem_Click(sender, e);
+				 }
+				 else
+				 {
+					 //FitLM(experimental.u2, experimental.u4, experimental.u6, experimental.lambda,experimental.n,experimental.j,experimental.o2,experimental.o4, experimental.o6, experimental.fexp,messages,latex);
+					 experimental.FitLevMarSol(messages,latex);	 
+					 OutTB->Text+=messages;
+					 latexBox->Text+=latex;
+					 FitStatusLabel->Text="Data fitted";
+					 RateGB->Enabled=true;
+					 o2tb->Text=experimental.o2.ToString("g4");
+					 o4tb->Text=experimental.o4.ToString("g4");
+					 o6tb->Text=experimental.o6.ToString("g4");
+				 }
+
+			 }
+	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
+			 }
+	private: System::Void toolStripStatusLabel1_Click(System::Object^  sender, System::EventArgs^  e) {
+			 }
+	private: System::Void fileToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+			 }
+	private: System::Void LoadButt_Click(System::Object^  sender, System::EventArgs^  e) {
 				 loadFromFileToolStripMenuItem_Click(sender, e);
 			 }
-			 else
-			 {
-			 experimental.MatrixJO(msg);
+	private: System::Void button4_Click_1(System::Object^  sender, System::EventArgs^  e) {
+				 loadEmissionDataToolStripMenuItem_Click(sender,e);
 			 }
-		 }
-private: System::Void button6_Click_1(System::Object^  sender, System::EventArgs^  e) {
-			 String ^fake,^fake2;
-			 experimental.LoadAbsoDataFromFile("d:\\prace\\2016\\PoligonJO\\dla196.txt",fake);
-			 experimental.LoadEmBranchFromFile("d:\\prace\\2016\\PoligonJO\\samarbranch.txt",fake);
-			 experimental.FitLevMarBranching(fake,fake2);
-		 }
-};
+	private: System::Void button5_Click_1(System::Object^  sender, System::EventArgs^  e) {
+				 String ^msg;
+				 if (experimental.AbsoMulti.filled==false){
+					 loadFromFileToolStripMenuItem_Click(sender, e);
+				 }
+				 else
+				 {
+					 experimental.MatrixJO(msg);
+				 }
+			 }
+	private: System::Void button6_Click_1(System::Object^  sender, System::EventArgs^  e) {
+				 String ^fake,^fake2;
+				 experimental.LoadAbsoDataFromFile("d:\\prace\\2016\\PoligonJO\\dla196.txt",fake);
+				 experimental.LoadEmBranchFromFile("d:\\prace\\2016\\PoligonJO\\samarbranch.txt",fake);
+				 experimental.FitLevMarBranching(fake,fake2);
+			 }
+	private: System::Void brButt_Click(System::Object^  sender, System::EventArgs^  e) {
+				 String ^MSG;
+				 if (openFileDialog1->ShowDialog() == ::System::Windows::Forms::DialogResult::OK )
+				 {
+					 experimental.LoadEmBranchFromFile(openFileDialog1->FileNames[0],MSG);
+					 OutTB->Text+=MSG;
+				 }
+			 }
+	private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {
+				 String ^MSG,^latex;
+				 experimental.FitLevMarBranching(MSG,latex);
+				 OutTB->Text+=MSG;
+				 FitStatusLabel->Text="Data fitted";
+				 RateGB->Enabled=true;
+				 o2tb->Text=experimental.o2.ToString("g4");
+				 o4tb->Text=experimental.o4.ToString("g4");
+				 o6tb->Text=experimental.o6.ToString("g4");
+
+			 }
+	};
 }
 

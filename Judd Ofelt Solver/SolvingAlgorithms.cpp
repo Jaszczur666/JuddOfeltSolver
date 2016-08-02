@@ -79,7 +79,7 @@ void CalculateHessianBr(Experiment BExp, double o2,double o4, double o6,double f
 	int i,size,size1,size2;
 	MatrixXd Hessian;
 	double ro2,ro4,ro6,rfemi,res,delta;
-	size=BExp.AbsoMulti.u2.size()+BExp.BMulti.u2.size();
+	size=BExp.AbsoMulti.u2.size()+BExp.BMulti.u2.size()-1;
 	size1=BExp.AbsoMulti.u2.size();
 	size2=BExp.BMulti.u2.size();
 	MatrixXd Res(size,1);
@@ -260,7 +260,7 @@ void FitSolarz(vector <double> u2, vector<double> u4, vector <double> u6, vector
 
 }
 
-void FitBranching(Experiment BExp,System::String^ &MSG,System::String^ &LATEX){
+void FitBranching(Experiment &BExp,System::String^ &MSG,System::String^ &LATEX){
 	MatrixXd Hessian,Hessiandiag;
 	MatrixXd Grad;
 	MatrixXd parameters(4,1);
@@ -281,7 +281,7 @@ void FitBranching(Experiment BExp,System::String^ &MSG,System::String^ &LATEX){
 	chi2s=0;
 	MSG+="Num.\tChi2\tO2\tO4\tO6\r\n";
 	cout <<"Begining fitting procedure."<<endl;
-	for(int i=1;i<100;i++)
+	for(int i=1;i<20;i++)
 	{
 		chi2s=chi2br(BExp,o2,o4,o6,femi);
 		CalculateHessianBr(BExp,o2,o4,o6,femi,Hessian,Grad);
@@ -293,6 +293,7 @@ void FitBranching(Experiment BExp,System::String^ &MSG,System::String^ &LATEX){
 		nfemi=newparams(3,0);
 		chi2n=chi2br(BExp,no2,no4,no6,nfemi);
 		cout<< i <<" "<< chi2s <<" " <<no2<<" "<<no4<<" "<<no6<<" "<<nfemi<<endl;
+		MSG+=i.ToString("G5")+"\t"+chi2s.ToString("G5")+"\t"+no2.ToString("G5")+"\t"+no4.ToString("G5")+"\t"+no6.ToString("G5")+"\t"+nfemi.ToString("G5")+"\r\n";
 		if (chi2n<chi2s){
 			parameters=newparams;
 			o2=no2;
@@ -306,9 +307,37 @@ void FitBranching(Experiment BExp,System::String^ &MSG,System::String^ &LATEX){
 			lambda=lambda/1.1;
 		}
 	}
-	int size;
+	int size,size1,size2;
 	size=BExp.AbsoMulti.u2.size()+BExp.BMulti.u2.size();
+	size1=BExp.AbsoMulti.u2.size();
+	size2=BExp.BMulti.u2.size();
 	error=(Hessiandiag.inverse().diagonal()*chi2n/(size-4));
 	for (int i=0;i<4;i++) error(i)=abs(sqrt(error(i)));
 	cout <<"Errors "<< error(0)<<" "<<error(1)<<" "<< error(2)<<" "<<error(3)<<endl;
+//	MSG+=error(0).ToString("G5")+" "+error(1).ToString("G5")+" "+error(2).ToString("G5")+" "+error(3).ToString("G5")+" "+"\r\n";
+	MSG+="Parameters\t o2="+o2.ToString("G4")+"\t o4="+o4.ToString("G4")+"\t o6="+o6.ToString("G4")+"\t Femi="+femi.ToString("G4")+"\r\n";
+	MSG+="Errors \t do2="+error(0).ToString("G2")+"\t do4="+error(1).ToString("G2")+"\t do6="+error(2).ToString("G2")+"\t dFemi"+error(3).ToString("G2")+"\r\n";
+	MSG+="Relative errors \t" + (100*error(0)/o2).ToString("G3") +"%\t"+(100*error(1)/o4).ToString("G3") +"%\t"+(100*error(2)/o6).ToString("G3")+"%\t"+(100*error(3)/femi).ToString("G3")+"%\r\n";
+	MSG+="Pexp\tPtheor \r\n";
+	MSG+="Absorption \r\n";
+	for (int i=0;i<size1;i++){
+		sumdfexp=sumdfexp+abs(pow(BExp.AbsoMulti.fexp[i]-f(BExp.AbsoMulti.u2[i], BExp.AbsoMulti.u4[i], BExp.AbsoMulti.u6[i], BExp.AbsoMulti.lambda[i],BExp.n,BExp.AbsoMulti.TwoJPlusOne,o2, o4,o6),2));
+		sumfexp=sumfexp+BExp.AbsoMulti.fexp[i]/size;
+		cout << BExp.AbsoMulti.fexp[i]<<" " << f(BExp.AbsoMulti.u2[i], BExp.AbsoMulti.u4[i], BExp.AbsoMulti.u6[i], BExp.AbsoMulti.lambda[i],BExp.n,BExp.AbsoMulti.TwoJPlusOne,o2, o4,o6)<<"  "<< endl;
+		MSG+=BExp.AbsoMulti.fexp[i].ToString("G4")+" "+f(BExp.AbsoMulti.u2[i], BExp.AbsoMulti.u4[i], BExp.AbsoMulti.u6[i], BExp.AbsoMulti.lambda[i],BExp.n,BExp.AbsoMulti.TwoJPlusOne,o2, o4,o6).ToString("G4")+"\r\n";
+	}
+		MSG+="Emission \r\n";
+	for (int i=0;i<size2;i++){
+		sumdfexp=sumdfexp+abs(pow(BExp.BMulti.branching[i]*femi-f(BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne,o2, o4,o6),2));
+		sumfexp=sumfexp+BExp.BMulti.branching[i]*femi/size;
+		cout<<BExp.BMulti.branching[i]*femi <<" "<<f(BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne,o2, o4,o6)<<endl;
+		MSG+=(BExp.BMulti.branching[i]*femi).ToString("G4")+" "+f(BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne,o2, o4,o6).ToString("G4")+"\r\n";
+	}
+	cout<<"RMS = " <<sqrt(sumdfexp/(size-4))<<" RMS/avg f "<<100*sqrt(sumdfexp/(size-4))/sumfexp<<"%"<<endl;
+	LATEX+="RMS = "+lf(sqrt(sumdfexp/(size-4)))+"$\\frac{RMS}{\\underline{f}}$= "+(100*sqrt(sumdfexp/(size-4))/sumfexp).ToString("G3") +"\\%\r\n\r\n";
+	MSG+="RMS = "+sqrt(sumdfexp/(size-4)).ToString("G4")+" RMS/avg f = "+ (100*sqrt(sumdfexp/(size-4))/sumfexp).ToString("G3")+"% \r\n";
+
+	BExp.o2=o2;
+	BExp.o4=o4;
+	BExp.o6=o6;
 }

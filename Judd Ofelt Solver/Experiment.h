@@ -20,6 +20,7 @@ public:
 	double sumrate;
 	double femi;
 	std::wstring AbsoDatafile;
+	std::wstring BrDatafile;
 	void LoadAbsoDataFromFile(String^ Filename,String^ &MSG);
 	void LoadEmDataFromFile(String^ Filename);
 	void LoadEmBranchFromFile(String^ Filename,String^ &MSG );

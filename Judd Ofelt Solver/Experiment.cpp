@@ -188,6 +188,7 @@ void Experiment::LoadEmBranchFromFile(String^ Filename ,String^ &MSG){
 	this->BMulti.lambda.clear();
 	while(inpfile >> branching >> wavenumber>>u2>>u4>>u6){
 		cout<<branching<<" "<<wavenumber<<" "<<u2<<" "<<u4<<" "<<u6<<std::endl;
+		MSG+=branching.ToString()+"\t"+wavenumber.ToString()+"\t"+u2.ToString("G5")+"\t"+u4.ToString("G5")+"\t"+u6.ToString("G5")+"\r\n";
 		this->BMulti.branching.push_back(branching);
 		this->BMulti.u2.push_back(u2);
 		this->BMulti.u4.push_back(u4);
