@@ -200,13 +200,10 @@ void Experiment::LoadEmBranchFromFile(String^ Filename ,String^ &MSG){
 	branchnorm=BMulti.branching[0];
 	for (int i=0;i<size;i++){
 	branchsum+=BMulti.branching[i];
-	BMulti.branching[i]*=(1/branchnorm);
+	BMulti.branching[i]*=pow((BMulti.lambda[i]/BMulti.lambda[0]),2)*(1/branchnorm); // Oscillator forces do not follow branching ratios directly
 	cout<<i<<" "<<BMulti.branching[i]<<std::endl;
 	}
-	cout<<branchsum<<std::endl;
-	for (int i=0;i<size;i++){
-		cout <<i<<" "<<BMulti.branching[i]<<" "<<std::endl;
-	}
+	//cout<<branchsum<<std::endl;
 }
 void Experiment::FitLevMarBranching(String^ &messages, String^ &latex){
 	FitBranching(*this,messages,latex);

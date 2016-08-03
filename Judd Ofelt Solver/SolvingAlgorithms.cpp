@@ -102,11 +102,11 @@ void CalculateHessianBr(Experiment BExp, double o2,double o4, double o6,double f
 		ro2=Residue(BExp.BMulti.branching[i]*femi, o2+delta, o4, o6,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne);
 		ro4=Residue(BExp.BMulti.branching[i]*femi, o2, o4+delta, o6,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne);
 		ro6=Residue(BExp.BMulti.branching[i]*femi, o2, o4, o6+delta,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne);
-		rfemi=Residue(BExp.BMulti.branching[i]*(femi+delta*1e15), o2, o4, o6,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne);
+		rfemi=Residue(BExp.BMulti.branching[i]*(femi+delta*1e9), o2, o4, o6,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne);
 		Jaco(size1+i-1,0)=(ro2-res)/delta;
 		Jaco(size1+i-1,1)=(ro4-res)/delta;
 		Jaco(size1+i-1,2)=(ro6-res)/delta;
-		Jaco(size1+i-1,3)=(rfemi-res)/(delta*1e15);
+		Jaco(size1+i-1,3)=(rfemi-res)/(delta*1e9);
 		Res(size1+i-1,0)=res;
 		//cout<<"res="<<res<<" rfemi="<<rfemi<<" rfemi-res="<<(rfemi-res)<<std::endl;
 	}
@@ -281,7 +281,7 @@ void FitBranching(Experiment &BExp,System::String^ &MSG,System::String^ &LATEX){
 	chi2s=0;
 	MSG+="Num.\tChi2\tO2\tO4\tO6\r\n";
 	cout <<"Begining fitting procedure."<<endl;
-	for(int i=1;i<20;i++)
+	for(int i=1;i<100;i++)
 	{
 		chi2s=chi2br(BExp,o2,o4,o6,femi);
 		CalculateHessianBr(BExp,o2,o4,o6,femi,Hessian,Grad);
