@@ -45,7 +45,7 @@ double chi2Solarz(std::vector <double> u2, std::vector<double> u4, std::vector <
 
 double Residue(double fexp, double o2, double o4, double o6,double u2, double u4, double u6, double lambda, double n, double TwoJPlusOne)
 {
-	return f(u2,u4,u6,lambda, n,TwoJPlusOne,(o2), (o4),(o6))-fexp;
+	return f(u2,u4,u6,lambda, n,TwoJPlusOne,o2,o4,o6)-fexp;
 };
 
 void CalculateHessian(std::vector <double> u2, std::vector<double> u4, std::vector <double> u6, std::vector <double> lambda0,double n,double TwoJPlusOne,double o2, double o4, double o6, std::vector <double> fexp, MatrixXd &Hess, MatrixXd &Grad)

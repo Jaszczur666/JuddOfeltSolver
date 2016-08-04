@@ -767,10 +767,19 @@ namespace JuddOfeltSolver {
 				 }
 			 }
 	private: System::Void button6_Click_1(System::Object^  sender, System::EventArgs^  e) {
-				 String ^fake,^fake2;
-				 experimental.LoadAbsoDataFromFile("d:\\prace\\2016\\PoligonJO\\dla196.txt",fake);
-				 experimental.LoadEmBranchFromFile("d:\\prace\\2016\\PoligonJO\\samarbranch.txt",fake);
-				 experimental.FitLevMarBranching(fake,fake2);
+				 //String ^fake,^fake2;
+				 //experimental.LoadAbsoDataFromFile("d:\\prace\\2016\\PoligonJO\\dla196.txt",fake);
+				 //experimental.LoadEmBranchFromFile("d:\\prace\\2016\\PoligonJO\\samarbranch.txt",fake);
+				 //experimental.FitLevMarBranching(fake,fake2);
+				 double o2,o4,o6;
+				 o2=1.25e-20;
+				 o4=2.75e-20;
+				 o6=3.675e-20;
+				 std::cout<<"9 2"<<std::endl;
+				 std::cout <<f(0.1, 0.02, 0.43, 1/10000.0,2,9,o2,o4,o6)<<" 10000 0.1 0.02 0.43"<<std::endl;
+				 std::cout <<f(0.453, 0.0564, 0.0345, 1/20000.0,2,9,o2,o4,o6)<<" 20000 0.453 0.0564 0.0345"<<std::endl;
+				 std::cout <<f(0.026, 0.167, 0.2388, 1/21000.0,2,9,o2,o4,o6)<<" 21000 0.026 0.167 0.2388"<<std::endl;
+				 std::cout <<f(0.7261, 0.3292, 0.8653, 1/22000.0,2,9,o2,o4,o6)<<" 22000 0.7261 0.3292 0.8653"<<std::endl;
 			 }
 	private: System::Void brButt_Click(System::Object^  sender, System::EventArgs^  e) {
 				 String ^MSG;
