@@ -3,15 +3,15 @@
 #include "AuxFuncs.h"
 #include "Constants.h"
 #include "SolvingAlgorithms.h"
-void Experiment::LoadEmDataFromFile(String^ Filename)//, struct Experiment &experimental)
+void Experiment::LoadEmDataFromFile(System::String^ Filename)//, struct Experiment &experimental)
 {
 	double n, TwoJPlusOne,u2,u4,u6,wavenumber;
-	wstring name,str;
+	std::wstring name,str;
 	MarshalString(Filename,name);
-	ifstream inpfile(name);
+	std::ifstream inpfile(name);
 	//	getline(inpfile,str);
 	inpfile>>TwoJPlusOne>>n;
-	cout << n <<" "<<TwoJPlusOne<<endl;
+	std::cout << n <<" "<<TwoJPlusOne<<std::endl;
 	this->EmiMulti.lambda.clear();
 	this->EmiMulti.u2.clear();
 	this->EmiMulti.u4.clear();
@@ -19,8 +19,8 @@ void Experiment::LoadEmDataFromFile(String^ Filename)//, struct Experiment &expe
 	this->EmiMulti.fexp.clear();
 	this->n=n;
 	this->EmiMulti.TwoJPlusOne=TwoJPlusOne;
-	cout <<"Loading file "<<endl;
-	cout<<"Wavenumber \t u2\t u4 \t u6"<<endl;
+	std::cout <<"Loading file "<<std::endl;
+	std::cout<<"Wavenumber \t u2\t u4 \t u6"<<std::endl;
 	while(inpfile >> wavenumber>>u2>>u4>>u6){
 		//this->fexp.push_back(pexp);
 		this->EmiMulti.u2.push_back(u2);
@@ -30,7 +30,7 @@ void Experiment::LoadEmDataFromFile(String^ Filename)//, struct Experiment &expe
 		this->o2=1e-20;
 		this->o4=1e-20;
 		this->o6=1e-20;
-		cout  <<1.0e7/wavenumber <<" "<<u2<<" "<<" "<<u4<<" "<< u6<<endl;
+		std::cout  <<1.0e7/wavenumber <<" "<<u2<<" "<<" "<<u4<<" "<< u6<<std::endl;
 	}
 }
 
@@ -44,12 +44,12 @@ void Experiment::CalculateRates()//vector <double> u2, vector<double> u4, vector
 	for(int i=0;i<size;i++){
 		//rate=((64*pow(pi,4)*qe*qe)/(3*h*pow(lambda0[i],3)*TwoJPlusOne))*(n*pow(n*n+2,2)/9)*(u2[i]*o2+u4[i]*o4+u6[i]*o6);
 		rate=((64*pow(pi,4)*qe*qe)/(3*h*pow(this->EmiMulti.lambda[i],3)*this->EmiMulti.TwoJPlusOne))*(this->n*pow(this->n*this->n+2,2)/9)*(this->EmiMulti.u2[i]*this->o2+this->EmiMulti.u4[i]*this->o4+this->EmiMulti.u6[i]*this->o6);
-		cout <<1e7*this->EmiMulti.lambda[i] <<" "<< rate <<endl;
+		std::cout <<1e7*this->EmiMulti.lambda[i] <<" "<< rate <<std::endl;
 		this->EmiMulti.Ajj.push_back(rate);
 		sumrate+=rate;
 	}
 	this->sumrate=sumrate;
-	cout << "Effective rate = "<<sumrate<<" which amounts to lifetime of "<<1e3/sumrate<<" ms"<<endl;
+	std::cout << "Effective rate = "<<sumrate<<" which amounts to lifetime of "<<1e3/sumrate<<" ms"<<std::endl;
 }
 
 void Experiment::GetParameters(Experiment donor)
@@ -79,7 +79,7 @@ void Experiment::ReportRates(System::String^ &messages,System::String^ &latex)
 		latex+="\\hline\r\n";
 
 	}
-	cout <<"Rates of radiative transmition calculated"<<endl;
+	std::cout <<"Rates of radiative transmition calculated"<<std::endl;
 	messages+="Wavenumber\t Transition rate\tBranching ratio\r\n";
 	for (int i=0;i<size;i++)
 	{
@@ -90,7 +90,7 @@ void Experiment::ReportRates(System::String^ &messages,System::String^ &latex)
 	latex+="\\hline\r\n\\multicolumn{3}{|l|}{Lifetime}&"+(1000./this->sumrate).ToString("G3")+"ms \\\\\r\n\\hline\r\n ";
 	latex+="\\end{tabular}\r\n";
 }
-void Experiment::DumpEmiData(String^ &emi)
+void Experiment::DumpEmiData(System::String^ &emi)
 {
 	int size;
 	emi="";
@@ -105,10 +105,10 @@ void Experiment::DumpEmiData(String^ &emi)
 	}
 
 }
-void Experiment::MatrixJO(String^ &msg){
+void Experiment::MatrixJO(System::String^ &msg){
 	double XF=0.0,YF=0.0,ZF=0.0,XX=0.0,XY=0.0,XZ=0.0,YY=0.0,YZ=0.0,ZZ=0.0,K=0.0;
 	double x=0.0,y=0.0,z=0.0;
-	MatrixXd Dmat(3,3),Om2(3,3),Om4(3,3),Om6(3,3);
+	Eigen::MatrixXd Dmat(3,3),Om2(3,3),Om4(3,3),Om6(3,3);
 	for (int i=0;i<this->AbsoMulti.u2.size();i++){
 		K=KFunction(this->AbsoMulti.u2[i],this->AbsoMulti.u4[i],this->AbsoMulti.u6[i],this->AbsoMulti.lambda[i],this->n,this->AbsoMulti.TwoJPlusOne);
 		x=K*this->AbsoMulti.u2[i];
@@ -123,31 +123,31 @@ void Experiment::MatrixJO(String^ &msg){
 		YY+=y*y;
 		YZ+=y*z;
 		ZZ+=z*z;
-		//cout<<K<<endl;
+		//cout<<K<<std::endl;
 	}
 	Dmat<<XX,XY,XZ,XY,YY,YZ,XZ,YZ,ZZ;
-	cout<<Dmat<<endl;
+	std::cout<<Dmat<<std::endl;
 	Om2<<XF,XY,XZ,YF,YY,YZ,ZF,YZ,ZZ;
 	Om4<<XX,XF,XZ,XY,YF,YZ,XZ,ZF,ZZ;
 	Om6<<XX,XY,XF,XY,YY,YF,XZ,YZ,ZF;
 	double d;
 	d=Dmat.determinant();
-	cout<<d<<" "<<1/d*Om2.determinant()<<" "<<1/d*Om4.determinant()<<" "<<1/d*Om6.determinant()<<endl;
+	std::cout<<d<<" "<<1/d*Om2.determinant()<<" "<<1/d*Om4.determinant()<<" "<<1/d*Om6.determinant()<<std::endl;
 }
-void Experiment::LoadAbsoDataFromFile(String^ Filename,String^ &MSG)//, struct Experiment &experimental)
+void Experiment::LoadAbsoDataFromFile(System::String^ Filename,System::String^ &MSG)//, struct Experiment &experimental)
 {
 	double n, j,u2,u4,u6,wavenumber,pexp;
-	wstring name,str;
+	std::wstring name,str;
 	MarshalString(Filename,name);
-	ifstream inpfile(name);
+	std::ifstream inpfile(name);
 	this->AbsoDatafile=name;
-	//	cout<<name<<endl;
+	//	std::cout<<name<<std::endl;
 	//	getline(inpfile,str);
 	inpfile>>j>>n;
 	MSG+="Loading file "+Filename+"\r\n";
-	cout <<"Loading file "<<endl;
+	std::cout <<"Loading file "<<std::endl;
 	MSG+="n= "+n.ToString("G3")+" 2J+1= "+j.ToString()+"\r\n";
-	cout <<"n= "<< n <<" 2J+1= "<<j<<endl;
+	std::cout <<"n= "<< n <<" 2J+1= "<<j<<std::endl;
 	this->AbsoMulti.lambda.clear();
 	this->AbsoMulti.u2.clear();
 	this->AbsoMulti.u4.clear();
@@ -159,26 +159,26 @@ void Experiment::LoadAbsoDataFromFile(String^ Filename,String^ &MSG)//, struct E
 	this->o4=1e-20;
 	this->o6=1e-20;
 	MSG+="fexp \t wvnmb[cm^-1] \t u2 \t u4 \t u6\r\n";
-	cout<<"fexp \t wvlgth[nm] \t u2 \t u4 \t u6"<<endl;
+	std::cout<<"fexp \t wvlgth[nm] \t u2 \t u4 \t u6"<<std::endl;
 	while(inpfile >> pexp >> wavenumber>>u2>>u4>>u6){
 		this->AbsoMulti.fexp.push_back(pexp);
 		this->AbsoMulti.u2.push_back(u2);
 		this->AbsoMulti.u4.push_back(u4);
 		this->AbsoMulti.u6.push_back(u6);
 		this->AbsoMulti.lambda.push_back(1./wavenumber);
-		cout <<pexp <<" \t"<<1.0e7/wavenumber <<"\t "<<u2<<"\t "<<"\t "<<u4<<"\t "<< u6<<endl;
+		std::cout <<pexp <<" \t"<<1.0e7/wavenumber <<"\t "<<u2<<"\t "<<"\t "<<u4<<"\t "<< u6<<std::endl;
 		MSG+=pexp.ToString("G5")+"\t"+wavenumber.ToString("G5")+"\t"+u2.ToString("G5")+"\t"+u4.ToString("G5")+"\t"+u6.ToString("G5")+"\r\n";
 	}
 }
-void Experiment::LoadEmBranchFromFile(String^ Filename ,String^ &MSG){
-	wstring name,str;
+void Experiment::LoadEmBranchFromFile(System::String^ Filename ,System::String^ &MSG){
+	std::wstring name,str;
 	double branching,wavenumber,u2,u4,u6,TwoJPlusOne;
 	int size;
 	double branchsum,branchnorm;
 	MarshalString(Filename,name);
-	ifstream inpfile(name);
+	std::ifstream inpfile(name);
 	MSG+="Loading file "+Filename+"\r\n";
-	cout <<"Loading file "<<endl;
+	std::cout <<"Loading file "<<std::endl;
 	inpfile>>TwoJPlusOne;
 	this->BMulti.TwoJPlusOne=TwoJPlusOne;
 	this->BMulti.u2.clear();
@@ -187,7 +187,7 @@ void Experiment::LoadEmBranchFromFile(String^ Filename ,String^ &MSG){
 	this->BMulti.branching.clear();
 	this->BMulti.lambda.clear();
 	while(inpfile >> branching >> wavenumber>>u2>>u4>>u6){
-		cout<<branching<<" "<<wavenumber<<" "<<u2<<" "<<u4<<" "<<u6<<std::endl;
+		std::cout<<branching<<" "<<wavenumber<<" "<<u2<<" "<<u4<<" "<<u6<<std::endl;
 		MSG+=branching.ToString()+"\t"+wavenumber.ToString()+"\t"+u2.ToString("G5")+"\t"+u4.ToString("G5")+"\t"+u6.ToString("G5")+"\r\n";
 		this->BMulti.branching.push_back(branching);
 		this->BMulti.u2.push_back(u2);
@@ -201,10 +201,10 @@ void Experiment::LoadEmBranchFromFile(String^ Filename ,String^ &MSG){
 	for (int i=0;i<size;i++){
 	branchsum+=BMulti.branching[i];
 	BMulti.branching[i]*=pow((BMulti.lambda[i]/BMulti.lambda[0]),2)*(1/branchnorm); // Oscillator forces do not follow branching ratios directly
-	cout<<i<<" "<<BMulti.branching[i]<<std::endl;
+	std::cout<<i<<" "<<BMulti.branching[i]<<std::endl;
 	}
 	//cout<<branchsum<<std::endl;
 }
-void Experiment::FitLevMarBranching(String^ &messages, String^ &latex){
+void Experiment::FitLevMarBranching(System::String^ &messages, System::String^ &latex){
 	FitBranching(*this,messages,latex);
 }

@@ -8,17 +8,16 @@
 #include "Constants.h"
 #include "AuxFuncs.h"
 #include "Experiment.h"
-using namespace std;
 using Eigen::MatrixXd;
-double chi2(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double TwoJPlusOne,double o2, double o4, double o6, vector <double> fexp);
-double chi2Solarz(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double TwoJPlusOne,double o2, double o4, double o6, vector <double> fexp);
+double chi2(std::vector <double> u2, std::vector<double> u4, std::vector <double> u6, std::vector <double> lambda0,double n,double TwoJPlusOne,double o2, double o4, double o6, std::vector <double> fexp);
+double chi2Solarz(std::vector <double> u2, std::vector<double> u4, std::vector <double> u6, std::vector <double> lambda0,double n,double TwoJPlusOne,double o2, double o4, double o6, std::vector <double> fexp);
 double Residue(double fexp, double o2, double o4, double o6,double u2, double u4, double u6, double lambda, double n, double TwoJPlusOne);
-void CalculateHessian(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double TwoJPlusOne,double o2, double o4, double o6, vector <double> fexp, MatrixXd &Hess, MatrixXd &Grad);
-void FitLM(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double TwoJPlusOne,double &o2, double &o4, double &o6, vector <double> fexp,System::String^ &MSG,System::String^ &LATEX);
-void FitSolarz(vector <double> u2, vector<double> u4, vector <double> u6, vector <double> lambda0,double n,double TwoJPlusOne,double &o2, double &o4, double &o6, vector <double> fexp,System::String^ &MSG,System::String^ &LATEX);
+void CalculateHessian(std::vector <double> u2, std::vector<double> u4, std::vector <double> u6, std::vector <double> lambda0,double n,double TwoJPlusOne,double o2, double o4, double o6, std::vector <double> fexp, MatrixXd &Hess, MatrixXd &Grad);
+void FitLM(std::vector <double> u2, std::vector<double> u4, std::vector <double> u6, std::vector <double> lambda0,double n,double TwoJPlusOne,double &o2, double &o4, double &o6, std::vector <double> fexp,System::String^ &MSG,System::String^ &LATEX);
+void FitSolarz(std::vector <double> u2, std::vector<double> u4, std::vector <double> u6, std::vector <double> lambda0,double n,double TwoJPlusOne,double &o2, double &o4, double &o6, std::vector <double> fexp,System::String^ &MSG,System::String^ &LATEX);
 void FitBranching(Experiment &BExp,System::String^ &MSG,System::String^ &LATEX);
 
-//void CalculateRates(vector <double> u2, vector<double> u4, vector <double> u6, double TwoJPlusOne, vector <double> lambda0,double n,double o2, double o4, double o6, vector <double> &a)
+//void CalculateRates(std::vector <double> u2, std::vector<double> u4, std::vector <double> u6, double TwoJPlusOne, std::vector <double> lambda0,double n,double o2, double o4, double o6, std::vector <double> &a)
 //{
 //	int size;
 //	double rate;

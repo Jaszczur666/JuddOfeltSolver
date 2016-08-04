@@ -4,10 +4,9 @@
 #include <vector>
 #define EIGEN_NO_CPUID
 #include <intrin.h>
-using namespace std;
 
 Experiment experimental;
-Experiment SmEmmision;
+//Experiment SmEmmision;
 namespace JuddOfeltSolver {
 
 	using namespace System;
@@ -683,7 +682,7 @@ namespace JuddOfeltSolver {
 				 cout <<chi2(experimental.u2,experimental.u4,experimental.u6,experimental.lambda,experimental.n,experimental.o2,experimental.o4,experimental.o6,experimental.fexp);*/
 			 }
 	private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-				 vector <double> a;
+				 std::vector <double> a;
 				 String ^messages,^latex,^emi,^fname;
 				 double Ajj;
 				 Ajj=0;

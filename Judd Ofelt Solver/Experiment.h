@@ -7,7 +7,6 @@
 #include <vector>
 #include <algorithm>
 #include "Multiplet.h"
-using namespace System;
 class Experiment{
 public:
 	Multiplet AbsoMulti;
@@ -21,17 +20,17 @@ public:
 	double femi;
 	std::wstring AbsoDatafile;
 	std::wstring BrDatafile;
-	void LoadAbsoDataFromFile(String^ Filename,String^ &MSG);
-	void LoadEmDataFromFile(String^ Filename);
-	void LoadEmBranchFromFile(String^ Filename,String^ &MSG );
+	void LoadAbsoDataFromFile(System::String^ Filename,System::String^ &MSG);
+	void LoadEmDataFromFile(System::String^ Filename);
+	void LoadEmBranchFromFile(System::String^ Filename,System::String^ &MSG );
 	void GetParameters(Experiment donor);
 	void CalculateRates();
-	void ReportRates(String^ &messages, String^ &latex);
-	void FitLevMar(String^ &messages, String^ &latex);
-	void FitLevMarBranching(String^ &messages, String^ &latex);
-	void FitLevMarSol(String^ &messages, String^ &latex);
-	void MatrixJO(String^ &messages);
-	void DumpEmiData(String^ &emi);
+	void ReportRates(System::String^ &messages, System::String^ &latex);
+	void FitLevMar(System::String^ &messages, System::String^ &latex);
+	void FitLevMarBranching(System::String^ &messages, System::String^ &latex);
+	void FitLevMarSol(System::String^ &messages, System::String^ &latex);
+	void MatrixJO(System::String^ &messages);
+	void DumpEmiData(System::String^ &emi);
 	Experiment()
 	{
 		femi=1e-6;
