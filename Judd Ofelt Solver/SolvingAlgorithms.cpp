@@ -79,7 +79,7 @@ void CalculateHessianBr(Experiment BExp, double o2,double o4, double o6,double f
 	int i,size,size1,size2;
 	MatrixXd Hessian;
 	double ro2,ro4,ro6,rfemi,res,delta;
-	size=BExp.AbsoMulti.u2.size()+BExp.BMulti.u2.size()-1;
+	size=BExp.AbsoMulti.u2.size()+BExp.BMulti.u2.size();
 	size1=BExp.AbsoMulti.u2.size();
 	size2=BExp.BMulti.u2.size();
 	MatrixXd Res(size,1);
@@ -102,19 +102,19 @@ void CalculateHessianBr(Experiment BExp, double o2,double o4, double o6,double f
 		ro2=Residue(BExp.BMulti.branching[i]*femi, o2+delta, o4, o6,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne);
 		ro4=Residue(BExp.BMulti.branching[i]*femi, o2, o4+delta, o6,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne);
 		ro6=Residue(BExp.BMulti.branching[i]*femi, o2, o4, o6+delta,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne);
-		rfemi=Residue(BExp.BMulti.branching[i]*(femi+delta*1e9), o2, o4, o6,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne);
-		Jaco(size1+i-1,0)=(ro2-res)/delta;
-		Jaco(size1+i-1,1)=(ro4-res)/delta;
-		Jaco(size1+i-1,2)=(ro6-res)/delta;
-		Jaco(size1+i-1,3)=(rfemi-res)/(delta*1e9);
-		Res(size1+i-1,0)=res;
+		rfemi=Residue(BExp.BMulti.branching[i]*(femi+delta*1e12), o2, o4, o6,BExp.BMulti.u2[i], BExp.BMulti.u4[i], BExp.BMulti.u6[i], BExp.BMulti.lambda[i],BExp.n,BExp.BMulti.TwoJPlusOne);
+		Jaco(size1+i,0)=(ro2-res)/delta;
+		Jaco(size1+i,1)=(ro4-res)/delta;
+		Jaco(size1+i,2)=(ro6-res)/delta;
+		Jaco(size1+i,3)=(rfemi-res)/(delta*1e12);
+		Res(size1+i,0)=res;
 		//cout<<"res="<<res<<" rfemi="<<rfemi<<" rfemi-res="<<(rfemi-res)<<std::endl;
 	}
 	Hess=Jaco.transpose()*Jaco;
 	Grad=Jaco.transpose()*Res;
-	/*	std::cout <<"_________________________________"<<std::endl;
-		std::cout <<	Jaco<<std::endl;
-		std::cout <<"_________________________________"<<std::endl;*/
+		//std::cout <<"_________________________________"<<std::endl;
+		//std::cout <<	Jaco<<std::endl;
+		//std::cout <<"_________________________________"<<std::endl;
 };
 void FitLM(std::vector <double> u2, std::vector<double> u4, std::vector <double> u6, std::vector <double> lambda0,double n,double TwoJPlusOne,double &o2, double &o4, double &o6, std::vector <double> fexp,System::String^ &MSG,System::String^ &LATEX)
 {
@@ -275,7 +275,7 @@ void FitBranching(Experiment &BExp,System::String^ &MSG,System::String^ &LATEX){
 	femi=BExp.femi;
 	double no2,no4,no6,sumfexp,sumdfexp;
 	double lambda,chi2s,chi2n,nfemi;
-	lambda=1/1024.0;
+	lambda=1/4096.0;
 	sumdfexp=0;
 	sumfexp=0;
 	chi2s=0;
@@ -292,8 +292,8 @@ void FitBranching(Experiment &BExp,System::String^ &MSG,System::String^ &LATEX){
 		no6=newparams(2,0);
 		nfemi=newparams(3,0);
 		chi2n=chi2br(BExp,no2,no4,no6,nfemi);
-		std::cout<< i <<" "<< chi2s <<" " <<no2<<" "<<no4<<" "<<no6<<" "<<nfemi<<std::endl;
-		MSG+=i.ToString("G5")+"\t"+chi2s.ToString("G5")+"\t"+no2.ToString("G5")+"\t"+no4.ToString("G5")+"\t"+no6.ToString("G5")+"\t"+nfemi.ToString("G5")+"\r\n";
+		std::cout<< i <<" "<< chi2n <<" " <<no2<<" "<<no4<<" "<<no6<<" "<<nfemi<<" "<<lambda<<std::endl;
+		MSG+=i.ToString("G5")+"\t"+chi2n.ToString("G5")+"\t"+no2.ToString("G5")+"\t"+no4.ToString("G5")+"\t"+no6.ToString("G5")+"\t"+nfemi.ToString("G5")+"\r\n";
 		if (chi2n<chi2s){
 			parameters=newparams;
 			o2=no2;
@@ -305,6 +305,7 @@ void FitBranching(Experiment &BExp,System::String^ &MSG,System::String^ &LATEX){
 		else
 		{
 			lambda=lambda/1.1;
+			std::cout<<"Step failed"<<std::endl;
 		}
 	}
 	int size,size1,size2;

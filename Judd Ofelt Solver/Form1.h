@@ -95,6 +95,7 @@ namespace JuddOfeltSolver {
 	private: System::Windows::Forms::Button^  brButt;
 	private: System::Windows::Forms::Button^  emiButt;
 	private: System::Windows::Forms::ToolStripStatusLabel^  toolStripStatusLabel2;
+	private: System::Windows::Forms::Button^  button8;
 
 
 
@@ -144,6 +145,7 @@ namespace JuddOfeltSolver {
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
 			this->toolStripStatusLabel1 = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->FitStatusLabel = (gcnew System::Windows::Forms::ToolStripStatusLabel());
+			this->toolStripStatusLabel2 = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->openFileDialog2 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->FitGB = (gcnew System::Windows::Forms::GroupBox());
 			this->button7 = (gcnew System::Windows::Forms::Button());
@@ -155,7 +157,7 @@ namespace JuddOfeltSolver {
 			this->RateGB = (gcnew System::Windows::Forms::GroupBox());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button6 = (gcnew System::Windows::Forms::Button());
-			this->toolStripStatusLabel2 = (gcnew System::Windows::Forms::ToolStripStatusLabel());
+			this->button8 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
@@ -423,6 +425,12 @@ namespace JuddOfeltSolver {
 			this->FitStatusLabel->Size = System::Drawing::Size(71, 17);
 			this->FitStatusLabel->Text = L"No fit to data";
 			// 
+			// toolStripStatusLabel2
+			// 
+			this->toolStripStatusLabel2->Name = L"toolStripStatusLabel2";
+			this->toolStripStatusLabel2->Size = System::Drawing::Size(197, 17);
+			this->toolStripStatusLabel2->Text = L"Dziękuje uprzejmie przyjadę autobusem";
+			// 
 			// openFileDialog2
 			// 
 			this->openFileDialog2->FileName = L"openFileDialog2";
@@ -536,17 +544,22 @@ namespace JuddOfeltSolver {
 			this->button6->UseVisualStyleBackColor = true;
 			this->button6->Click += gcnew System::EventHandler(this, &Form1::button6_Click_1);
 			// 
-			// toolStripStatusLabel2
+			// button8
 			// 
-			this->toolStripStatusLabel2->Name = L"toolStripStatusLabel2";
-			this->toolStripStatusLabel2->Size = System::Drawing::Size(197, 17);
-			this->toolStripStatusLabel2->Text = L"Dziękuje uprzejmie przyjadę autobusem";
+			this->button8->Location = System::Drawing::Point(731, 470);
+			this->button8->Name = L"button8";
+			this->button8->Size = System::Drawing::Size(105, 23);
+			this->button8->TabIndex = 23;
+			this->button8->Text = L"murrican morons";
+			this->button8->UseVisualStyleBackColor = true;
+			this->button8->Click += gcnew System::EventHandler(this, &Form1::button8_Click);
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1013, 572);
+			this->Controls->Add(this->button8);
 			this->Controls->Add(this->button6);
 			this->Controls->Add(this->RateGB);
 			this->Controls->Add(this->groupBox2);
@@ -800,6 +813,10 @@ namespace JuddOfeltSolver {
 				 o6tb->Text=experimental.o6.ToString("g4");
 
 			 }
-	};
+	private: System::Void button8_Click(System::Object^  sender, System::EventArgs^  e) {
+experimental.AbsoMulti.proveQuimbyToBeArchMoron(1.886e-20,5.05e-20,5.28e-20);
+experimental.AbsoMulti.proveQuimbyToBeArchMoron(2.68e-20,3.82e-20,5.62e-20);
+			 }
+};
 }
 
