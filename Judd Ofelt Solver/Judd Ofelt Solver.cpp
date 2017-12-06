@@ -2,7 +2,7 @@
 
 #include "stdafx.h"
 #include "Form1.h"
-#define EIGEN_NO_CPUID
+//#define EIGEN_NO_CPUID
 using namespace JuddOfeltSolver;
 
 [STAThreadAttribute]

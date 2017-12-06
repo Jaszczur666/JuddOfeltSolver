@@ -2,7 +2,7 @@
 #include "SolvingAlgorithms.h"
 #include "Experiment.h"
 #include <vector>
-#define EIGEN_NO_CPUID
+//#define EIGEN_NO_CPUID
 #include <intrin.h>
 
 Experiment experimental;
@@ -158,7 +158,7 @@ namespace JuddOfeltSolver {
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button6 = (gcnew System::Windows::Forms::Button());
 			this->button8 = (gcnew System::Windows::Forms::Button());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabResult->SuspendLayout();
@@ -194,8 +194,10 @@ namespace JuddOfeltSolver {
 			// dataGridView1
 			// 
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {this->u2, this->u4, 
-				this->u6, this->lambda, this->Pexp});
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+				this->u2, this->u4,
+					this->u6, this->lambda, this->Pexp
+			});
 			this->dataGridView1->Location = System::Drawing::Point(30, 6);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->Size = System::Drawing::Size(581, 221);
@@ -229,7 +231,7 @@ namespace JuddOfeltSolver {
 			// 
 			// menuStrip1
 			// 
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->fileToolStripMenuItem});
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->fileToolStripMenuItem });
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Size = System::Drawing::Size(1013, 24);
@@ -238,10 +240,12 @@ namespace JuddOfeltSolver {
 			// 
 			// fileToolStripMenuItem
 			// 
-			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->loadFromFileToolStripMenuItem, 
-				this->loadEmissionDataToolStripMenuItem, this->quitToolStripMenuItem});
+			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->loadFromFileToolStripMenuItem,
+					this->loadEmissionDataToolStripMenuItem, this->quitToolStripMenuItem
+			});
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
-			this->fileToolStripMenuItem->Size = System::Drawing::Size(35, 20);
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(37, 20);
 			this->fileToolStripMenuItem->Text = L"File";
 			this->fileToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::fileToolStripMenuItem_Click);
 			// 
@@ -405,8 +409,10 @@ namespace JuddOfeltSolver {
 			// 
 			// statusStrip1
 			// 
-			this->statusStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->toolStripStatusLabel1, 
-				this->FitStatusLabel, this->toolStripStatusLabel2});
+			this->statusStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->toolStripStatusLabel1,
+					this->FitStatusLabel, this->toolStripStatusLabel2
+			});
 			this->statusStrip1->Location = System::Drawing::Point(0, 550);
 			this->statusStrip1->Name = L"statusStrip1";
 			this->statusStrip1->Size = System::Drawing::Size(1013, 22);
@@ -415,20 +421,20 @@ namespace JuddOfeltSolver {
 			// toolStripStatusLabel1
 			// 
 			this->toolStripStatusLabel1->Name = L"toolStripStatusLabel1";
-			this->toolStripStatusLabel1->Size = System::Drawing::Size(100, 17);
+			this->toolStripStatusLabel1->Size = System::Drawing::Size(110, 17);
 			this->toolStripStatusLabel1->Text = L"No data file koaded";
 			this->toolStripStatusLabel1->Click += gcnew System::EventHandler(this, &Form1::toolStripStatusLabel1_Click);
 			// 
 			// FitStatusLabel
 			// 
 			this->FitStatusLabel->Name = L"FitStatusLabel";
-			this->FitStatusLabel->Size = System::Drawing::Size(71, 17);
+			this->FitStatusLabel->Size = System::Drawing::Size(77, 17);
 			this->FitStatusLabel->Text = L"No fit to data";
 			// 
 			// toolStripStatusLabel2
 			// 
 			this->toolStripStatusLabel2->Name = L"toolStripStatusLabel2";
-			this->toolStripStatusLabel2->Size = System::Drawing::Size(197, 17);
+			this->toolStripStatusLabel2->Size = System::Drawing::Size(216, 17);
 			this->toolStripStatusLabel2->Text = L"Dziękuje uprzejmie przyjadę autobusem";
 			// 
 			// openFileDialog2
@@ -502,6 +508,7 @@ namespace JuddOfeltSolver {
 			this->emiButt->TabIndex = 5;
 			this->emiButt->Text = L"Load emi";
 			this->emiButt->UseVisualStyleBackColor = true;
+			this->emiButt->Click += gcnew System::EventHandler(this, &Form1::emiButt_Click);
 			// 
 			// LoadButt
 			// 
@@ -579,7 +586,7 @@ namespace JuddOfeltSolver {
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
 			this->tabControl1->ResumeLayout(false);
@@ -695,10 +702,10 @@ namespace JuddOfeltSolver {
 				 cout <<chi2(experimental.u2,experimental.u4,experimental.u6,experimental.lambda,experimental.n,experimental.o2,experimental.o4,experimental.o6,experimental.fexp);*/
 			 }
 	private: System::Void loadEmissionDataToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-				 std::vector <double> a;
+				 //std::vector <double> a;
 				 String ^messages,^latex,^emi,^fname;
-				 double Ajj;
-				 Ajj=0;
+				 //double Ajj;
+//				 Ajj=0;
 				 DateTime now;
 				 now=DateTime::Now;
 				 String ^date=now.ToString("yyyyMMddHHmmss");
@@ -817,6 +824,9 @@ namespace JuddOfeltSolver {
 experimental.AbsoMulti.proveQuimbyToBeArchMoron(1.886e-20,5.05e-20,5.28e-20);
 experimental.AbsoMulti.proveQuimbyToBeArchMoron(2.68e-20,3.82e-20,5.62e-20);
 			 }
+private: System::Void emiButt_Click(System::Object^  sender, System::EventArgs^  e) {
+	loadEmissionDataToolStripMenuItem_Click(sender, e);
+}
 };
 }
 

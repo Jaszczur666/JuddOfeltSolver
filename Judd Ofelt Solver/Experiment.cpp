@@ -27,9 +27,9 @@ void Experiment::LoadEmDataFromFile(System::String^ Filename)//, struct Experime
 		this->EmiMulti.u4.push_back(u4);
 		this->EmiMulti.u6.push_back(u6);
 		this->EmiMulti.lambda.push_back(1./wavenumber);
-		this->o2=1e-20;
-		this->o4=1e-20;
-		this->o6=1e-20;
+		//this->o2=1e-20;
+		//this->o4=1e-20;
+		//this->o6=1e-20;
 		std::cout  <<1.0e7/wavenumber <<" "<<u2<<" "<<" "<<u4<<" "<< u6<<std::endl;
 	}
 }
@@ -41,6 +41,8 @@ void Experiment::CalculateRates()//vector <double> u2, vector<double> u4, vector
 	size=EmiMulti.u2.size();
 	this->EmiMulti.Ajj.clear();
 	sumrate=0;
+	std::cout << "Debugging omegas"<<std::endl;
+	std::cout << this->o2<<" "<<this->o4<<" "<<this->o6<<std::endl;
 	for(int i=0;i<size;i++){
 		//rate=((64*pow(pi,4)*qe*qe)/(3*h*pow(lambda0[i],3)*TwoJPlusOne))*(n*pow(n*n+2,2)/9)*(u2[i]*o2+u4[i]*o4+u6[i]*o6);
 		rate=((64*pow(pi,4)*qe*qe)/(3*h*pow(this->EmiMulti.lambda[i],3)*this->EmiMulti.TwoJPlusOne))*(this->n*pow(this->n*this->n+2,2)/9)*(this->EmiMulti.u2[i]*this->o2+this->EmiMulti.u4[i]*this->o4+this->EmiMulti.u6[i]*this->o6);
